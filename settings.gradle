@@ -1,0 +1,8 @@
+rootProject.name = "gewt-material"
+
+include ':esoco-common'
+project(':esoco-common').projectDir = new File('../esoco-common')
+
+include ':gewt'
+project(':gewt').projectDir = new File('../gewt')
+
