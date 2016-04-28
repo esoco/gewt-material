@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material;
 
+import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialTextBox;
 
@@ -24,6 +25,7 @@ import de.esoco.ewt.component.TextComponent.IsTextBox;
 import de.esoco.ewt.component.TextField.TextFieldWidgetFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
+import de.esoco.ewt.style.StyleFlag;
 
 
 /********************************************************************
@@ -34,15 +36,6 @@ import de.esoco.ewt.style.StyleData;
 public class MaterialTextBoxFactory
 	extends TextFieldWidgetFactory<GewtMaterialTextBox>
 {
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
-	 * Creates a new instance.
-	 */
-	public MaterialTextBoxFactory()
-	{
-	}
-
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -53,7 +46,14 @@ public class MaterialTextBoxFactory
 		Component rComponent,
 		StyleData rStyle)
 	{
-		return new GewtMaterialTextBox();
+		GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
+
+		if (rStyle.hasFlag(StyleFlag.PASSWORD))
+		{
+			aTextBox.setType(InputType.PASSWORD);
+		}
+
+		return aTextBox;
 	}
 
 	//~ Inner Classes ----------------------------------------------------------

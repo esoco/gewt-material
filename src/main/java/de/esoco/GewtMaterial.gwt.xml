@@ -5,6 +5,7 @@
 	<source path='ewt'/>
 
 	<inherits name='de.esoco.GEWT' />	
-	<inherits name="gwt.material.design.GwtMaterialWithJQuery" />
+	<inherits name='gwt.material.design.GwtMaterialWithJQuery' />
+	<inherits name='gwt.material.design.addins.GwtMaterialAddins' />
 			
 </module>

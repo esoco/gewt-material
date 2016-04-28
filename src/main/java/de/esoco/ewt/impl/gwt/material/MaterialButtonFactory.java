@@ -34,15 +34,6 @@ import com.google.gwt.user.client.ui.HasText;
 public class MaterialButtonFactory
 	extends ButtonWidgetFactory<GewtMaterialButton>
 {
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
-	 * Creates a new instance.
-	 */
-	public MaterialButtonFactory()
-	{
-	}
-
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************

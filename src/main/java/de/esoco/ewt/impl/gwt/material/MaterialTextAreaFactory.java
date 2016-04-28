@@ -34,15 +34,6 @@ import de.esoco.ewt.style.StyleData;
 public class MaterialTextAreaFactory
 	extends TextAreaWidgetFactory<GewtMaterialTextArea>
 {
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
-	 * Creates a new instance.
-	 */
-	public MaterialTextAreaFactory()
-	{
-	}
-
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************

@@ -23,32 +23,43 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 
+import de.esoco.lib.property.UserInterfaceProperties;
+import de.esoco.lib.property.UserInterfaceProperties.LabelStyle;
+
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Widget;
+
 
 /********************************************************************
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
-public class MaterialLabelFactory
-	extends LabelWidgetFactory<MaterialLabel>
+public class MaterialLabelFactory<W extends Widget & HasText>
+	extends LabelWidgetFactory<W>
 {
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
-	 * Creates a new instance.
-	 */
-	public MaterialLabelFactory()
-	{
-	}
-
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MaterialLabel createWidget(Component rComponent, StyleData rStyle)
+	@SuppressWarnings("unchecked")
+	public W createWidget(Component rComponent, StyleData rStyle)
 	{
-		return new MaterialLabel();
+		Widget rWidget;
+
+		if (rStyle.getProperty(UserInterfaceProperties.LABEL_STYLE,
+							   LabelStyle.DEFAULT) ==
+			LabelStyle.DEFAULT)
+		{
+			rWidget = new MaterialLabel();
+		}
+		else
+		{
+			rWidget = super.createWidget(rComponent, rStyle);
+		}
+
+		return (W) rWidget;
 	}
 }
