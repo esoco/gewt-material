@@ -16,14 +16,10 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
-import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
-import gwt.material.design.client.constants.Axis;
-
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.SplitPanel;
-import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory;
@@ -32,11 +28,6 @@ import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
-import de.esoco.ewt.style.StyleData;
-import de.esoco.ewt.style.StyleFlag;
-
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -107,60 +98,6 @@ public class GewtMaterial
 			}
 
 			return rLayout;
-		}
-	}
-
-	/********************************************************************
-	 * A layout implementation that creates and manages a {@link
-	 * MaterialSplitPanel}.
-	 *
-	 * @author eso
-	 */
-	static class MaterialSplitPanelLayout extends SplitPanelLayout
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * @see de.esoco.ewt.component.SplitPanel$SplitPanelLayout#addWidget(com.google.gwt.user.client.ui.HasWidgets,
-		 *      com.google.gwt.user.client.ui.Widget,
-		 *      de.esoco.ewt.style.StyleData)
-		 */
-		@Override
-		public void addWidget(HasWidgets rContainer,
-							  Widget	 rWidget,
-							  StyleData  rStyleData)
-		{
-			MaterialSplitPanel rSplitPanel = (MaterialSplitPanel) rContainer;
-
-//			Alignment eVerticalAlign = rStyleData.getVerticalAlignment();
-//
-//			if (eVerticalAlign == Alignment.BEGIN ||
-//				eVerticalAlign == Alignment.END)
-//			{
-//				rWidget.setHeight("100%");
-//			}
-//			else
-//			{
-//				rWidget.setWidth("100%");
-//			}
-
-			rSplitPanel.add(rWidget);
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public HasWidgets createLayoutContainer(
-			UserInterfaceContext rContext,
-			StyleData			 rStyle)
-		{
-			MaterialSplitPanel aSplitPanel = new MaterialSplitPanel();
-
-			aSplitPanel.setAxis(rStyle.hasFlag(StyleFlag.VERTICAL)
-								? Axis.VERTICAL : Axis.HORIZONTAL);
-
-			return aSplitPanel;
 		}
 	}
 }
