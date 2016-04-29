@@ -16,16 +16,21 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
+import gwt.material.design.addins.client.MaterialResourceInjector;
+
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.SplitPanel;
+import de.esoco.ewt.component.StackPanel;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory;
+import de.esoco.ewt.impl.gwt.material.layout.MaterialSplitPanelLayout;
+import de.esoco.ewt.impl.gwt.material.layout.MaterialStackPanelLayout;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
 
@@ -70,6 +75,8 @@ public class GewtMaterial
 								  true);
 
 		EWT.registerDefaultWidgetFactories(false);
+
+		MaterialResourceInjector.setDebug(false);
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
@@ -95,6 +102,10 @@ public class GewtMaterial
 			if (rContainer instanceof SplitPanel)
 			{
 				rLayout = new MaterialSplitPanelLayout();
+			}
+			else if (rContainer instanceof StackPanel)
+			{
+				rLayout = new MaterialStackPanelLayout();
 			}
 
 			return rLayout;

@@ -14,11 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt;
+package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
 import gwt.material.design.client.constants.Axis;
 
+import de.esoco.ewt.UserInterfaceContext;
 import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -33,13 +34,12 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author eso
  */
-class MaterialSplitPanelLayout extends SplitPanelLayout
+public class MaterialSplitPanelLayout extends SplitPanelLayout
 {
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
-	 * @see de.esoco.ewt.component.SplitPanel$SplitPanelLayout#addWidget(com.google.gwt.user.client.ui.HasWidgets,
-	 *      com.google.gwt.user.client.ui.Widget, de.esoco.ewt.style.StyleData)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addWidget(HasWidgets rContainer,
