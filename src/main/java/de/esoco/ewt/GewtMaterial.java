@@ -29,7 +29,6 @@ import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory;
-import de.esoco.ewt.impl.gwt.material.layout.MaterialSplitPanelLayout;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialStackPanelLayout;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
@@ -101,7 +100,7 @@ public class GewtMaterial
 		{
 			if (rContainer instanceof SplitPanel)
 			{
-				rLayout = new MaterialSplitPanelLayout();
+//				rLayout = new MaterialSplitPanelLayout();
 			}
 			else if (rContainer instanceof StackPanel)
 			{

@@ -16,16 +16,18 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.addins.client.stepper.MaterialStep;
 import gwt.material.design.addins.client.stepper.MaterialStepper;
 import gwt.material.design.client.constants.Axis;
 
 import de.esoco.ewt.UserInterfaceContext;
-import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
+import de.esoco.ewt.component.Component;
+import de.esoco.ewt.component.StackPanel.StackPanelLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -33,21 +35,36 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author eso
  */
-public class MaterialStackPanelLayout extends SplitPanelLayout
+public class MaterialStackPanelLayout extends StackPanelLayout
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private MaterialStepper aStepper;
+	private MaterialStep    aFirstStep;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyleData)
+	public void addGroup(Component rStepComponent,
+						 String    sStepTitle,
+						 boolean   bCloseable)
 	{
-		MaterialStepper rStepper = (MaterialStepper) rContainer;
+		MaterialStep aStep = aFirstStep;
 
-		rStepper.add(rWidget);
+		if (aStep == null)
+		{
+			aStep = new MaterialStep();
+			aStepper.add(aStep);
+		}
+		else
+		{
+			aFirstStep = null;
+		}
+
+		aStep.add(rStepComponent.getWidget());
 	}
 
 	/***************************************
@@ -58,11 +75,66 @@ public class MaterialStackPanelLayout extends SplitPanelLayout
 		UserInterfaceContext rContext,
 		StyleData			 rStyle)
 	{
-		MaterialStepper aStepper = new MaterialStepper();
+		aStepper   = new MaterialStepper();
+		aFirstStep = new MaterialStep();
 
-		aStepper.setAxis(rStyle.hasFlag(StyleFlag.VERTICAL) ? Axis.VERTICAL
-															: Axis.HORIZONTAL);
+		boolean bVertical = rStyle.hasFlag(StyleFlag.VERTICAL);
+
+		aStepper.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+
+		GWT.log("VERTICAL: " + bVertical);
+
+		// necessary unless an init bug in MaterialStepper is fixed
+		// https://github.com/GwtMaterialDesign/gwt-material-addins/issues/63
+		aStepper.add(aFirstStep);
 
 		return aStepper;
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getGroupCount()
+	{
+		return aStepper.getWidgetCount();
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getGroupIndex(Component rGroupComponent)
+	{
+		return aStepper.getWidgetIndex(rGroupComponent.getWidget());
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getSelectionIndex()
+	{
+		return aStepper.getCurrentStepIndex() - 1;
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setGroupTitle(int nIndex, String sTitle)
+	{
+		MaterialStep rStep = (MaterialStep) aStepper.getWidget(nIndex);
+
+		rStep.setTitle(sTitle);
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setSelection(int nIndex)
+	{
+		aStepper.goToStep(nIndex + 1);
 	}
 }
