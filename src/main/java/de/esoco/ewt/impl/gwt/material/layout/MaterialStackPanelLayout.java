@@ -115,7 +115,7 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	@Override
 	public int getSelectionIndex()
 	{
-		return aStepper.getCurrentStepIndex() - 1;
+		return aStepper.getCurrentStepIndex();
 	}
 
 	/***************************************
