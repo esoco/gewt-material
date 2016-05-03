@@ -29,9 +29,11 @@ import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory;
+import de.esoco.ewt.impl.gwt.material.layout.MaterialMenuLayout;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialStackPanelLayout;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
+import de.esoco.ewt.layout.MenuLayout;
 
 
 /********************************************************************
@@ -105,6 +107,10 @@ public class GewtMaterial
 			else if (rContainer instanceof StackPanel)
 			{
 				rLayout = new MaterialStackPanelLayout();
+			}
+			else if (rLayout instanceof MenuLayout)
+			{
+				rLayout = new MaterialMenuLayout();
 			}
 
 			return rLayout;
