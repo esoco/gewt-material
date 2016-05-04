@@ -93,7 +93,4 @@ public class GewtMaterial
 		MaterialResourceInjector.setDebug(false);
 		new MaterialSplitPanel();
 	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
 }
