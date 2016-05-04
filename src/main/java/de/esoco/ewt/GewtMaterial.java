@@ -17,23 +17,18 @@
 package de.esoco.ewt;
 
 import gwt.material.design.addins.client.MaterialResourceInjector;
+import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
+import gwt.material.design.client.MaterialWithJQuery;
 
 import de.esoco.ewt.component.Button;
-import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.Label;
-import de.esoco.ewt.component.SplitPanel;
-import de.esoco.ewt.component.StackPanel;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory;
-import de.esoco.ewt.impl.gwt.material.layout.MaterialMenuLayout;
-import de.esoco.ewt.impl.gwt.material.layout.MaterialStackPanelLayout;
-import de.esoco.ewt.layout.GenericLayout;
-import de.esoco.ewt.layout.LayoutMapper;
-import de.esoco.ewt.layout.MenuLayout;
+import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
 
 
 /********************************************************************
@@ -54,6 +49,21 @@ public class GewtMaterial
 	}
 
 	//~ Static methods ---------------------------------------------------------
+
+	/***************************************
+	 * Returns the current JQuery version.
+	 *
+	 * @return The JQuery version string
+	 */
+	public static native String getJQueryVersion() /*-{
+		var jQuery = $wnd['jQuery'];
+		if (typeof jQuery != 'undefined') {
+			return jQuery.fn.jquery;
+		}
+		else {
+			return 'undefined';
+		}
+	}-*/;
 
 	/***************************************
 	 * Initializes the library wrapper by registering the necessary factories.
@@ -77,43 +87,13 @@ public class GewtMaterial
 
 		EWT.registerDefaultWidgetFactories(false);
 
+		MaterialWithJQuery aMaterialWithJQuery = new MaterialWithJQuery();
+
+		aMaterialWithJQuery.load();
 		MaterialResourceInjector.setDebug(false);
+		new MaterialSplitPanel();
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
 
-	/********************************************************************
-	 * A factory that maps GEWT layouts to new layouts that create
-	 * GwtMaterialDesign panels.
-	 *
-	 * @author eso
-	 */
-	static class MaterialLayoutFactory implements LayoutMapper
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public GenericLayout mapLayout(
-			Container	  rContainer,
-			GenericLayout rLayout)
-		{
-			if (rContainer instanceof SplitPanel)
-			{
-//				rLayout = new MaterialSplitPanelLayout();
-			}
-			else if (rContainer instanceof StackPanel)
-			{
-				rLayout = new MaterialStackPanelLayout();
-			}
-			else if (rLayout instanceof MenuLayout)
-			{
-				rLayout = new MaterialMenuLayout();
-			}
-
-			return rLayout;
-		}
-	}
 }

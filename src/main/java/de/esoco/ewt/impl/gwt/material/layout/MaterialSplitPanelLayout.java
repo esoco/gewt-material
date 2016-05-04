@@ -18,6 +18,7 @@ package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
 import gwt.material.design.client.constants.Axis;
+import gwt.material.design.client.ui.MaterialLabel;
 
 import de.esoco.ewt.UserInterfaceContext;
 import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
@@ -36,6 +37,10 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MaterialSplitPanelLayout extends SplitPanelLayout
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private MaterialSplitPanel aSplitPanel;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -46,8 +51,6 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 						  Widget	 rWidget,
 						  StyleData  rStyleData)
 	{
-		MaterialSplitPanel rSplitPanel = (MaterialSplitPanel) rContainer;
-
 //			Alignment eVerticalAlign = rStyleData.getVerticalAlignment();
 //
 //			if (eVerticalAlign == Alignment.BEGIN ||
@@ -60,7 +63,7 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 //				rWidget.setWidth("100%");
 //			}
 
-		rSplitPanel.add(rWidget);
+//		aSplitPanel.add(rWidget);
 	}
 
 	/***************************************
@@ -71,10 +74,16 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 		UserInterfaceContext rContext,
 		StyleData			 rStyle)
 	{
-		MaterialSplitPanel aSplitPanel = new MaterialSplitPanel();
+		aSplitPanel = new MaterialSplitPanel();
 
 		aSplitPanel.setAxis(rStyle.hasFlag(StyleFlag.VERTICAL)
 							? Axis.VERTICAL : Axis.HORIZONTAL);
+
+		aSplitPanel.add(new MaterialLabel("Left Widget"));
+		aSplitPanel.add(new MaterialLabel("Right Widget"));
+		aSplitPanel.setLeftMax(1000);
+		aSplitPanel.setRightMax(1000);
+		aSplitPanel.setHeight("500px");
 
 		return aSplitPanel;
 	}
