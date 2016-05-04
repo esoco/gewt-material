@@ -20,7 +20,7 @@ import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.ui.MaterialLabel;
 
-import de.esoco.ewt.UserInterfaceContext;
+import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -71,8 +71,8 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 	 */
 	@Override
 	public HasWidgets createLayoutContainer(
-		UserInterfaceContext rContext,
-		StyleData			 rStyle)
+		Container rContainer,
+		StyleData rStyle)
 	{
 		aSplitPanel = new MaterialSplitPanel();
 

@@ -16,14 +16,18 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material;
 
+import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialLink;
 
 import de.esoco.ewt.component.Button.ButtonWidgetFactory;
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory.GewtMaterialButton;
 import de.esoco.ewt.style.StyleData;
+import de.esoco.ewt.style.StyleFlag;
 
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -31,8 +35,8 @@ import com.google.gwt.user.client.ui.HasText;
  *
  * @author eso
  */
-public class MaterialButtonFactory
-	extends ButtonWidgetFactory<GewtMaterialButton>
+public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
+	extends ButtonWidgetFactory<W>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -40,11 +44,21 @@ public class MaterialButtonFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialButton createWidget(
-		Component rComponent,
-		StyleData rStyle)
+	@SuppressWarnings("unchecked")
+	public W createWidget(Component rComponent, StyleData rStyle)
 	{
-		return new GewtMaterialButton();
+		AbstractButton aButtonWidget;
+
+		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
+		{
+			aButtonWidget = new MaterialLink();
+		}
+		else
+		{
+			aButtonWidget = new GewtMaterialButton();
+		}
+
+		return (W) aButtonWidget;
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
@@ -55,6 +69,15 @@ public class MaterialButtonFactory
 	 * @author eso
 	 */
 	static class GewtMaterialButton extends MaterialButton implements HasText
+	{
+	}
+
+	/********************************************************************
+	 * A {@link MaterialLink} subclass that also implements {@link HasText}.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialLink extends MaterialLink implements HasText
 	{
 	}
 }

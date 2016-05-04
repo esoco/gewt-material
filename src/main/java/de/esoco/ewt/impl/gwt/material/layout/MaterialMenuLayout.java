@@ -19,7 +19,7 @@ package de.esoco.ewt.impl.gwt.material.layout;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialSideNav;
 
-import de.esoco.ewt.UserInterfaceContext;
+import de.esoco.ewt.component.Container;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -35,6 +35,10 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MaterialMenuLayout extends MenuLayout
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private MaterialNavBar aNavBar;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -46,6 +50,10 @@ public class MaterialMenuLayout extends MenuLayout
 						  StyleData  rStyleData,
 						  int		 nIndex)
 	{
+		if (aNavBar != null)
+		{
+		}
+
 		super.addWidget(rContainer, rWidget, rStyleData, nIndex);
 	}
 
@@ -54,20 +62,21 @@ public class MaterialMenuLayout extends MenuLayout
 	 */
 	@Override
 	public HasWidgets createLayoutContainer(
-		UserInterfaceContext rContext,
-		StyleData			 rContainerStyle)
+		Container rContainer,
+		StyleData rContainerStyle)
 	{
-		HasWidgets aMenu;
+		HasWidgets aMenuWidget;
 
 		if (rContainerStyle.hasFlag(StyleFlag.VERTICAL))
 		{
-			aMenu = new MaterialSideNav();
+			aMenuWidget = new MaterialSideNav();
 		}
 		else
 		{
-			aMenu = new MaterialNavBar();
+			aNavBar     = new MaterialNavBar();
+			aMenuWidget = aNavBar;
 		}
 
-		return aMenu;
+		return aMenuWidget;
 	}
 }

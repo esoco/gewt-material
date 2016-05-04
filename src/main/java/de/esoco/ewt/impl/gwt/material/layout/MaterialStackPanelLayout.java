@@ -20,13 +20,12 @@ import gwt.material.design.addins.client.stepper.MaterialStep;
 import gwt.material.design.addins.client.stepper.MaterialStepper;
 import gwt.material.design.client.constants.Axis;
 
-import de.esoco.ewt.UserInterfaceContext;
 import de.esoco.ewt.component.Component;
+import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.StackPanel.StackPanelLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 
@@ -72,8 +71,8 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	 */
 	@Override
 	public HasWidgets createLayoutContainer(
-		UserInterfaceContext rContext,
-		StyleData			 rStyle)
+		Container rContainer,
+		StyleData rStyle)
 	{
 		aStepper   = new MaterialStepper();
 		aFirstStep = new MaterialStep();
@@ -81,8 +80,6 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 		boolean bVertical = rStyle.hasFlag(StyleFlag.VERTICAL);
 
 		aStepper.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
-
-		GWT.log("VERTICAL: " + bVertical);
 
 		// necessary unless an init bug in MaterialStepper is fixed
 		// https://github.com/GwtMaterialDesign/gwt-material-addins/issues/63

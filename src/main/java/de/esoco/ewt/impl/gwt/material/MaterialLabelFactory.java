@@ -18,12 +18,12 @@ package de.esoco.ewt.impl.gwt.material;
 
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialNavBrand;
+import gwt.material.design.client.ui.MaterialTitle;
 
-import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 
-import de.esoco.lib.property.UserInterfaceProperties;
 import de.esoco.lib.property.UserInterfaceProperties.LabelStyle;
 
 import com.google.gwt.user.client.ui.HasText;
@@ -44,22 +44,28 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public W createWidget(Component rComponent, StyleData rStyle)
+	protected Widget createLabelWidget(LabelStyle eLabelStyle, StyleData rStyle)
 	{
-		Widget rWidget;
+		Widget aWidget;
 
-		if (rStyle.getProperty(UserInterfaceProperties.LABEL_STYLE,
-							   LabelStyle.DEFAULT) ==
-			LabelStyle.DEFAULT)
+		switch (eLabelStyle)
 		{
-			rWidget = new MaterialLabel();
-		}
-		else
-		{
-			rWidget = super.createWidget(rComponent, rStyle);
+			case DEFAULT:
+				aWidget = new MaterialLabel();
+				break;
+
+			case BRAND:
+				aWidget = new MaterialNavBrand();
+				break;
+
+			case TITLE:
+				aWidget = new MaterialTitle();
+				break;
+
+			default:
+				aWidget = super.createLabelWidget(eLabelStyle, rStyle);
 		}
 
-		return (W) rWidget;
+		return aWidget;
 	}
 }
