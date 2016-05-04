@@ -51,7 +51,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 
 		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
 		{
-			aButtonWidget = new MaterialLink();
+			aButtonWidget = new GewtMaterialLink();
 		}
 		else
 		{
