@@ -17,6 +17,8 @@
 package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.client.ui.MaterialNavBar;
+import gwt.material.design.client.ui.MaterialNavBrand;
+import gwt.material.design.client.ui.MaterialNavSection;
 import gwt.material.design.client.ui.MaterialSideNav;
 
 import de.esoco.ewt.component.Container;
@@ -24,6 +26,7 @@ import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -37,7 +40,8 @@ public class MaterialMenuLayout extends MenuLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private MaterialNavBar aNavBar;
+	private MaterialNavBar     aNavBar;
+	private MaterialNavSection aNavSection;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -50,11 +54,19 @@ public class MaterialMenuLayout extends MenuLayout
 						  StyleData  rStyleData,
 						  int		 nIndex)
 	{
-		if (aNavBar != null)
+		if (aNavBar != null &&
+			aNavSection == null &&
+			!(rWidget instanceof MaterialNavBrand))
 		{
+			aNavSection = new MaterialNavSection();
+			aNavSection.setFloat(Float.RIGHT);
+			aNavBar.add(aNavSection);
 		}
 
-		super.addWidget(rContainer, rWidget, rStyleData, nIndex);
+		super.addWidget(aNavSection != null ? aNavSection : rContainer,
+						rWidget,
+						rStyleData,
+						nIndex);
 	}
 
 	/***************************************

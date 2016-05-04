@@ -17,6 +17,7 @@
 package de.esoco.ewt.impl.gwt.material;
 
 import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialIcon;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialTitle;
@@ -58,6 +59,10 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 				aWidget = new MaterialNavBrand();
 				break;
 
+			case ICON:
+				aWidget = new GewtMaterialIcon();
+				break;
+
 			case TITLE:
 				aWidget = new MaterialTitle();
 				break;
@@ -67,5 +72,53 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 		}
 
 		return aWidget;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * A {@link MaterialIcon} subclass that also implements {@link HasText}.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialIcon extends MaterialIcon implements HasText
+	{
+	}
+
+	/********************************************************************
+	 * A {@link MaterialTitle} subclass that also implements {@link HasText}.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialTitle extends MaterialTitle implements HasText
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String getText()
+		{
+			return super.getTitle();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setText(String sText)
+		{
+			super.setTitle(sText);
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setTitle(String sTooltip)
+		{
+			super.setTooltip(sTooltip);
+		}
 	}
 }
