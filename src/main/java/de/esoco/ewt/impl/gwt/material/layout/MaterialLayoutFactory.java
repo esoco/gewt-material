@@ -17,8 +17,10 @@
 package de.esoco.ewt.impl.gwt.material.layout;
 
 import de.esoco.ewt.component.Container;
+import de.esoco.ewt.component.MainView.MainViewLayout;
 import de.esoco.ewt.component.SplitPanel;
 import de.esoco.ewt.component.StackPanel;
+import de.esoco.ewt.layout.ContentLayout;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
 import de.esoco.ewt.layout.MenuLayout;
@@ -42,7 +44,7 @@ public class MaterialLayoutFactory implements LayoutMapper
 	{
 		if (rContainer instanceof SplitPanel)
 		{
-//			rLayout = new MaterialSplitPanelLayout();
+			rLayout = new MaterialSplitPanelLayout();
 		}
 		else if (rContainer instanceof StackPanel)
 		{
@@ -51,6 +53,16 @@ public class MaterialLayoutFactory implements LayoutMapper
 		else if (rLayout instanceof MenuLayout)
 		{
 			rLayout = new MaterialMenuLayout();
+		}
+		else if (rLayout instanceof ContentLayout)
+		{
+			rLayout =
+				new MaterialContentLayout(((ContentLayout) rLayout)
+										  .getLayoutType());
+		}
+		else if (rLayout instanceof MainViewLayout)
+		{
+			return new MaterialMainViewLayout();
 		}
 
 		return rLayout;

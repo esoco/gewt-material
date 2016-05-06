@@ -47,7 +47,7 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addGroup(Component rStepComponent,
+	public void addPage(Component rStepComponent,
 						 String    sStepTitle,
 						 boolean   bCloseable)
 	{
@@ -92,7 +92,7 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getGroupCount()
+	public int getPageCount()
 	{
 		return aStepper.getWidgetCount();
 	}
@@ -101,7 +101,7 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getGroupIndex(Component rGroupComponent)
+	public int getPageIndex(Component rGroupComponent)
 	{
 		return aStepper.getWidgetIndex(rGroupComponent.getWidget());
 	}
@@ -119,7 +119,7 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setGroupTitle(int nIndex, String sTitle)
+	public void setPageTitle(int nIndex, String sTitle)
 	{
 		MaterialStep rStep = (MaterialStep) aStepper.getWidget(nIndex);
 
