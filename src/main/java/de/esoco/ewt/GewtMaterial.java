@@ -16,10 +16,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
-import gwt.material.design.addins.client.MaterialResourceInjector;
-import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
-import gwt.material.design.client.MaterialWithJQuery;
-
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.TextArea;
@@ -86,11 +82,5 @@ public class GewtMaterial
 								  true);
 
 		EWT.registerDefaultWidgetFactories(false);
-
-		MaterialWithJQuery aMaterialWithJQuery = new MaterialWithJQuery();
-
-		aMaterialWithJQuery.load();
-		MaterialResourceInjector.setDebug(false);
-		new MaterialSplitPanel();
 	}
 }
