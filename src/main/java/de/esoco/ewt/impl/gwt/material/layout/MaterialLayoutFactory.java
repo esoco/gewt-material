@@ -44,7 +44,7 @@ public class MaterialLayoutFactory implements LayoutMapper
 	{
 		if (rContainer instanceof SplitPanel)
 		{
-			rLayout = new MaterialSplitPanelLayout();
+//			rLayout = new MaterialSplitPanelLayout();
 		}
 		else if (rContainer instanceof StackPanel)
 		{
