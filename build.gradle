@@ -18,6 +18,7 @@ targetCompatibility = 1.7
 
 repositories {
     jcenter()
+    maven {  url "https://oss.sonatype.org/content/groups/public" }
 }
 
 dependencies
@@ -31,8 +32,8 @@ dependencies
 		compile 'de.esoco:gewt:1.+'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.0'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.0'
+	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.1-SNAPSHOT'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.1-SNAPSHOT'
 }
 
 gwt {

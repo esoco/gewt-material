@@ -66,7 +66,10 @@ public class GewtMaterial
 	 */
 	public static void init()
 	{
-		EWT.setLayoutMapper(new MaterialLayoutFactory());
+		MaterialLayoutFactory aLayoutFactory = new MaterialLayoutFactory();
+
+		EWT.setLayoutFactory(aLayoutFactory);
+		EWT.setLayoutMapper(aLayoutFactory);
 
 		EWT.registerWidgetFactory(Button.class,
 								  new MaterialButtonFactory<>(),

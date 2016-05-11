@@ -17,16 +17,20 @@
 package de.esoco.ewt.impl.gwt.material;
 
 import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialCardContent;
+import gwt.material.design.client.ui.MaterialCardTitle;
 import gwt.material.design.client.ui.MaterialIcon;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialTitle;
 
+import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.UserInterfaceProperties.LabelStyle;
 
+import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -45,7 +49,9 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Widget createLabelWidget(LabelStyle eLabelStyle, StyleData rStyle)
+	protected Widget createLabelWidget(Component  rComponent,
+									   LabelStyle eLabelStyle,
+									   StyleData  rStyle)
 	{
 		Widget aWidget;
 
@@ -64,11 +70,21 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 				break;
 
 			case TITLE:
-				aWidget = new MaterialTitle();
+				if (rComponent.getParent().getWidget() instanceof
+					MaterialCardContent)
+				{
+					aWidget = new MaterialCardTitle();
+				}
+				else
+				{
+					aWidget = new MaterialTitle();
+				}
+
 				break;
 
 			default:
-				aWidget = super.createLabelWidget(eLabelStyle, rStyle);
+				aWidget =
+					super.createLabelWidget(rComponent, eLabelStyle, rStyle);
 		}
 
 		return aWidget;
@@ -81,8 +97,27 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 	 *
 	 * @author eso
 	 */
-	static class GewtMaterialIcon extends MaterialIcon implements HasText
+	static class GewtMaterialIcon extends MaterialIcon implements HasHTML
 	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String getHTML()
+		{
+			return getText();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setHTML(String sHtml)
+		{
+			getElement().setInnerText(sHtml);
+		}
 	}
 
 	/********************************************************************

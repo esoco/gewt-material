@@ -18,21 +18,22 @@ package de.esoco.ewt.impl.gwt.material.layout;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.MainView.MainViewLayout;
-import de.esoco.ewt.component.SplitPanel;
-import de.esoco.ewt.component.StackPanel;
-import de.esoco.ewt.layout.ContentLayout;
 import de.esoco.ewt.layout.GenericLayout;
+import de.esoco.ewt.layout.LayoutFactory.DefaultLayoutFactory;
 import de.esoco.ewt.layout.LayoutMapper;
-import de.esoco.ewt.layout.MenuLayout;
+import de.esoco.ewt.style.StyleData;
+
+import de.esoco.lib.property.UserInterfaceProperties.Layout;
 
 
 /********************************************************************
- * A factory that maps GEWT layouts to new layouts that create GwtMaterialDesign
- * panels.
+ * A factory and mapper that creates layouts or maps GEWT layouts to new layouts
+ * that are based on GwtMaterialDesign widgets.
  *
  * @author eso
  */
-public class MaterialLayoutFactory implements LayoutMapper
+public class MaterialLayoutFactory extends DefaultLayoutFactory
+	implements LayoutMapper
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -40,31 +41,62 @@ public class MaterialLayoutFactory implements LayoutMapper
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GenericLayout mapLayout(Container rContainer, GenericLayout rLayout)
+	public GenericLayout createLayout(Container rParentContainer,
+									  StyleData rContainerStyle,
+									  Layout    eLayout)
 	{
-		if (rContainer instanceof SplitPanel)
+		GenericLayout aLayout;
+
+		switch (eLayout)
 		{
-//			rLayout = new MaterialSplitPanelLayout();
-		}
-		else if (rContainer instanceof StackPanel)
-		{
-			rLayout = new MaterialStackPanelLayout();
-		}
-		else if (rLayout instanceof MenuLayout)
-		{
-			rLayout = new MaterialMenuLayout();
-		}
-		else if (rLayout instanceof ContentLayout)
-		{
-			rLayout =
-				new MaterialContentLayout(((ContentLayout) rLayout)
-										  .getLayoutType());
-		}
-		else if (rLayout instanceof MainViewLayout)
-		{
-			return new MaterialMainViewLayout();
+// currently not working because of JS error in GwtMaterial
+//			case SPLIT:
+//				aLayout = new MaterialSplitPanelLayout();
+//				break;
+
+			case STACK:
+				aLayout = new MaterialStackPanelLayout();
+				break;
+
+			case LIST:
+				aLayout = new MaterialListLayout();
+				break;
+
+			case LIST_ITEM:
+				aLayout = new MaterialListItemLayout();
+				break;
+
+			case MENU:
+				aLayout = new MaterialMenuLayout();
+				break;
+
+			case HEADER:
+			case CONTENT:
+			case FOOTER:
+				aLayout = new MaterialContentLayout(eLayout);
+				break;
+
+			default:
+				aLayout =
+					super.createLayout(rParentContainer,
+									   rContainerStyle,
+									   eLayout);
 		}
 
-		return rLayout;
+		return aLayout;
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GenericLayout mapLayout(Container rContainer, GenericLayout aLayout)
+	{
+		if (aLayout instanceof MainViewLayout)
+		{
+			aLayout = new MaterialMainViewLayout();
+		}
+
+		return aLayout;
 	}
 }
