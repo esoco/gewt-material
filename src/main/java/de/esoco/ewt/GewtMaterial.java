@@ -20,10 +20,10 @@ import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
-import de.esoco.ewt.impl.gwt.material.MaterialButtonFactory;
-import de.esoco.ewt.impl.gwt.material.MaterialLabelFactory;
-import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory;
-import de.esoco.ewt.impl.gwt.material.MaterialTextBoxFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
 
 

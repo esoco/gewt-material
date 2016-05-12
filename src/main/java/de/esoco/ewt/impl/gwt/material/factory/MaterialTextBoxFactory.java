@@ -14,16 +14,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material;
+package de.esoco.ewt.impl.gwt.material.factory;
 
+import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialButton;
-import gwt.material.design.client.ui.MaterialTextArea;
+import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.component.TextArea.IsTextArea;
-import de.esoco.ewt.component.TextArea.TextAreaWidgetFactory;
-import de.esoco.ewt.impl.gwt.material.MaterialTextAreaFactory.GewtMaterialTextArea;
+import de.esoco.ewt.component.TextComponent.IsTextBox;
+import de.esoco.ewt.component.TextField.TextFieldWidgetFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
+import de.esoco.ewt.style.StyleFlag;
 
 
 /********************************************************************
@@ -31,8 +33,8 @@ import de.esoco.ewt.style.StyleData;
  *
  * @author eso
  */
-public class MaterialTextAreaFactory
-	extends TextAreaWidgetFactory<GewtMaterialTextArea>
+public class MaterialTextBoxFactory
+	extends TextFieldWidgetFactory<GewtMaterialTextBox>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -40,23 +42,30 @@ public class MaterialTextAreaFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialTextArea createWidget(
+	public GewtMaterialTextBox createWidget(
 		Component rComponent,
 		StyleData rStyle)
 	{
-		return new GewtMaterialTextArea();
+		GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
+
+		if (rStyle.hasFlag(StyleFlag.PASSWORD))
+		{
+			aTextBox.setType(InputType.PASSWORD);
+		}
+
+		return aTextBox;
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * A {@link MaterialTextArea} subclass that also implements the interface
-	 * {@link IsTextArea}.
+	 * A {@link MaterialTextBox} subclass that also implements the interface
+	 * {@link IsTextBox}.
 	 *
 	 * @author eso
 	 */
-	static class GewtMaterialTextArea extends MaterialTextArea
-		implements IsTextArea
+	static class GewtMaterialTextBox extends MaterialTextBox
+		implements IsTextBox
 	{
 		//~ Methods ------------------------------------------------------------
 
@@ -85,15 +94,6 @@ public class MaterialTextAreaFactory
 		public boolean isReadOnly()
 		{
 			return asGwtValueBoxBase().isReadOnly();
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setCharacterWidth(int nColumns)
-		{
-			// TODO: check if possible with ValueBoxBase
 		}
 
 		/***************************************
@@ -129,16 +129,6 @@ public class MaterialTextAreaFactory
 		@Override
 		public void setVisibleLength(int nColumns)
 		{
-			// TODO: check if possible with ValueBoxBase
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setVisibleLines(int nRows)
-		{
-			// TODO: check if possible with ValueBoxBase
 		}
 	}
 }

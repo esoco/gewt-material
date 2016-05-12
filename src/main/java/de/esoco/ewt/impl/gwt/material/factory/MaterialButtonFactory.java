@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material;
+package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.ui.MaterialButton;
