@@ -21,7 +21,7 @@ import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.component.TextComponent.IsTextBox;
+import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.component.TextField.TextFieldWidgetFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
@@ -60,12 +60,12 @@ public class MaterialTextBoxFactory
 
 	/********************************************************************
 	 * A {@link MaterialTextBox} subclass that also implements the interface
-	 * {@link IsTextBox}.
+	 * {@link IsTextControlWidget}.
 	 *
 	 * @author eso
 	 */
 	static class GewtMaterialTextBox extends MaterialTextBox
-		implements IsTextBox
+		implements IsTextControlWidget
 	{
 		//~ Methods ------------------------------------------------------------
 

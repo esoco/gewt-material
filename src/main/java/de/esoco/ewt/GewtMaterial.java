@@ -18,10 +18,13 @@ package de.esoco.ewt;
 
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.Label;
+import de.esoco.ewt.component.List;
+import de.esoco.ewt.component.ListBox;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialListControlFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
@@ -71,6 +74,22 @@ public class GewtMaterial
 		EWT.setLayoutFactory(aLayoutFactory);
 		EWT.setLayoutMapper(aLayoutFactory);
 
+		initWidgetFactories();
+
+		EWT.registerDefaultWidgetFactories(false);
+	}
+
+	/***************************************
+	 * Initializes the GwtMaterialDesign-specific widget factories.
+	 */
+	private static void initWidgetFactories()
+	{
+		MaterialListControlFactory aListControlFactory =
+			new MaterialListControlFactory();
+
+		EWT.registerWidgetFactory(List.class, aListControlFactory, true);
+		EWT.registerWidgetFactory(ListBox.class, aListControlFactory, true);
+
 		EWT.registerWidgetFactory(Button.class,
 								  new MaterialButtonFactory<>(),
 								  true);
@@ -83,7 +102,5 @@ public class GewtMaterial
 		EWT.registerWidgetFactory(TextField.class,
 								  new MaterialTextBoxFactory(),
 								  true);
-
-		EWT.registerDefaultWidgetFactories(false);
 	}
 }
