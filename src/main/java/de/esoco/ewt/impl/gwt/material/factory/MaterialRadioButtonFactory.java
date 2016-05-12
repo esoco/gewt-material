@@ -14,26 +14,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material.layout;
+package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.CollapsibleType;
-import gwt.material.design.client.ui.MaterialCollapsible;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
+import gwt.material.design.client.ui.MaterialRadioButton;
 
-import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.GenericLayout;
+import de.esoco.ewt.component.Component;
+import de.esoco.ewt.component.RadioButton.RadioButtonWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.RadioButton;
 
 
 /********************************************************************
- * GWT Material implementation for list-style layouts.
+ * The factory for {@link MaterialRadioButton} widgets.
  *
  * @author eso
  */
-public class MaterialListLayout extends GenericLayout
+public class MaterialRadioButtonFactory extends RadioButtonWidgetFactory
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -41,31 +38,8 @@ public class MaterialListLayout extends GenericLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyleData,
-						  int		 nIndex)
+	public RadioButton createWidget(Component rComponent, StyleData rStyle)
 	{
-		if (!(rWidget instanceof MaterialCollapsibleItem))
-		{
-			rWidget = new MaterialCollapsibleItem(rWidget);
-		}
-
-		super.addWidget(rContainer, rWidget, rStyleData, nIndex);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public HasWidgets createLayoutContainer(
-		Container rContainer,
-		StyleData rStyle)
-	{
-		MaterialCollapsible aCollapsible = new MaterialCollapsible();
-
-		aCollapsible.setType(CollapsibleType.EXPANDABLE);
-
-		return aCollapsible;
+		return new MaterialRadioButton();
 	}
 }

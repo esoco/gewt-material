@@ -58,6 +58,10 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 				aLayout = new MaterialStackPanelLayout();
 				break;
 
+			case CARD:
+				aLayout = new MaterialCardLayout();
+				break;
+
 			case LIST:
 				aLayout = new MaterialListLayout();
 				break;

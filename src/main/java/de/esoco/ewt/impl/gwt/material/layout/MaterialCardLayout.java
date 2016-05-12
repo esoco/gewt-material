@@ -16,12 +16,10 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
-import gwt.material.design.client.ui.MaterialCollapsible;
-import gwt.material.design.client.ui.MaterialCollapsibleBody;
-import gwt.material.design.client.ui.MaterialCollapsibleHeader;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
-import gwt.material.design.client.ui.MaterialCollectionItem;
-import gwt.material.design.client.ui.MaterialTitle;
+import gwt.material.design.client.base.AbstractButton;
+import gwt.material.design.client.ui.MaterialCard;
+import gwt.material.design.client.ui.MaterialCardAction;
+import gwt.material.design.client.ui.MaterialCardContent;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.layout.GenericLayout;
@@ -36,11 +34,12 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author eso
  */
-public class MaterialListItemLayout extends GenericLayout
+public class MaterialCardLayout extends GenericLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private MaterialCollapsibleBody aItemBody = null;
+	private MaterialCardContent aCardContent;
+	private MaterialCardAction  aCardAction;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -53,21 +52,32 @@ public class MaterialListItemLayout extends GenericLayout
 						  StyleData  rStyleData,
 						  int		 nIndex)
 	{
-		if (rWidget instanceof MaterialTitle)
+		if (rWidget instanceof AbstractButton)
 		{
-			rWidget = new MaterialCollapsibleHeader(rWidget);
-		}
-		else if (!(rWidget instanceof MaterialCollapsibleHeader) &&
-				 !(rWidget instanceof MaterialCollapsibleBody))
-		{
-			if (aItemBody == null)
+			if (aCardAction == null)
 			{
-				aItemBody = new MaterialCollapsibleBody(rWidget);
-				rWidget   = aItemBody;
+				aCardAction = new MaterialCardAction();
+				aCardAction.add(rWidget);
+				rWidget = aCardAction;
 			}
 			else
 			{
-				aItemBody.add(rWidget);
+				aCardAction.add(rWidget);
+				rWidget = null;
+			}
+		}
+		else if (!(rWidget instanceof MaterialCardContent) &&
+				 !(rWidget instanceof MaterialCardAction))
+		{
+			if (aCardContent == null)
+			{
+				aCardContent = new MaterialCardContent();
+				aCardContent.add(rWidget);
+				rWidget = aCardContent;
+			}
+			else
+			{
+				aCardContent.add(rWidget);
 				rWidget = null;
 			}
 		}
@@ -86,17 +96,6 @@ public class MaterialListItemLayout extends GenericLayout
 		Container rContainer,
 		StyleData rStyle)
 	{
-		HasWidgets aHasWidgets;
-
-		if (rContainer.getParent().getWidget() instanceof MaterialCollapsible)
-		{
-			aHasWidgets = new MaterialCollapsibleItem();
-		}
-		else
-		{
-			aHasWidgets = new MaterialCollectionItem();
-		}
-
-		return aHasWidgets;
+		return new MaterialCard();
 	}
 }

@@ -17,6 +17,7 @@
 package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardContent;
 import gwt.material.design.client.ui.MaterialCardTitle;
 import gwt.material.design.client.ui.MaterialIcon;
@@ -70,8 +71,11 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 				break;
 
 			case TITLE:
-				if (rComponent.getParent().getWidget() instanceof
-					MaterialCardContent)
+
+				Widget rParentWidget = rComponent.getParent().getWidget();
+
+				if (rParentWidget instanceof MaterialCard ||
+					rParentWidget instanceof MaterialCardContent)
 				{
 					aWidget = new MaterialCardTitle();
 				}

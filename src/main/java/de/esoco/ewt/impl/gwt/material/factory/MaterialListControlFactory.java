@@ -14,26 +14,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material.layout;
+package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.CollapsibleType;
-import gwt.material.design.client.ui.MaterialCollapsible;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
+import gwt.material.design.client.ui.MaterialListBox;
+import gwt.material.design.client.ui.MaterialTextBox;
 
-import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.GenericLayout;
+import de.esoco.ewt.component.Component;
+import de.esoco.ewt.component.ListControl.IsListControlWidget;
+import de.esoco.ewt.component.ListControl.ListControlWidgetFactory;
+import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.style.StyleData;
-
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
- * GWT Material implementation for list-style layouts.
+ * The factory for {@link MaterialListBox} widgets.
  *
  * @author eso
  */
-public class MaterialListLayout extends GenericLayout
+public class MaterialListControlFactory extends ListControlWidgetFactory
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -41,31 +39,23 @@ public class MaterialListLayout extends GenericLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyleData,
-						  int		 nIndex)
-	{
-		if (!(rWidget instanceof MaterialCollapsibleItem))
-		{
-			rWidget = new MaterialCollapsibleItem(rWidget);
-		}
-
-		super.addWidget(rContainer, rWidget, rStyleData, nIndex);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public HasWidgets createLayoutContainer(
-		Container rContainer,
+	public GewtMaterialListBox createWidget(
+		Component rComponent,
 		StyleData rStyle)
 	{
-		MaterialCollapsible aCollapsible = new MaterialCollapsible();
+		return new GewtMaterialListBox();
+	}
 
-		aCollapsible.setType(CollapsibleType.EXPANDABLE);
+	//~ Inner Classes ----------------------------------------------------------
 
-		return aCollapsible;
+	/********************************************************************
+	 * A {@link MaterialTextBox} subclass that also implements the interface
+	 * {@link IsTextControlWidget}.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialListBox extends MaterialListBox
+		implements IsListControlWidget
+	{
 	}
 }

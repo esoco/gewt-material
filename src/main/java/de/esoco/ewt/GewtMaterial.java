@@ -17,14 +17,18 @@
 package de.esoco.ewt;
 
 import de.esoco.ewt.component.Button;
+import de.esoco.ewt.component.CheckBox;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.List;
 import de.esoco.ewt.component.ListBox;
+import de.esoco.ewt.component.RadioButton;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialCheckBoxFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialListControlFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialRadioButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
@@ -92,6 +96,12 @@ public class GewtMaterial
 
 		EWT.registerWidgetFactory(Button.class,
 								  new MaterialButtonFactory<>(),
+								  true);
+		EWT.registerWidgetFactory(CheckBox.class,
+								  new MaterialCheckBoxFactory<>(),
+								  true);
+		EWT.registerWidgetFactory(RadioButton.class,
+								  new MaterialRadioButtonFactory(),
 								  true);
 		EWT.registerWidgetFactory(Label.class,
 								  new MaterialLabelFactory<>(),
