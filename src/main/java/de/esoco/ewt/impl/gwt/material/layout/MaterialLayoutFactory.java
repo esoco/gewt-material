@@ -62,6 +62,10 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 				aLayout = new MaterialCardLayout();
 				break;
 
+			case GRID_ROW:
+				aLayout = new MaterialRowLayout();
+				break;
+
 			case LIST:
 				aLayout = new MaterialListLayout();
 				break;
@@ -103,4 +107,7 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 
 		return aLayout;
 	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
 }
