@@ -17,6 +17,7 @@
 package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.AbstractButton;
+import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialLink;
 
@@ -25,9 +26,13 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
+import de.esoco.lib.property.UserInterfaceProperties.ButtonStyle;
+
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.UserInterfaceProperties.BUTTON_STYLE;
 
 
 /********************************************************************
@@ -47,6 +52,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	@SuppressWarnings("unchecked")
 	public W createWidget(Component rComponent, StyleData rStyle)
 	{
+		ButtonType     eButtonType   = mapButtonType(rStyle);
 		AbstractButton aButtonWidget;
 
 		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
@@ -58,7 +64,47 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 			aButtonWidget = new GewtMaterialButton();
 		}
 
+		if (eButtonType != null)
+		{
+			aButtonWidget.setType(eButtonType);
+		}
+
 		return (W) aButtonWidget;
+	}
+
+	/***************************************
+	 * Maps the {@link ButtonStyle} from a style data object to a GwtMaterial
+	 * {@link ButtonType} constant.
+	 *
+	 * @param  rStyle The style data to read the button style from
+	 *
+	 * @return The button type or NULL for a default or if no mapping exists
+	 */
+	private ButtonType mapButtonType(StyleData rStyle)
+	{
+		ButtonType eButtonType;
+
+		switch (rStyle.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT))
+		{
+			case FLAT:
+				eButtonType = ButtonType.FLAT;
+				break;
+
+			case FLOAT:
+				eButtonType = ButtonType.FLOATING;
+				break;
+
+			case LINK:
+				eButtonType = ButtonType.LINK;
+				break;
+
+			case DEFAULT:
+			case OUTLINE:
+			default:
+				eButtonType = null;
+		}
+
+		return eButtonType;
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
