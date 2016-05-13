@@ -63,7 +63,8 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 				break;
 
 			case GRID_ROW:
-				aLayout = new MaterialRowLayout();
+			case GRID_COLUMN:
+				aLayout = new MaterialGridLayout(eLayout);
 				break;
 
 			case LIST:
@@ -107,7 +108,4 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 
 		return aLayout;
 	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
 }
