@@ -21,7 +21,6 @@ import gwt.material.design.client.ui.MaterialTextArea;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.TextArea.IsTextArea;
-import de.esoco.ewt.component.TextArea.TextAreaWidgetFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory.GewtMaterialTextArea;
 import de.esoco.ewt.style.StyleData;
 
@@ -32,7 +31,7 @@ import de.esoco.ewt.style.StyleData;
  * @author eso
  */
 public class MaterialTextAreaFactory
-	extends TextAreaWidgetFactory<GewtMaterialTextArea>
+	extends MaterialWidgetFactory<GewtMaterialTextArea>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -40,7 +39,7 @@ public class MaterialTextAreaFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialTextArea createWidget(
+	public GewtMaterialTextArea createMaterialWidget(
 		Component rComponent,
 		StyleData rStyle)
 	{

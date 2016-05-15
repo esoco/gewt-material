@@ -21,7 +21,6 @@ import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.ListControl.IsListControlWidget;
-import de.esoco.ewt.component.ListControl.ListControlWidgetFactory;
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.style.StyleData;
 
@@ -31,7 +30,8 @@ import de.esoco.ewt.style.StyleData;
  *
  * @author eso
  */
-public class MaterialListControlFactory extends ListControlWidgetFactory
+public class MaterialListControlFactory
+	extends MaterialWidgetFactory<IsListControlWidget>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -39,7 +39,7 @@ public class MaterialListControlFactory extends ListControlWidgetFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialListBox createWidget(
+	public GewtMaterialListBox createMaterialWidget(
 		Component rComponent,
 		StyleData rStyle)
 	{

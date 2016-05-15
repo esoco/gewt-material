@@ -21,7 +21,6 @@ import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialLink;
 
-import de.esoco.ewt.component.Button.ButtonWidgetFactory;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -41,7 +40,7 @@ import static de.esoco.lib.property.UserInterfaceProperties.BUTTON_STYLE;
  * @author eso
  */
 public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
-	extends ButtonWidgetFactory<W>
+	extends MaterialWidgetFactory<W>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -49,8 +48,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public W createWidget(Component rComponent, StyleData rStyle)
+	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
 		ButtonType     eButtonType   = mapButtonType(rStyle);
 		AbstractButton aButtonWidget;
@@ -69,7 +67,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 			aButtonWidget.setType(eButtonType);
 		}
 
-		return (W) aButtonWidget;
+		return aButtonWidget;
 	}
 
 	/***************************************

@@ -22,18 +22,22 @@ import gwt.material.design.client.ui.MaterialCardContent;
 import gwt.material.design.client.ui.MaterialCardTitle;
 import gwt.material.design.client.ui.MaterialIcon;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.style.StyleData;
+import de.esoco.ewt.style.StyleFlag;
 
 import de.esoco.lib.property.UserInterfaceProperties.LabelStyle;
 
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.UserInterfaceProperties.LABEL_STYLE;
 
 
 /********************************************************************
@@ -42,53 +46,67 @@ import com.google.gwt.user.client.ui.Widget;
  * @author eso
  */
 public class MaterialLabelFactory<W extends Widget & HasText>
-	extends LabelWidgetFactory<W>
+	extends MaterialWidgetFactory<W>
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private LabelWidgetFactory<W> aDefaultFactory = new LabelWidgetFactory<>();
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Widget createLabelWidget(Component  rComponent,
-									   LabelStyle eLabelStyle,
-									   StyleData  rStyle)
+	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
-		Widget aWidget;
+		Widget aWidget = null;
 
-		switch (eLabelStyle)
+		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
 		{
-			case DEFAULT:
-				aWidget = new MaterialLabel();
-				break;
+			aWidget = new MaterialLink();
+		}
+		else
+		{
+			LabelStyle eLabelStyle =
+				rStyle.getProperty(LABEL_STYLE, LabelStyle.DEFAULT);
 
-			case BRAND:
-				aWidget = new MaterialNavBrand();
-				break;
+			switch (eLabelStyle)
+			{
+				case DEFAULT:
+					aWidget = new MaterialLabel();
+					break;
 
-			case ICON:
-				aWidget = new GewtMaterialIcon();
-				break;
+				case BRAND:
+					aWidget = new MaterialNavBrand();
+					break;
 
-			case TITLE:
+				case ICON:
+					aWidget = new GewtMaterialIcon();
+					break;
 
-				Widget rParentWidget = rComponent.getParent().getWidget();
+				case TITLE:
 
-				if (rParentWidget instanceof MaterialCard ||
-					rParentWidget instanceof MaterialCardContent)
-				{
-					aWidget = new MaterialCardTitle();
-				}
-				else
-				{
-					aWidget = new MaterialTitle();
-				}
+					Widget rParentWidget = rComponent.getParent().getWidget();
 
-				break;
+					if (rParentWidget instanceof MaterialCard ||
+						rParentWidget instanceof MaterialCardContent)
+					{
+						aWidget = new MaterialCardTitle();
+					}
+					else
+					{
+						aWidget = new MaterialTitle();
+					}
 
-			default:
-				aWidget =
-					super.createLabelWidget(rComponent, eLabelStyle, rStyle);
+					break;
+
+				default:
+					aWidget =
+						aDefaultFactory.createLabelWidget(rComponent,
+														  eLabelStyle,
+														  rStyle);
+			}
 		}
 
 		return aWidget;

@@ -18,7 +18,6 @@ package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.ui.MaterialCheckBox;
 
-import de.esoco.ewt.component.CheckBox.CheckBoxWidgetFactory;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.style.StyleData;
 
@@ -34,7 +33,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author eso
  */
 public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & HasValue<Boolean>>
-	extends CheckBoxWidgetFactory<W>
+	extends MaterialWidgetFactory<W>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -42,9 +41,8 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public W createWidget(Component rComponent, StyleData rStyle)
+	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
-		return (W) new MaterialCheckBox();
+		return new MaterialCheckBox();
 	}
 }

@@ -22,7 +22,6 @@ import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
-import de.esoco.ewt.component.TextField.TextFieldWidgetFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -34,7 +33,7 @@ import de.esoco.ewt.style.StyleFlag;
  * @author eso
  */
 public class MaterialTextBoxFactory
-	extends TextFieldWidgetFactory<GewtMaterialTextBox>
+	extends MaterialWidgetFactory<GewtMaterialTextBox>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -42,7 +41,7 @@ public class MaterialTextBoxFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialTextBox createWidget(
+	public GewtMaterialTextBox createMaterialWidget(
 		Component rComponent,
 		StyleData rStyle)
 	{

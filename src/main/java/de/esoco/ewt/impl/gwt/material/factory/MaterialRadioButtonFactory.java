@@ -19,7 +19,6 @@ package de.esoco.ewt.impl.gwt.material.factory;
 import gwt.material.design.client.ui.MaterialRadioButton;
 
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.component.RadioButton.RadioButtonWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 
 import com.google.gwt.user.client.ui.RadioButton;
@@ -30,7 +29,8 @@ import com.google.gwt.user.client.ui.RadioButton;
  *
  * @author eso
  */
-public class MaterialRadioButtonFactory extends RadioButtonWidgetFactory
+public class MaterialRadioButtonFactory
+	extends MaterialWidgetFactory<RadioButton>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -38,7 +38,9 @@ public class MaterialRadioButtonFactory extends RadioButtonWidgetFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RadioButton createWidget(Component rComponent, StyleData rStyle)
+	public RadioButton createMaterialWidget(
+		Component rComponent,
+		StyleData rStyle)
 	{
 		return new MaterialRadioButton();
 	}
