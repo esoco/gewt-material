@@ -24,8 +24,7 @@ import gwt.material.design.client.ui.MaterialLink;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
-
-import de.esoco.lib.property.UserInterfaceProperties.ButtonStyle;
+import de.esoco.lib.property.ButtonStyle;
 
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasText;

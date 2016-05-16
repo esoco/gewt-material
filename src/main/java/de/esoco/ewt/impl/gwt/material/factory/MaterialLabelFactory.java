@@ -30,8 +30,7 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
-
-import de.esoco.lib.property.UserInterfaceProperties.LabelStyle;
+import de.esoco.lib.property.LabelStyle;
 
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;

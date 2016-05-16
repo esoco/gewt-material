@@ -24,8 +24,7 @@ import gwt.material.design.client.constants.IconType;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.impl.gwt.WidgetFactory;
 import de.esoco.ewt.style.StyleData;
-
-import de.esoco.lib.property.UserInterfaceProperties.RelativeScale;
+import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;

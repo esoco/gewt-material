@@ -23,7 +23,7 @@ import de.esoco.ewt.layout.LayoutFactory.DefaultLayoutFactory;
 import de.esoco.ewt.layout.LayoutMapper;
 import de.esoco.ewt.style.StyleData;
 
-import de.esoco.lib.property.UserInterfaceProperties.Layout;
+import de.esoco.lib.property.Layout;
 
 
 /********************************************************************
