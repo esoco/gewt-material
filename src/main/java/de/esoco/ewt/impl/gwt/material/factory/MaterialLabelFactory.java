@@ -30,13 +30,14 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
+
 import de.esoco.lib.property.LabelStyle;
 
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-import static de.esoco.lib.property.UserInterfaceProperties.LABEL_STYLE;
+import static de.esoco.lib.property.StyleProperties.LABEL_STYLE;
 
 
 /********************************************************************
@@ -95,7 +96,7 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 					}
 					else
 					{
-						aWidget = new MaterialTitle();
+						aWidget = new GewtMaterialTitle();
 					}
 
 					break;

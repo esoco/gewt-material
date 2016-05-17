@@ -18,19 +18,25 @@ package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.MaterialWidget;
+import gwt.material.design.client.constants.IconPosition;
 import gwt.material.design.client.constants.IconSize;
 import gwt.material.design.client.constants.IconType;
 
 import de.esoco.ewt.component.Component;
+import de.esoco.ewt.graphics.Color;
 import de.esoco.ewt.impl.gwt.WidgetFactory;
 import de.esoco.ewt.style.StyleData;
+
+import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-import static de.esoco.lib.property.UserInterfaceProperties.ICON;
-import static de.esoco.lib.property.UserInterfaceProperties.ICON_SIZE;
+import static de.esoco.lib.property.ContentProperties.ICON;
+import static de.esoco.lib.property.ContentProperties.ICON_ALIGNMENT;
+import static de.esoco.lib.property.ContentProperties.ICON_COLOR;
+import static de.esoco.lib.property.ContentProperties.ICON_SIZE;
 
 
 /********************************************************************
@@ -86,7 +92,9 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 
 		if (sIcon != null)
 		{
-			rHasIcon.setIconType(IconType.valueOf(sIcon));
+			IconType eIconType = IconType.valueOf(sIcon);
+
+			rHasIcon.setIconType(eIconType);
 
 			RelativeScale eIconSize =
 				rStyle.getProperty(ICON_SIZE, RelativeScale.XLARGE);
@@ -96,6 +104,24 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 			if (eIconSize != RelativeScale.XLARGE)
 			{
 				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
+			}
+
+			int nColor = rStyle.getIntProperty(ICON_COLOR, -1);
+
+			if (nColor >= 0)
+			{
+				// set on Style because setIconColor expects color names
+				rHasIcon.getIcon().getElement().getStyle()
+						.setColor(Color.toHtml(nColor));
+			}
+
+			Alignment eAlignment = rStyle.getProperty(ICON_ALIGNMENT, null);
+
+			if (eAlignment != null)
+			{
+				rHasIcon.setIconPosition(eAlignment != Alignment.END
+										 ? IconPosition.LEFT
+										 : IconPosition.RIGHT);
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 	<source path='ewt'/>
 
 	<inherits name='de.esoco.GEWT' />	
-	<inherits name='gwt.material.design.GwtMaterialDesign' />
+	<inherits name='gwt.material.design.GwtMaterialDesignBasic' />
 	<inherits name='gwt.material.design.addins.GWTMaterialAddins'/>
 			
 </module>
