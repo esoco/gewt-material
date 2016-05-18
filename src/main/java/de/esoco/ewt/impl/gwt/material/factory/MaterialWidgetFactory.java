@@ -95,34 +95,33 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 			IconType eIconType = IconType.valueOf(sIcon);
 
 			rHasIcon.setIconType(eIconType);
+		}
 
-			RelativeScale eIconSize =
-				rStyle.getProperty(ICON_SIZE, RelativeScale.XLARGE);
+		RelativeScale eIconSize =
+			rStyle.getProperty(ICON_SIZE, RelativeScale.XLARGE);
 
-			// XLARGE not supported by GwtMaterial, therefore used
-			// as default instead of NULL
-			if (eIconSize != RelativeScale.XLARGE)
-			{
-				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
-			}
+		// XLARGE not supported by GwtMaterial, therefore used
+		// as default instead of NULL
+		if (eIconSize != RelativeScale.XLARGE)
+		{
+			rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
+		}
 
-			int nColor = rStyle.getIntProperty(ICON_COLOR, -1);
+		int nColor = rStyle.getIntProperty(ICON_COLOR, -1);
 
-			if (nColor >= 0)
-			{
-				// set on Style because setIconColor expects color names
-				rHasIcon.getIcon().getElement().getStyle()
-						.setColor(Color.toHtml(nColor));
-			}
+		if (nColor >= 0)
+		{
+			// set on Style because setIconColor expects color names
+			rHasIcon.getIcon().getElement().getStyle()
+					.setColor(Color.toHtml(nColor));
+		}
 
-			Alignment eAlignment = rStyle.getProperty(ICON_ALIGNMENT, null);
+		Alignment eAlignment = rStyle.getProperty(ICON_ALIGNMENT, null);
 
-			if (eAlignment != null)
-			{
-				rHasIcon.setIconPosition(eAlignment != Alignment.END
-										 ? IconPosition.LEFT
-										 : IconPosition.RIGHT);
-			}
+		if (eAlignment != null)
+		{
+			rHasIcon.setIconPosition(eAlignment != Alignment.END
+									 ? IconPosition.LEFT : IconPosition.RIGHT);
 		}
 	}
 }

@@ -16,11 +16,11 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
+import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardContent;
 import gwt.material.design.client.ui.MaterialCardTitle;
-import gwt.material.design.client.ui.MaterialIcon;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialNavBrand;
@@ -28,12 +28,14 @@ import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
+import de.esoco.ewt.graphics.Icon;
+import de.esoco.ewt.graphics.Image;
+import de.esoco.ewt.property.ImageAttribute;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
 import de.esoco.lib.property.LabelStyle;
 
-import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -92,7 +94,7 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 					if (rParentWidget instanceof MaterialCard ||
 						rParentWidget instanceof MaterialCardContent)
 					{
-						aWidget = new MaterialCardTitle();
+						aWidget = new GewtMaterialCardTitle();
 					}
 					else
 					{
@@ -115,30 +117,42 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * A {@link MaterialIcon} subclass that also implements {@link HasText}.
+	 * A {@link MaterialCardTitle} subclass that also implements {@link
+	 * ImageAttribute}.
 	 *
 	 * @author eso
 	 */
-	static class GewtMaterialIcon extends MaterialIcon implements HasHTML
+	static class GewtMaterialCardTitle extends MaterialCardTitle
+		implements ImageAttribute
 	{
+		//~ Instance fields ----------------------------------------------------
+
+		private Image rImage;
+
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String getHTML()
+		public Image getImage()
 		{
-			return getText();
+			return rImage;
 		}
 
 		/***************************************
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setHTML(String sHtml)
+		public void setImage(Image rImage)
 		{
-			getElement().setInnerText(sHtml);
+			this.rImage = rImage;
+
+			if (rImage instanceof Icon)
+			{
+				setIconType(IconType.valueOf(((Icon) rImage).getName()
+											 .toUpperCase()));
+			}
 		}
 	}
 

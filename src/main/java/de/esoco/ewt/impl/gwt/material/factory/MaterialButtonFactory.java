@@ -18,19 +18,24 @@ package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.ButtonType;
+import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialLink;
 
 import de.esoco.ewt.component.Component;
+import de.esoco.ewt.graphics.Icon;
+import de.esoco.ewt.graphics.Image;
+import de.esoco.ewt.property.ImageAttribute;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
+
 import de.esoco.lib.property.ButtonStyle;
 
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-import static de.esoco.lib.property.UserInterfaceProperties.BUTTON_STYLE;
+import static de.esoco.lib.property.StyleProperties.BUTTON_STYLE;
 
 
 /********************************************************************
@@ -49,12 +54,19 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	@Override
 	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
-		ButtonType     eButtonType   = mapButtonType(rStyle);
+		ButtonStyle eButtonStyle =
+			rStyle.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT);
+
+		ButtonType     eButtonType   = mapButtonType(eButtonStyle);
 		AbstractButton aButtonWidget;
 
 		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
 		{
 			aButtonWidget = new GewtMaterialLink();
+		}
+		else if (eButtonStyle == ButtonStyle.ICON)
+		{
+			aButtonWidget = new GewtMaterialIcon();
 		}
 		else
 		{
@@ -73,15 +85,15 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	 * Maps the {@link ButtonStyle} from a style data object to a GwtMaterial
 	 * {@link ButtonType} constant.
 	 *
-	 * @param  rStyle The style data to read the button style from
+	 * @param  eButtonStyle rStyle The style data to read the button style from
 	 *
 	 * @return The button type or NULL for a default or if no mapping exists
 	 */
-	private ButtonType mapButtonType(StyleData rStyle)
+	private ButtonType mapButtonType(ButtonStyle eButtonStyle)
 	{
 		ButtonType eButtonType;
 
-		switch (rStyle.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT))
+		switch (eButtonStyle)
 		{
 			case FLAT:
 				eButtonType = ButtonType.FLAT;
@@ -111,8 +123,38 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	 *
 	 * @author eso
 	 */
-	static class GewtMaterialButton extends MaterialButton implements HasText
+	static class GewtMaterialButton extends MaterialButton
+		implements HasText, ImageAttribute
 	{
+		//~ Instance fields ----------------------------------------------------
+
+		private Image rImage;
+
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Image getImage()
+		{
+			return rImage;
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setImage(Image rImage)
+		{
+			this.rImage = rImage;
+
+			if (rImage instanceof Icon)
+			{
+				setIconType(IconType.valueOf(((Icon) rImage).getName()
+											 .toUpperCase()));
+			}
+		}
 	}
 
 	/********************************************************************
@@ -120,7 +162,37 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	 *
 	 * @author eso
 	 */
-	static class GewtMaterialLink extends MaterialLink implements HasText
+	static class GewtMaterialLink extends MaterialLink implements HasText,
+																  ImageAttribute
 	{
+		//~ Instance fields ----------------------------------------------------
+
+		private Image rImage;
+
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Image getImage()
+		{
+			return rImage;
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setImage(Image rImage)
+		{
+			this.rImage = rImage;
+
+			if (rImage instanceof Icon)
+			{
+				setIconType(IconType.valueOf(((Icon) rImage).getName()
+											 .toUpperCase()));
+			}
+		}
 	}
 }
