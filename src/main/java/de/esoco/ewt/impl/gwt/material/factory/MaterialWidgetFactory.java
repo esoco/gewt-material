@@ -34,9 +34,9 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
-import static de.esoco.lib.property.ContentProperties.ICON_ALIGNMENT;
-import static de.esoco.lib.property.ContentProperties.ICON_COLOR;
-import static de.esoco.lib.property.ContentProperties.ICON_SIZE;
+import static de.esoco.lib.property.StyleProperties.ICON_ALIGNMENT;
+import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
+import static de.esoco.lib.property.StyleProperties.ICON_SIZE;
 
 
 /********************************************************************

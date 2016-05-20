@@ -22,6 +22,7 @@ import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialLink;
 
+import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.graphics.Icon;
 import de.esoco.ewt.graphics.Image;
@@ -77,6 +78,8 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 		{
 			aButtonWidget.setType(eButtonType);
 		}
+
+		aButtonWidget.setWaves(GewtMaterial.getDefaultAnimation());
 
 		return aButtonWidget;
 	}
@@ -151,8 +154,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 
 			if (rImage instanceof Icon)
 			{
-				setIconType(IconType.valueOf(((Icon) rImage).getName()
-											 .toUpperCase()));
+				setIconType(IconType.valueOf(((Icon) rImage).getName()));
 			}
 		}
 	}
@@ -190,8 +192,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 
 			if (rImage instanceof Icon)
 			{
-				setIconType(IconType.valueOf(((Icon) rImage).getName()
-											 .toUpperCase()));
+				setIconType(IconType.valueOf(((Icon) rImage).getName()));
 			}
 		}
 	}

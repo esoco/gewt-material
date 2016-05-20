@@ -150,8 +150,7 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 
 			if (rImage instanceof Icon)
 			{
-				setIconType(IconType.valueOf(((Icon) rImage).getName()
-											 .toUpperCase()));
+				setIconType(IconType.valueOf(((Icon) rImage).getName()));
 			}
 		}
 	}

@@ -16,6 +16,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
+import gwt.material.design.client.constants.WavesType;
+
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.CheckBox;
 import de.esoco.ewt.component.Label;
@@ -42,6 +44,10 @@ import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
  */
 public class GewtMaterial
 {
+	//~ Static fields/initializers ---------------------------------------------
+
+	private static WavesType aDefaultWavesType = WavesType.LIGHT;
+
 	//~ Constructors -----------------------------------------------------------
 
 	/***************************************
@@ -52,6 +58,16 @@ public class GewtMaterial
 	}
 
 	//~ Static methods ---------------------------------------------------------
+
+	/***************************************
+	 * Returns the default material widget animation.
+	 *
+	 * @return The default material widget animation type
+	 */
+	public static final WavesType getDefaultAnimation()
+	{
+		return aDefaultWavesType;
+	}
 
 	/***************************************
 	 * Returns the current JQuery version.
@@ -81,6 +97,16 @@ public class GewtMaterial
 		initWidgetFactories();
 
 		EWT.registerDefaultWidgetFactories(false);
+	}
+
+	/***************************************
+	 * Sets the default material widget animation.
+	 *
+	 * @param eWavesType The default material widget animation type
+	 */
+	public static final void setDefaultAnimation(WavesType eWavesType)
+	{
+		aDefaultWavesType = eWavesType;
 	}
 
 	/***************************************
