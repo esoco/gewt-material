@@ -40,7 +40,8 @@ public class MaterialListItemLayout extends GenericLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private MaterialCollapsibleBody aItemBody = null;
+	private MaterialCollapsibleHeader aItemHeader = null;
+	private MaterialCollapsibleBody   aItemBody   = null;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -60,7 +61,12 @@ public class MaterialListItemLayout extends GenericLayout
 		else if (!(rWidget instanceof MaterialCollapsibleHeader) &&
 				 !(rWidget instanceof MaterialCollapsibleBody))
 		{
-			if (aItemBody == null)
+			if (aItemHeader == null)
+			{
+				aItemHeader = new MaterialCollapsibleHeader(rWidget);
+				rWidget     = aItemHeader;
+			}
+			else if (aItemBody == null)
 			{
 				aItemBody = new MaterialCollapsibleBody(rWidget);
 				rWidget   = aItemBody;
