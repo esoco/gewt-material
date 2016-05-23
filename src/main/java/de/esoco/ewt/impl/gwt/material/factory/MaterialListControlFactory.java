@@ -17,11 +17,9 @@
 package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.ui.MaterialListBox;
-import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.ListControl.IsListControlWidget;
-import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.style.StyleData;
 
 
@@ -49,8 +47,8 @@ public class MaterialListControlFactory
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * A {@link MaterialTextBox} subclass that also implements the interface
-	 * {@link IsTextControlWidget}.
+	 * A {@link MaterialListBox} subclass that also implements the interface
+	 * {@link IsListControlWidget}.
 	 *
 	 * @author eso
 	 */
