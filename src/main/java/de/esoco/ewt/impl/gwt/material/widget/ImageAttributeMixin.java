@@ -16,26 +16,38 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
-import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.addins.client.stepper.base.mixin.AbstractMixin;
+import gwt.material.design.client.base.HasIcon;
+import gwt.material.design.client.constants.IconType;
 
+import de.esoco.ewt.graphics.Icon;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
-import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.UIObject;
 
 
 /********************************************************************
- * A {@link MaterialButton} subclass that also implements {@link HasText}.
+ * A mixin for GEWT extensions of GwtMaterial widgets that applies images to Gwt
  *
  * @author eso
  */
-public class GewtMaterialButton extends MaterialButton implements HasText,
-																  ImageAttribute
+public class ImageAttributeMixin<T extends UIObject & HasIcon>
+	extends AbstractMixin<T> implements ImageAttribute
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private ImageAttributeMixin<GewtMaterialButton> aImageAttrMixin =
-		new ImageAttributeMixin<>(this);
+	private Image rImage;
+
+	//~ Constructors -----------------------------------------------------------
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	public ImageAttributeMixin(T rWidget)
+	{
+		super(rWidget);
+	}
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -45,7 +57,7 @@ public class GewtMaterialButton extends MaterialButton implements HasText,
 	@Override
 	public Image getImage()
 	{
-		return aImageAttrMixin.getImage();
+		return rImage;
 	}
 
 	/***************************************
@@ -54,6 +66,11 @@ public class GewtMaterialButton extends MaterialButton implements HasText,
 	@Override
 	public void setImage(Image rImage)
 	{
-		aImageAttrMixin.setImage(rImage);
+		this.rImage = rImage;
+
+		if (rImage instanceof Icon)
+		{
+			uiObject.setIconType(IconType.valueOf(((Icon) rImage).getName()));
+		}
 	}
 }

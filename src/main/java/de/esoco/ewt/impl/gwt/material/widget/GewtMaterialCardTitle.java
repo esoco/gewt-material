@@ -1,11 +1,26 @@
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// This file is a part of the 'gewt-material' project.
+// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//	  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
-import de.esoco.ewt.graphics.Icon;
+import gwt.material.design.client.ui.MaterialCardTitle;
+
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
-import gwt.material.design.client.constants.IconType;
-import gwt.material.design.client.ui.MaterialCardTitle;
 
 /********************************************************************
  * A {@link MaterialCardTitle} subclass that also implements {@link
@@ -16,11 +31,12 @@ import gwt.material.design.client.ui.MaterialCardTitle;
 public class GewtMaterialCardTitle extends MaterialCardTitle
 	implements ImageAttribute
 {
-	//~ Instance fields ----------------------------------------------------
+	//~ Instance fields --------------------------------------------------------
 
-	private Image rImage;
+	private ImageAttributeMixin<GewtMaterialCardTitle> aImageAttrMixin =
+		new ImageAttributeMixin<>(this);
 
-	//~ Methods ------------------------------------------------------------
+	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
 	 * {@inheritDoc}
@@ -28,7 +44,7 @@ public class GewtMaterialCardTitle extends MaterialCardTitle
 	@Override
 	public Image getImage()
 	{
-		return rImage;
+		return aImageAttrMixin.getImage();
 	}
 
 	/***************************************
@@ -37,11 +53,6 @@ public class GewtMaterialCardTitle extends MaterialCardTitle
 	@Override
 	public void setImage(Image rImage)
 	{
-		this.rImage = rImage;
-
-		if (rImage instanceof Icon)
-		{
-			setIconType(IconType.valueOf(((Icon) rImage).getName()));
-		}
+		aImageAttrMixin.setImage(rImage);
 	}
 }

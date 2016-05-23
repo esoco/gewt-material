@@ -16,10 +16,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
-import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialIcon;
 
-import de.esoco.ewt.graphics.Icon;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
@@ -37,7 +35,8 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private Image rImage;
+	private ImageAttributeMixin<GewtMaterialIcon> aImageAttrMixin =
+		new ImageAttributeMixin<>(this);
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -56,7 +55,7 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	@Override
 	public Image getImage()
 	{
-		return rImage;
+		return aImageAttrMixin.getImage();
 	}
 
 	/***************************************
@@ -74,11 +73,6 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	@Override
 	public void setImage(Image rImage)
 	{
-		this.rImage = rImage;
-
-		if (rImage instanceof Icon)
-		{
-			setIconType(IconType.valueOf(((Icon) rImage).getName()));
-		}
+		aImageAttrMixin.setImage(rImage);
 	}
 }
