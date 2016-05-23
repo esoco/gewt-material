@@ -16,21 +16,18 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardContent;
-import gwt.material.design.client.ui.MaterialCardTitle;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialNavBrand;
-import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
-import de.esoco.ewt.graphics.Icon;
-import de.esoco.ewt.graphics.Image;
-import de.esoco.ewt.property.ImageAttribute;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialCardTitle;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialIcon;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTitle;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
@@ -112,83 +109,5 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 		}
 
 		return aWidget;
-	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * A {@link MaterialCardTitle} subclass that also implements {@link
-	 * ImageAttribute}.
-	 *
-	 * @author eso
-	 */
-	static class GewtMaterialCardTitle extends MaterialCardTitle
-		implements ImageAttribute
-	{
-		//~ Instance fields ----------------------------------------------------
-
-		private Image rImage;
-
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Image getImage()
-		{
-			return rImage;
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setImage(Image rImage)
-		{
-			this.rImage = rImage;
-
-			if (rImage instanceof Icon)
-			{
-				setIconType(IconType.valueOf(((Icon) rImage).getName()));
-			}
-		}
-	}
-
-	/********************************************************************
-	 * A {@link MaterialTitle} subclass that also implements {@link HasText}.
-	 *
-	 * @author eso
-	 */
-	static class GewtMaterialTitle extends MaterialTitle implements HasText
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getText()
-		{
-			return super.getTitle();
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setText(String sText)
-		{
-			super.setTitle(sText);
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setTitle(String sTooltip)
-		{
-			super.setTooltip(sTooltip);
-		}
 	}
 }

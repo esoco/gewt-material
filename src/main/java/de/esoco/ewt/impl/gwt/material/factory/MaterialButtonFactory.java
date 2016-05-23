@@ -18,15 +18,13 @@ package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.ButtonType;
-import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialButton;
-import gwt.material.design.client.ui.MaterialLink;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.graphics.Icon;
-import de.esoco.ewt.graphics.Image;
-import de.esoco.ewt.property.ImageAttribute;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialButton;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialIcon;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialLink;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
@@ -117,83 +115,5 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 		}
 
 		return eButtonType;
-	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * A {@link MaterialButton} subclass that also implements {@link HasText}.
-	 *
-	 * @author eso
-	 */
-	static class GewtMaterialButton extends MaterialButton
-		implements HasText, ImageAttribute
-	{
-		//~ Instance fields ----------------------------------------------------
-
-		private Image rImage;
-
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Image getImage()
-		{
-			return rImage;
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setImage(Image rImage)
-		{
-			this.rImage = rImage;
-
-			if (rImage instanceof Icon)
-			{
-				setIconType(IconType.valueOf(((Icon) rImage).getName()));
-			}
-		}
-	}
-
-	/********************************************************************
-	 * A {@link MaterialLink} subclass that also implements {@link HasText}.
-	 *
-	 * @author eso
-	 */
-	static class GewtMaterialLink extends MaterialLink implements HasText,
-																  ImageAttribute
-	{
-		//~ Instance fields ----------------------------------------------------
-
-		private Image rImage;
-
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Image getImage()
-		{
-			return rImage;
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setImage(Image rImage)
-		{
-			this.rImage = rImage;
-
-			if (rImage instanceof Icon)
-			{
-				setIconType(IconType.valueOf(((Icon) rImage).getName()));
-			}
-		}
 	}
 }

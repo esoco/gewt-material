@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material.factory;
+package de.esoco.ewt.impl.gwt.material.widget;
 
 import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialIcon;
@@ -32,7 +32,8 @@ import com.google.gwt.user.client.ui.HasText;
  *
  * @author eso
  */
-class GewtMaterialIcon extends MaterialIcon implements HasHTML, ImageAttribute
+public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
+															  ImageAttribute
 {
 	//~ Instance fields --------------------------------------------------------
 

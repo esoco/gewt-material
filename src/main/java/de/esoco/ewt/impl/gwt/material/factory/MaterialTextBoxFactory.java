@@ -18,11 +18,9 @@ package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialButton;
-import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.component.TextControl.IsTextControlWidget;
-import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory.GewtMaterialTextBox;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
@@ -53,81 +51,5 @@ public class MaterialTextBoxFactory
 		}
 
 		return aTextBox;
-	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * A {@link MaterialTextBox} subclass that also implements the interface
-	 * {@link IsTextControlWidget}.
-	 *
-	 * @author eso
-	 */
-	static class GewtMaterialTextBox extends MaterialTextBox
-		implements IsTextControlWidget
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public int getCursorPos()
-		{
-			return asGwtValueBoxBase().getCursorPos();
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getSelectedText()
-		{
-			return asGwtValueBoxBase().getSelectedText();
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public boolean isReadOnly()
-		{
-			return asGwtValueBoxBase().isReadOnly();
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setCursorPos(int nPosition)
-		{
-			asGwtValueBoxBase().setCursorPos(nPosition);
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setReadOnly(boolean bReadOnly)
-		{
-			asGwtValueBoxBase().setReadOnly(bReadOnly);
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setSelectionRange(int nStart, int nLength)
-		{
-			asGwtValueBoxBase().setSelectionRange(nStart, nLength);
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setVisibleLength(int nColumns)
-		{
-		}
 	}
 }
