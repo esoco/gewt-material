@@ -64,7 +64,7 @@ public class MaterialListLayout extends GenericLayout
 	{
 		MaterialCollapsible aCollapsible = new MaterialCollapsible();
 
-		aCollapsible.setType(CollapsibleType.EXPANDABLE);
+		aCollapsible.setType(CollapsibleType.POPOUT);
 
 		return aCollapsible;
 	}
