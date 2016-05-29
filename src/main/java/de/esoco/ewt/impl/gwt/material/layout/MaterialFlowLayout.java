@@ -14,26 +14,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material.factory;
+package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.client.base.MaterialWidget;
+import gwt.material.design.client.ui.MaterialPanel;
 
-import de.esoco.ewt.GewtMaterial;
-import de.esoco.ewt.component.Component;
-import de.esoco.ewt.impl.gwt.WidgetFactory;
+import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
+import de.esoco.lib.property.Layout;
 
 
 /********************************************************************
- * The base class for all {@link MaterialWidget} factories.
+ * GwtMaterial layout implementation for {@link Layout#FLOW}.
  *
  * @author eso
  */
-public abstract class MaterialWidgetFactory<W extends IsWidget>
-	implements WidgetFactory<W>
+final class MaterialFlowLayout extends AbstractMaterialLayout
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -41,27 +38,10 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public final W createWidget(Component rComponent, StyleData rStyle)
+	protected MaterialWidget creatMaterialLayoutContainer(
+		Container rContainer,
+		StyleData rContainerStyle)
 	{
-		Widget aWidget = createMaterialWidget(rComponent, rStyle);
-
-		GewtMaterial.checkApplyIcon(aWidget, rStyle);
-		GewtMaterial.checkApplyAlignment(aWidget, rStyle);
-
-		return (W) aWidget;
+		return new MaterialPanel();
 	}
-
-	/***************************************
-	 * Must be implemented by subclasses to create the {@link MaterialWidget}
-	 * for the given component.
-	 *
-	 * @param  rComponent The component to create the widget for
-	 * @param  rStyle     The style of the new widget
-	 *
-	 * @return The new material widget instance
-	 */
-	protected abstract Widget createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle);
 }

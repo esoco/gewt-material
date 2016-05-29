@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
@@ -28,12 +29,10 @@ import gwt.material.design.client.ui.MaterialFooter;
 import gwt.material.design.client.ui.MaterialHeader;
 
 import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.ContentLayout;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Layout;
 
-import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
 
@@ -42,7 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author eso
  */
-public class MaterialContentLayout extends ContentLayout
+public class MaterialContentLayout extends AbstractMaterialLayout
 {
 	//~ Enums ------------------------------------------------------------------
 
@@ -51,16 +50,20 @@ public class MaterialContentLayout extends ContentLayout
 	 */
 	private enum ContentArea { GLOBAL, CARD, COLLAPSIBLE }
 
+	//~ Instance fields --------------------------------------------------------
+
+	private Layout eLayout;
+
 	//~ Constructors -----------------------------------------------------------
 
 	/***************************************
 	 * Creates a new instance.
 	 *
-	 * @param eLayoutType The type of the content
+	 * @param eLayout The layout of the content
 	 */
-	public MaterialContentLayout(Layout eLayoutType)
+	public MaterialContentLayout(Layout eLayout)
 	{
-		super(eLayoutType);
+		this.eLayout = eLayout;
 	}
 
 	//~ Methods ----------------------------------------------------------------
@@ -69,14 +72,13 @@ public class MaterialContentLayout extends ContentLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
+	protected MaterialWidget creatMaterialLayoutContainer(
 		Container rContainer,
-		StyleData rStyle)
+		StyleData rContainerStyle)
 	{
-		Widget	    rParentWidget = rContainer.getParent().getWidget();
-		Layout	    eLayout		  = getLayoutType();
-		HasWidgets  aLayoutWidget = null;
-		ContentArea eContentArea;
+		Widget		   rParentWidget = rContainer.getParent().getWidget();
+		MaterialWidget aLayoutWidget = null;
+		ContentArea    eContentArea;
 
 		eContentArea = getContentArea(rParentWidget);
 
@@ -113,9 +115,9 @@ public class MaterialContentLayout extends ContentLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	HasWidgets createCardContentContainer(Layout eLayout)
+	MaterialWidget createCardContentContainer(Layout eLayout)
 	{
-		HasWidgets aLayoutWidget;
+		MaterialWidget aLayoutWidget;
 
 		switch (eLayout)
 		{
@@ -142,9 +144,9 @@ public class MaterialContentLayout extends ContentLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	HasWidgets createCollapsibleContentContainer(Layout eLayout)
+	MaterialWidget createCollapsibleContentContainer(Layout eLayout)
 	{
-		HasWidgets aLayoutWidget;
+		MaterialWidget aLayoutWidget;
 
 		switch (eLayout)
 		{
@@ -170,9 +172,9 @@ public class MaterialContentLayout extends ContentLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	HasWidgets createGlobalContentContainer(Layout eLayout)
+	MaterialWidget createGlobalContentContainer(Layout eLayout)
 	{
-		HasWidgets aLayoutWidget;
+		MaterialWidget aLayoutWidget;
 
 		switch (eLayout)
 		{

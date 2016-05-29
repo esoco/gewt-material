@@ -17,12 +17,12 @@
 package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.client.base.AbstractButton;
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
 
 import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.style.StyleData;
 
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author eso
  */
-public class MaterialCardLayout extends GenericLayout
+public class MaterialCardLayout extends AbstractMaterialLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
@@ -92,9 +92,9 @@ public class MaterialCardLayout extends GenericLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
+	protected MaterialWidget creatMaterialLayoutContainer(
 		Container rContainer,
-		StyleData rStyle)
+		StyleData rContainerStyle)
 	{
 		return new MaterialCard();
 	}

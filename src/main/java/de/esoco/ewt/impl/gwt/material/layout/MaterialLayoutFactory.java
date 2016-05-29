@@ -54,6 +54,11 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 //				aLayout = new MaterialSplitPanelLayout();
 //				break;
 
+			case FLOW:
+			case GRID:
+				aLayout = new MaterialFlowLayout();
+				break;
+
 			case STACK:
 				aLayout = new MaterialStackPanelLayout();
 				break;

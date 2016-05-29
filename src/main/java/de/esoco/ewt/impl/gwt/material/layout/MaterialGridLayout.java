@@ -21,12 +21,9 @@ import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialRow;
 
 import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Layout;
-
-import com.google.gwt.user.client.ui.HasWidgets;
 
 
 /********************************************************************
@@ -34,7 +31,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
  *
  * @author eso
  */
-final class MaterialGridLayout extends GenericLayout
+final class MaterialGridLayout extends AbstractMaterialLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
@@ -58,9 +55,9 @@ final class MaterialGridLayout extends GenericLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
+	protected MaterialWidget creatMaterialLayoutContainer(
 		Container rContainer,
-		StyleData rStyle)
+		StyleData rContainerStyle)
 	{
 		MaterialWidget rContainerWidget;
 

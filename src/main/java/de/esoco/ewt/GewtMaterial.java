@@ -16,6 +16,12 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
+import gwt.material.design.client.base.HasIcon;
+import gwt.material.design.client.base.HasTextAlign;
+import gwt.material.design.client.constants.IconPosition;
+import gwt.material.design.client.constants.IconSize;
+import gwt.material.design.client.constants.IconType;
+import gwt.material.design.client.constants.TextAlign;
 import gwt.material.design.client.constants.WavesType;
 
 import de.esoco.ewt.component.Button;
@@ -26,6 +32,7 @@ import de.esoco.ewt.component.ListBox;
 import de.esoco.ewt.component.RadioButton;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
+import de.esoco.ewt.graphics.Color;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialCheckBoxFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
@@ -34,6 +41,18 @@ import de.esoco.ewt.impl.gwt.material.factory.MaterialRadioButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
+import de.esoco.ewt.style.StyleData;
+
+import de.esoco.lib.property.Alignment;
+import de.esoco.lib.property.RelativeScale;
+import de.esoco.lib.property.UserInterfaceProperties;
+
+import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.ContentProperties.ICON;
+import static de.esoco.lib.property.StyleProperties.ICON_ALIGNMENT;
+import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
+import static de.esoco.lib.property.StyleProperties.ICON_SIZE;
 
 
 /********************************************************************
@@ -58,6 +77,96 @@ public class GewtMaterial
 	}
 
 	//~ Static methods ---------------------------------------------------------
+
+	/***************************************
+	 * Applies any alignment settings from the style data to the given widget.
+	 *
+	 * @param rWidget rHasTextAlign The material widget with alignment
+	 * @param rStyle  The style to check for alignment
+	 */
+	public static void checkApplyAlignment(Widget rWidget, StyleData rStyle)
+	{
+		if (rWidget instanceof HasTextAlign)
+		{
+			HasTextAlign rHasTextAlign  = (HasTextAlign) rWidget;
+			Alignment    eTextAlignment =
+				rStyle.getProperty(UserInterfaceProperties.ALIGNMENT, null);
+
+			if (eTextAlignment != null)
+			{
+				TextAlign eTextAlign = TextAlign.DEFAULT;
+
+				switch (eTextAlignment)
+				{
+					case BEGIN:
+						eTextAlign = TextAlign.LEFT;
+						break;
+
+					case FILL:
+					case CENTER:
+						eTextAlign = TextAlign.CENTER;
+						break;
+
+					case END:
+						eTextAlign = TextAlign.RIGHT;
+						break;
+				}
+
+				rHasTextAlign.setTextAlign(eTextAlign);
+			}
+		}
+	}
+
+	/***************************************
+	 * Applies any icon definition from the style data to the given widget.
+	 *
+	 * @param rWidget rHasIcon The material widget with icon attribute
+	 * @param rStyle  The style to check for icon definitions
+	 */
+	public static void checkApplyIcon(Widget rWidget, StyleData rStyle)
+	{
+		if (rWidget instanceof HasIcon)
+		{
+			HasIcon rHasIcon = (HasIcon) rWidget;
+
+			String sIcon = rStyle.getProperty(ICON, null);
+
+			if (sIcon != null)
+			{
+				IconType eIconType = IconType.valueOf(sIcon);
+
+				rHasIcon.setIconType(eIconType);
+			}
+
+			RelativeScale eIconSize =
+				rStyle.getProperty(ICON_SIZE, RelativeScale.XLARGE);
+
+			// XLARGE not supported by GwtMaterial, therefore used
+			// as default instead of NULL
+			if (eIconSize != RelativeScale.XLARGE)
+			{
+				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
+			}
+
+			int nColor = rStyle.getIntProperty(ICON_COLOR, -1);
+
+			if (nColor >= 0)
+			{
+				// set on Style because setIconColor expects color names
+				rHasIcon.getIcon().getElement().getStyle()
+						.setColor(Color.toHtml(nColor));
+			}
+
+			Alignment eAlignment = rStyle.getProperty(ICON_ALIGNMENT, null);
+
+			if (eAlignment != null)
+			{
+				rHasIcon.setIconPosition(eAlignment != Alignment.END
+										 ? IconPosition.LEFT
+										 : IconPosition.RIGHT);
+			}
+		}
+	}
 
 	/***************************************
 	 * Returns the default material widget animation.

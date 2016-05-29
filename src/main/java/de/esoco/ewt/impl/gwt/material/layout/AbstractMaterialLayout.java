@@ -14,26 +14,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-package de.esoco.ewt.impl.gwt.material.factory;
+package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.client.base.MaterialWidget;
 
 import de.esoco.ewt.GewtMaterial;
-import de.esoco.ewt.component.Component;
-import de.esoco.ewt.impl.gwt.WidgetFactory;
+import de.esoco.ewt.component.Container;
+import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.style.StyleData;
 
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HasWidgets;
 
 
 /********************************************************************
- * The base class for all {@link MaterialWidget} factories.
+ * The base class for GwtMaterial layouts.
  *
  * @author eso
  */
-public abstract class MaterialWidgetFactory<W extends IsWidget>
-	implements WidgetFactory<W>
+public abstract class AbstractMaterialLayout extends GenericLayout
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -41,27 +39,24 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public final W createWidget(Component rComponent, StyleData rStyle)
+	public final HasWidgets createLayoutContainer(
+		Container rContainer,
+		StyleData rContainerStyle)
 	{
-		Widget aWidget = createMaterialWidget(rComponent, rStyle);
+		MaterialWidget aContainer =
+			creatMaterialLayoutContainer(rContainer, rContainerStyle);
 
-		GewtMaterial.checkApplyIcon(aWidget, rStyle);
-		GewtMaterial.checkApplyAlignment(aWidget, rStyle);
+		GewtMaterial.checkApplyAlignment(aContainer, rContainerStyle);
 
-		return (W) aWidget;
+		return aContainer;
 	}
 
 	/***************************************
-	 * Must be implemented by subclasses to create the {@link MaterialWidget}
-	 * for the given component.
+	 * Must be implemented by subclasses to create the actual layout container.
 	 *
-	 * @param  rComponent The component to create the widget for
-	 * @param  rStyle     The style of the new widget
-	 *
-	 * @return The new material widget instance
+	 * @see GenericLayout#createLayoutContainer(Container, StyleData)
 	 */
-	protected abstract Widget createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle);
+	protected abstract MaterialWidget creatMaterialLayoutContainer(
+		Container rContainer,
+		StyleData rContainerStyle);
 }

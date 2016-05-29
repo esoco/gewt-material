@@ -16,12 +16,12 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.constants.CollapsibleType;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 
 import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.style.StyleData;
 
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -33,7 +33,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @author eso
  */
-public class MaterialListLayout extends GenericLayout
+public class MaterialListLayout extends AbstractMaterialLayout
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -58,9 +58,9 @@ public class MaterialListLayout extends GenericLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
+	protected MaterialWidget creatMaterialLayoutContainer(
 		Container rContainer,
-		StyleData rStyle)
+		StyleData rContainerStyle)
 	{
 		MaterialCollapsible aCollapsible = new MaterialCollapsible();
 
