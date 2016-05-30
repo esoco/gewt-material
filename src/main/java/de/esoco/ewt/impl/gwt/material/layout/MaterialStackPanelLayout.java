@@ -48,8 +48,8 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	 */
 	@Override
 	public void addPage(Component rStepComponent,
-						 String    sStepTitle,
-						 boolean   bCloseable)
+						String    sStepTitle,
+						boolean   bCloseable)
 	{
 		MaterialStep aStep = aFirstStep;
 

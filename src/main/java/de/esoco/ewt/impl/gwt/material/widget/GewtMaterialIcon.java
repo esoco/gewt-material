@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
+import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.MaterialIcon;
 
 import de.esoco.ewt.graphics.Image;
@@ -46,7 +47,7 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	@Override
 	public String getHTML()
 	{
-		return getText();
+		return getIconType().name();
 	}
 
 	/***************************************
@@ -62,9 +63,21 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	 * {@inheritDoc}
 	 */
 	@Override
+	public String getText()
+	{
+		return getIconType().name();
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void setHTML(String sHtml)
 	{
-		getElement().setInnerText(sHtml);
+		if (sHtml.length() > 0)
+		{
+			setIconType(IconType.valueOf(sHtml));
+		}
 	}
 
 	/***************************************
@@ -74,5 +87,17 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	public void setImage(Image rImage)
 	{
 		aImageAttrMixin.setImage(rImage);
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setText(String sText)
+	{
+		if (sText.length() > 0)
+		{
+			setIconType(IconType.valueOf(sText));
+		}
 	}
 }
