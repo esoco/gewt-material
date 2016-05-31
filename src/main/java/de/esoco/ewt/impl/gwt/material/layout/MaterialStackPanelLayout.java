@@ -39,7 +39,6 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 	//~ Instance fields --------------------------------------------------------
 
 	private MaterialStepper aStepper;
-	private MaterialStep    aFirstStep;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -51,18 +50,9 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 						String    sStepTitle,
 						boolean   bCloseable)
 	{
-		MaterialStep aStep = aFirstStep;
+		MaterialStep aStep = new MaterialStep();
 
-		if (aStep == null)
-		{
-			aStep = new MaterialStep();
-			aStepper.add(aStep);
-		}
-		else
-		{
-			aFirstStep = null;
-		}
-
+		aStepper.add(aStep);
 		aStep.add(rStepComponent.getWidget());
 	}
 
@@ -74,16 +64,11 @@ public class MaterialStackPanelLayout extends StackPanelLayout
 		Container rContainer,
 		StyleData rStyle)
 	{
-		aStepper   = new MaterialStepper();
-		aFirstStep = new MaterialStep();
+		aStepper = new MaterialStepper();
 
 		boolean bVertical = rStyle.hasFlag(StyleFlag.VERTICAL);
 
 		aStepper.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
-
-		// necessary unless an init bug in MaterialStepper is fixed
-		// https://github.com/GwtMaterialDesign/gwt-material-addins/issues/63
-		aStepper.add(aFirstStep);
 
 		return aStepper;
 	}

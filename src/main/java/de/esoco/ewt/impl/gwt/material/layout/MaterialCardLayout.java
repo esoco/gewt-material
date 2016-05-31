@@ -92,6 +92,18 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void clear(HasWidgets rContainer)
+	{
+		super.clear(rContainer);
+
+		aCardContent = null;
+		aCardAction  = null;
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
 	protected MaterialWidget creatMaterialLayoutContainer(
 		Container rContainer,
 		StyleData rContainerStyle)

@@ -73,6 +73,18 @@ public class MaterialMenuLayout extends MenuLayout
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void clear(HasWidgets rContainer)
+	{
+		super.clear(rContainer);
+
+		aNavBar     = null;
+		aNavSection = null;
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
 	public HasWidgets createLayoutContainer(
 		Container rContainer,
 		StyleData rContainerStyle)
