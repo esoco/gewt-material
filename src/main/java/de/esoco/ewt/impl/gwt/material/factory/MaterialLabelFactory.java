@@ -36,6 +36,7 @@ import de.esoco.lib.property.LabelStyle;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
+import static de.esoco.lib.property.StyleProperties.HAS_IMAGES;
 import static de.esoco.lib.property.StyleProperties.LABEL_STYLE;
 
 
@@ -73,7 +74,9 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 			switch (eLabelStyle)
 			{
 				case DEFAULT:
-					aWidget = new MaterialLabel();
+					aWidget =
+						rStyle.hasFlag(HAS_IMAGES) ? new GewtMaterialIcon()
+												   : new MaterialLabel();
 					break;
 
 				case BRAND:

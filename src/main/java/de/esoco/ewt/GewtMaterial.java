@@ -47,6 +47,7 @@ import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.RelativeScale;
 import de.esoco.lib.property.UserInterfaceProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
@@ -133,9 +134,16 @@ public class GewtMaterial
 
 			if (sIcon != null)
 			{
-				IconType eIconType = IconType.valueOf(sIcon);
+				try
+				{
+					IconType eIconType = IconType.valueOf(sIcon);
 
-				rHasIcon.setIconType(eIconType);
+					rHasIcon.setIconType(eIconType);
+				}
+				catch (IllegalArgumentException e)
+				{
+					GWT.log("No icon type for " + sIcon);
+				}
 			}
 
 			RelativeScale eIconSize =
