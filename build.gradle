@@ -32,8 +32,8 @@ dependencies
 		compile 'de.esoco:gewt:1.+'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.1-SNAPSHOT'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.1-SNAPSHOT'
+	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.1'
 }
 
 gwt {
