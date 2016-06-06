@@ -49,14 +49,17 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 
 		switch (eLayout)
 		{
-// currently not working because of JS error in GwtMaterial
-//			case SPLIT:
-//				aLayout = new MaterialSplitPanelLayout();
-//				break;
+			case SPLIT:
+				aLayout = new MaterialSplitPanelLayout();
+				break;
 
 			case FLOW:
 			case GRID:
 				aLayout = new MaterialFlowLayout();
+				break;
+
+			case TABS:
+				aLayout = new MaterialTabPanelLayout();
 				break;
 
 			case STACK:

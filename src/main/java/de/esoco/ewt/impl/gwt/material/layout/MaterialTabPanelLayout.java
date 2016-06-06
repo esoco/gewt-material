@@ -16,59 +16,48 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
-import gwt.material.design.addins.client.stepper.MaterialStep;
-import gwt.material.design.addins.client.stepper.MaterialStepper;
-import gwt.material.design.client.constants.Axis;
+import gwt.material.design.client.ui.MaterialTab;
+import gwt.material.design.client.ui.MaterialTabItem;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
-import de.esoco.ewt.style.StyleFlag;
 
 
 /********************************************************************
- * A layout implementation that creates and manages a {@link MaterialStepper}.
+ * A layout implementation that creates and manages a {@link MaterialTab}
+ * widget.
  *
  * @author eso
  */
-public class MaterialStackPanelLayout
-	extends MaterialSwitchPanelLayout<MaterialStepper, MaterialStep>
+public class MaterialTabPanelLayout
+	extends MaterialSwitchPanelLayout<MaterialTab, MaterialTabItem>
 {
-	//~ Instance fields --------------------------------------------------------
-
-	private MaterialStepper aStepper;
-
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addPage(Component rStepComponent,
+	public void addPage(Component rTabComponent,
 						String    sStepTitle,
 						boolean   bCloseable)
 	{
-		MaterialStep aStep = new MaterialStep();
+		MaterialTabItem aTabItem = new MaterialTabItem();
 
-		aStepper.add(aStep);
-		aStep.add(rStepComponent.getWidget());
+		aTabItem.add(rTabComponent.getWidget());
+		getPanelWidget().add(aTabItem);
+
+		addContentWidget(rTabComponent.getWidget(), aTabItem);
 	}
 
 	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MaterialStepper createPanelWidget(
-		Container rContainer,
-		StyleData rStyle)
+	public MaterialTab createPanelWidget(Container rContainer, StyleData rStyle)
 	{
-		aStepper = new MaterialStepper();
-
-		boolean bVertical = rStyle.hasFlag(StyleFlag.VERTICAL);
-
-		aStepper.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
-
-		return aStepper;
+		return new MaterialTab();
 	}
 
 	/***************************************
@@ -77,7 +66,7 @@ public class MaterialStackPanelLayout
 	@Override
 	public int getSelectionIndex()
 	{
-		return aStepper.getCurrentStepIndex();
+		return getPanelWidget().getTabIndex();
 	}
 
 	/***************************************
@@ -86,9 +75,8 @@ public class MaterialStackPanelLayout
 	@Override
 	public void setPageTitle(int nIndex, String sTitle)
 	{
-		MaterialStep rStep = (MaterialStep) aStepper.getWidget(nIndex);
-
-		rStep.setTitle(sTitle);
+		MaterialTabItem rTabItem =
+			(MaterialTabItem) getPanelWidget().getWidget(nIndex);
 	}
 
 	/***************************************
@@ -97,6 +85,6 @@ public class MaterialStackPanelLayout
 	@Override
 	public void setSelection(int nIndex)
 	{
-		aStepper.goToStep(nIndex + 1);
+		getPanelWidget().setTabIndex(nIndex);
 	}
 }
