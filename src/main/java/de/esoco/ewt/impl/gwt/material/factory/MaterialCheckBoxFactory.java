@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
+import gwt.material.design.client.constants.CheckBoxType;
 import gwt.material.design.client.ui.MaterialCheckBox;
 
 import de.esoco.ewt.component.Component;
@@ -48,13 +49,25 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 	@Override
 	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
-		if (rStyle.getProperty(CHECK_BOX_STYLE, null) == CheckBoxStyle.SWITCH)
+		CheckBoxStyle eStyle  = rStyle.getProperty(CHECK_BOX_STYLE, null);
+		Widget		  aWidget;
+
+		if (eStyle == CheckBoxStyle.SWITCH)
 		{
-			return new GewtMaterialSwitch();
+			aWidget = new GewtMaterialSwitch();
 		}
 		else
 		{
-			return new MaterialCheckBox();
+			MaterialCheckBox aCheckBox = new MaterialCheckBox();
+
+			if (eStyle == CheckBoxStyle.SOLID)
+			{
+				aCheckBox.setType(CheckBoxType.FILLED);
+			}
+
+			aWidget = aCheckBox;
 		}
+
+		return aWidget;
 	}
 }
