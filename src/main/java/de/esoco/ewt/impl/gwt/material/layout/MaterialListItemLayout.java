@@ -21,14 +21,20 @@ import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialCollapsibleHeader;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
+import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
+import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
+import de.esoco.lib.property.Alignment;
+
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 
 
 /********************************************************************
@@ -40,8 +46,12 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
+	private boolean bIsCollapsible;
+
 	private MaterialCollapsibleHeader aItemHeader = null;
 	private MaterialCollapsibleBody   aItemBody   = null;
+
+	private MaterialCollectionSecondary aSecondary = null;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -51,36 +61,21 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 	@Override
 	public void addWidget(HasWidgets rContainer,
 						  Widget	 rWidget,
-						  StyleData  rStyleData,
+						  StyleData  rStyle,
 						  int		 nIndex)
 	{
-		if (rWidget instanceof MaterialTitle)
+		if (bIsCollapsible)
 		{
-			rWidget = new MaterialCollapsibleHeader(rWidget);
+			rWidget = createCollapsibleItemWidget(rWidget);
 		}
-		else if (!(rWidget instanceof MaterialCollapsibleHeader) &&
-				 !(rWidget instanceof MaterialCollapsibleBody))
+		else
 		{
-			if (aItemHeader == null)
-			{
-				aItemHeader = new MaterialCollapsibleHeader(rWidget);
-				rWidget     = aItemHeader;
-			}
-			else if (aItemBody == null)
-			{
-				aItemBody = new MaterialCollapsibleBody(rWidget);
-				rWidget   = aItemBody;
-			}
-			else
-			{
-				aItemBody.add(rWidget);
-				rWidget = null;
-			}
+			rWidget = createCollectionItemWidget(rWidget, rStyle);
 		}
 
 		if (rWidget != null)
 		{
-			super.addWidget(rContainer, rWidget, rStyleData, nIndex);
+			super.addWidget(rContainer, rWidget, rStyle, nIndex);
 		}
 	}
 
@@ -106,7 +101,10 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 	{
 		MaterialWidget aHasWidgets;
 
-		if (rContainer.getParent().getWidget() instanceof MaterialCollapsible)
+		bIsCollapsible =
+			rContainer.getParent().getWidget() instanceof MaterialCollapsible;
+
+		if (bIsCollapsible)
 		{
 			aHasWidgets = new MaterialCollapsibleItem();
 		}
@@ -116,5 +114,73 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 		}
 
 		return aHasWidgets;
+	}
+
+	/***************************************
+	 * Checks whether the given widget needs to be wrapped into a specific child
+	 * widget for a {@link MaterialCollapsible} container.
+	 *
+	 * @param  rWidget The widget to check
+	 *
+	 * @return Either the original widget, a new wrapper widget or NULL if the
+	 *         widget has been added to an existing wrapper
+	 */
+	private Widget createCollapsibleItemWidget(Widget rWidget)
+	{
+		if (rWidget instanceof MaterialTitle)
+		{
+			rWidget = new MaterialCollapsibleHeader(rWidget);
+		}
+		else if (!(rWidget instanceof MaterialCollapsibleHeader) &&
+				 !(rWidget instanceof MaterialCollapsibleBody))
+		{
+			if (aItemHeader == null)
+			{
+				aItemHeader = new MaterialCollapsibleHeader(rWidget);
+				rWidget     = aItemHeader;
+			}
+			else if (aItemBody == null)
+			{
+				aItemBody = new MaterialCollapsibleBody(rWidget);
+				rWidget   = aItemBody;
+			}
+			else
+			{
+				aItemBody.add(rWidget);
+				rWidget = null;
+			}
+		}
+
+		return rWidget;
+	}
+
+	/***************************************
+	 * Checks whether the given widget needs to be wrapped into a specific child
+	 * widget for a {@link MaterialCollection} container.
+	 *
+	 * @param  rWidget The widget to check
+	 * @param  rStyle
+	 *
+	 * @return Either the original widget, a new wrapper widget or NULL if the
+	 *         widget has been added to an existing wrapper
+	 */
+	private Widget createCollectionItemWidget(Widget rWidget, StyleData rStyle)
+	{
+		if (rStyle.getProperty(HORIZONTAL_ALIGN, null) == Alignment.END)
+		{
+			if (aSecondary == null)
+			{
+				aSecondary = new MaterialCollectionSecondary();
+				rWidget    = aSecondary;
+			}
+			else
+			{
+				rWidget = null;
+			}
+
+			aSecondary.add(rWidget);
+		}
+
+		return rWidget;
 	}
 }

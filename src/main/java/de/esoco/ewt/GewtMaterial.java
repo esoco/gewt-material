@@ -45,15 +45,15 @@ import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.RelativeScale;
-import de.esoco.lib.property.UserInterfaceProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
-import static de.esoco.lib.property.StyleProperties.ICON_ALIGNMENT;
+import static de.esoco.lib.property.LayoutProperties.ICON_ALIGN;
+import static de.esoco.lib.property.LayoutProperties.ICON_SIZE;
+import static de.esoco.lib.property.LayoutProperties.TEXT_ALIGN;
 import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
-import static de.esoco.lib.property.StyleProperties.ICON_SIZE;
 
 
 /********************************************************************
@@ -90,8 +90,7 @@ public class GewtMaterial
 		if (rWidget instanceof HasTextAlign)
 		{
 			HasTextAlign rHasTextAlign  = (HasTextAlign) rWidget;
-			Alignment    eTextAlignment =
-				rStyle.getProperty(UserInterfaceProperties.ALIGNMENT, null);
+			Alignment    eTextAlignment = rStyle.getProperty(TEXT_ALIGN, null);
 
 			if (eTextAlignment != null)
 			{
@@ -165,7 +164,7 @@ public class GewtMaterial
 						.setColor(Color.toHtml(nColor));
 			}
 
-			Alignment eAlignment = rStyle.getProperty(ICON_ALIGNMENT, null);
+			Alignment eAlignment = rStyle.getProperty(ICON_ALIGN, null);
 
 			if (eAlignment != null)
 			{

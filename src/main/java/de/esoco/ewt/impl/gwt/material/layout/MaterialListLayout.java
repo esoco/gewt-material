@@ -20,12 +20,18 @@ import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.constants.CollapsibleType;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
+import gwt.material.design.client.ui.MaterialCollection;
+import gwt.material.design.client.ui.MaterialCollectionItem;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
+import de.esoco.lib.property.ListLayoutStyle;
+
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.StyleProperties.LIST_LAYOUT_STYLE;
 
 
 /********************************************************************
@@ -35,6 +41,10 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MaterialListLayout extends AbstractMaterialLayout
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private ListLayoutStyle eListStyle;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -46,7 +56,17 @@ public class MaterialListLayout extends AbstractMaterialLayout
 						  StyleData  rStyleData,
 						  int		 nIndex)
 	{
-		if (!(rWidget instanceof MaterialCollapsibleItem))
+		if (eListStyle == ListLayoutStyle.SIMPLE)
+		{
+			if (!(rWidget instanceof MaterialCollectionItem))
+			{
+				MaterialCollectionItem aItem = new MaterialCollectionItem();
+
+				aItem.add(rWidget);
+				rWidget = aItem;
+			}
+		}
+		else if (!(rWidget instanceof MaterialCollapsibleItem))
 		{
 			rWidget = new MaterialCollapsibleItem(rWidget);
 		}
@@ -62,10 +82,24 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		Container rContainer,
 		StyleData rContainerStyle)
 	{
-		MaterialCollapsible aCollapsible = new MaterialCollapsible();
+		eListStyle =
+			rContainerStyle.getProperty(LIST_LAYOUT_STYLE,
+										ListLayoutStyle.SIMPLE);
 
-		aCollapsible.setType(CollapsibleType.POPOUT);
+		MaterialWidget aContainerWidget;
 
-		return aCollapsible;
+		if (eListStyle == ListLayoutStyle.SIMPLE)
+		{
+			aContainerWidget = new MaterialCollection();
+		}
+		else
+		{
+			MaterialCollapsible aCollapsible = new MaterialCollapsible();
+
+			aCollapsible.setType(CollapsibleType.POPOUT);
+			aContainerWidget = aCollapsible;
+		}
+
+		return aContainerWidget;
 	}
 }

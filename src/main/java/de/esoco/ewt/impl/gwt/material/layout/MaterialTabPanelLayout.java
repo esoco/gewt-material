@@ -75,8 +75,8 @@ public class MaterialTabPanelLayout
 	@Override
 	public void setPageTitle(int nIndex, String sTitle)
 	{
-		MaterialTabItem rTabItem =
-			(MaterialTabItem) getPanelWidget().getWidget(nIndex);
+//		MaterialTabItem rTabItem =
+//			(MaterialTabItem) getPanelWidget().getWidget(nIndex);
 	}
 
 	/***************************************

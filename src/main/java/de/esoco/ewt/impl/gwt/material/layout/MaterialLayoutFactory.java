@@ -57,10 +57,10 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 			case GRID:
 				aLayout = new MaterialFlowLayout();
 				break;
-
-			case TABS:
-				aLayout = new MaterialTabPanelLayout();
-				break;
+// TODO: implement GewtMaterialTabPanel (MaterialTab is only the tab bar)
+//			case TABS:
+//				aLayout = new MaterialTabPanelLayout();
+//				break;
 
 			case STACK:
 				aLayout = new MaterialStackPanelLayout();
