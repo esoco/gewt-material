@@ -29,7 +29,6 @@ import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.ListLayoutStyle;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -97,8 +96,6 @@ public class MaterialListLayout extends AbstractMaterialLayout
 										ListLayoutStyle.SIMPLE);
 
 		MaterialWidget aContainerWidget;
-
-		GWT.log("LIST_LAYOUT_STYLE: " + eListStyle);
 
 		if (eListStyle == ListLayoutStyle.SIMPLE)
 		{
