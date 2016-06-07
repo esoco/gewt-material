@@ -22,16 +22,19 @@ import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
+import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.ListLayoutStyle;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.StyleProperties.LIST_LAYOUT_STYLE;
+import static de.esoco.lib.property.StyleProperties.MULTI_SELECTION;
 
 
 /********************************************************************
@@ -58,7 +61,14 @@ public class MaterialListLayout extends AbstractMaterialLayout
 	{
 		if (eListStyle == ListLayoutStyle.SIMPLE)
 		{
-			if (!(rWidget instanceof MaterialCollectionItem))
+			if (rWidget instanceof MaterialTitle)
+			{
+				MaterialTitle rListTitle = (MaterialTitle) rWidget;
+
+				((MaterialCollection) rContainer).setHeader(rListTitle
+															.getTitle());
+			}
+			else if (!(rWidget instanceof MaterialCollectionItem))
 			{
 				MaterialCollectionItem aItem = new MaterialCollectionItem();
 
@@ -88,6 +98,8 @@ public class MaterialListLayout extends AbstractMaterialLayout
 
 		MaterialWidget aContainerWidget;
 
+		GWT.log("LIST_LAYOUT_STYLE: " + eListStyle);
+
 		if (eListStyle == ListLayoutStyle.SIMPLE)
 		{
 			aContainerWidget = new MaterialCollection();
@@ -96,7 +108,10 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		{
 			MaterialCollapsible aCollapsible = new MaterialCollapsible();
 
-			aCollapsible.setType(CollapsibleType.POPOUT);
+			aCollapsible.setAccordion(!rContainerStyle.hasFlag(MULTI_SELECTION));
+			aCollapsible.setType(eListStyle == ListLayoutStyle.POPOUT
+								 ? CollapsibleType.POPOUT
+								 : CollapsibleType.FLAT);
 			aContainerWidget = aCollapsible;
 		}
 
