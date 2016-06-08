@@ -22,16 +22,20 @@ import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
+import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
+import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.ListLayoutStyle;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
+import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.StyleProperties.LIST_LAYOUT_STYLE;
 import static de.esoco.lib.property.StyleProperties.MULTI_SELECTION;
 
@@ -47,6 +51,8 @@ public class MaterialListLayout extends AbstractMaterialLayout
 
 	private ListLayoutStyle eListStyle;
 
+	private MaterialCollectionItem aCurrentItem;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -55,7 +61,7 @@ public class MaterialListLayout extends AbstractMaterialLayout
 	@Override
 	public void addWidget(HasWidgets rContainer,
 						  Widget	 rWidget,
-						  StyleData  rStyleData,
+						  StyleData  rStyle,
 						  int		 nIndex)
 	{
 		if (eListStyle == ListLayoutStyle.SIMPLE)
@@ -69,10 +75,25 @@ public class MaterialListLayout extends AbstractMaterialLayout
 			}
 			else if (!(rWidget instanceof MaterialCollectionItem))
 			{
-				MaterialCollectionItem aItem = new MaterialCollectionItem();
+				if (aCurrentItem != null &&
+					rStyle.getProperty(HORIZONTAL_ALIGN, null) == Alignment.END)
+				{
+					GWT.log("SECONDARY: " + rWidget);
 
-				aItem.add(rWidget);
-				rWidget = aItem;
+					MaterialCollectionSecondary aSecondary =
+						new MaterialCollectionSecondary();
+
+					aCurrentItem.add(aSecondary);
+					aSecondary.add(rWidget);
+					aCurrentItem = null;
+				}
+				else
+				{
+					aCurrentItem = new MaterialCollectionItem();
+					aCurrentItem.add(rWidget);
+				}
+
+				rWidget = aCurrentItem;
 			}
 		}
 		else if (!(rWidget instanceof MaterialCollapsibleItem))
@@ -80,7 +101,10 @@ public class MaterialListLayout extends AbstractMaterialLayout
 			rWidget = new MaterialCollapsibleItem(rWidget);
 		}
 
-		super.addWidget(rContainer, rWidget, rStyleData, nIndex);
+		if (rWidget != null)
+		{
+			super.addWidget(rContainer, rWidget, rStyle, nIndex);
+		}
 	}
 
 	/***************************************
