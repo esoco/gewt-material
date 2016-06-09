@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.constants.NavBarType;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
@@ -99,6 +100,9 @@ public class MaterialMenuLayout extends MenuLayout
 		{
 			aNavBar     = new MaterialNavBar();
 			aMenuWidget = aNavBar;
+
+			// TODO: apply style
+			aNavBar.setType(NavBarType.FIXED);
 		}
 
 		return aMenuWidget;
