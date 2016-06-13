@@ -31,7 +31,6 @@ import de.esoco.ewt.style.StyleData;
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.ListLayoutStyle;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -78,8 +77,6 @@ public class MaterialListLayout extends AbstractMaterialLayout
 				if (aCurrentItem != null &&
 					rStyle.getProperty(HORIZONTAL_ALIGN, null) == Alignment.END)
 				{
-					GWT.log("SECONDARY: " + rWidget);
-
 					MaterialCollectionSecondary aSecondary =
 						new MaterialCollectionSecondary();
 
