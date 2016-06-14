@@ -50,6 +50,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
+import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_SIZE;
 import static de.esoco.lib.property.LayoutProperties.TEXT_ALIGN;
@@ -89,14 +90,19 @@ public class GewtMaterial
 	{
 		if (rWidget instanceof HasTextAlign)
 		{
-			HasTextAlign rHasTextAlign  = (HasTextAlign) rWidget;
-			Alignment    eTextAlignment = rStyle.getProperty(TEXT_ALIGN, null);
+			HasTextAlign rHasTextAlign = (HasTextAlign) rWidget;
+			Alignment    eAlignment    = rStyle.getProperty(TEXT_ALIGN, null);
 
-			if (eTextAlignment != null)
+			if (eAlignment == null)
+			{
+				eAlignment = rStyle.getProperty(HORIZONTAL_ALIGN, null);
+			}
+
+			if (eAlignment != null)
 			{
 				TextAlign eTextAlign = TextAlign.DEFAULT;
 
-				switch (eTextAlignment)
+				switch (eAlignment)
 				{
 					case BEGIN:
 						eTextAlign = TextAlign.LEFT;
