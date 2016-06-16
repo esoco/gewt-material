@@ -16,7 +16,9 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
+import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.ui.MaterialIcon;
+import gwt.material.design.client.ui.html.Span;
 
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
@@ -37,6 +39,8 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 
 	private ImageAttributeMixin<GewtMaterialIcon> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
+
+	Span aTextSpan = null;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -62,6 +66,15 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	 * {@inheritDoc}
 	 */
 	@Override
+	public String getText()
+	{
+		return aTextSpan != null ? aTextSpan.getText() : "";
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void setHTML(String sHtml)
 	{
 		setText(sHtml);
@@ -74,5 +87,26 @@ public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
 	public void setImage(Image rImage)
 	{
 		aImageAttrMixin.setImage(rImage);
+	}
+
+	/***************************************
+	 * Overridden to prevent error "this$static_0_g$ is null" on updating the
+	 * label. It occurs because {@link AbstractButton} always removes the text
+	 * span in the {@link AbstractButton#setText(String)} method.
+	 *
+	 * @see HasText#setText(String)
+	 */
+	@Override
+	public void setText(String sText)
+	{
+		if (aTextSpan == null)
+		{
+			aTextSpan = new Span(sText);
+			add(aTextSpan);
+		}
+		else
+		{
+			aTextSpan.setText(sText);
+		}
 	}
 }

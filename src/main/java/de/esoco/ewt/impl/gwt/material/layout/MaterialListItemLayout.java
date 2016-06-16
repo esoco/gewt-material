@@ -171,14 +171,14 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 			if (aSecondary == null)
 			{
 				aSecondary = new MaterialCollectionSecondary();
-				rWidget    = aSecondary;
+				aSecondary.add(rWidget);
+				rWidget = aSecondary;
 			}
 			else
 			{
+				aSecondary.add(rWidget);
 				rWidget = null;
 			}
-
-			aSecondary.add(rWidget);
 		}
 
 		return rWidget;
