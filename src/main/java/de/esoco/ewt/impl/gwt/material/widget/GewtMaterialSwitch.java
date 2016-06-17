@@ -55,6 +55,19 @@ public class GewtMaterialSwitch extends MaterialSwitch implements HasHTML
 	}
 
 	/***************************************
+	 * @see gwt.material.design.client.ui.MaterialSwitch#setEnabled(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean rEnabled)
+	{
+		// TODO: workaround for MaterialSwitch bug that overrides styles in setEnabled
+		boolean bVisible = isVisible();
+
+		super.setEnabled(rEnabled);
+		setVisible(bVisible);
+	}
+
+	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
