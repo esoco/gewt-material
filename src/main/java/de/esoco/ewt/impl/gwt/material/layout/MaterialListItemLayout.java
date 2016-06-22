@@ -131,18 +131,31 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 		{
 			rWidget = new MaterialCollapsibleHeader(rWidget);
 		}
-		else if (!(rWidget instanceof MaterialCollapsibleHeader) &&
-				 !(rWidget instanceof MaterialCollapsibleBody))
+		else
 		{
 			if (aItemHeader == null)
 			{
-				aItemHeader = new MaterialCollapsibleHeader(rWidget);
-				rWidget     = aItemHeader;
+				if (rWidget instanceof MaterialCollapsibleHeader)
+				{
+					aItemHeader = (MaterialCollapsibleHeader) rWidget;
+				}
+				else
+				{
+					aItemHeader = new MaterialCollapsibleHeader(rWidget);
+					rWidget     = aItemHeader;
+				}
 			}
 			else if (aItemBody == null)
 			{
-				aItemBody = new MaterialCollapsibleBody(rWidget);
-				rWidget   = aItemBody;
+				if (rWidget instanceof MaterialCollapsibleBody)
+				{
+					aItemBody = (MaterialCollapsibleBody) rWidget;
+				}
+				else
+				{
+					aItemBody = new MaterialCollapsibleBody(rWidget);
+					rWidget   = aItemBody;
+				}
 			}
 			else
 			{
