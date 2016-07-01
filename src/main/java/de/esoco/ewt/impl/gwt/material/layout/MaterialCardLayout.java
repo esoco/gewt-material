@@ -22,6 +22,7 @@ import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
 
+import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
@@ -49,7 +50,7 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 	@Override
 	public void addWidget(HasWidgets rContainer,
 						  Widget	 rWidget,
-						  StyleData  rStyleData,
+						  StyleData  rStyle,
 						  int		 nIndex)
 	{
 		if (rWidget instanceof AbstractButton)
@@ -59,6 +60,8 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 				aCardAction = new MaterialCardAction();
 				aCardAction.add(rWidget);
 				rWidget = aCardAction;
+
+				GewtMaterial.checkApplyAlignment(rWidget, rStyle);
 			}
 			else
 			{
@@ -84,7 +87,7 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 
 		if (rWidget != null)
 		{
-			super.addWidget(rContainer, rWidget, rStyleData, nIndex);
+			super.addWidget(rContainer, rWidget, rStyle, nIndex);
 		}
 	}
 
