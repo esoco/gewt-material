@@ -21,6 +21,7 @@ import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
+import gwt.material.design.client.ui.MaterialCardReveal;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
@@ -70,7 +71,8 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 			}
 		}
 		else if (!(rWidget instanceof MaterialCardContent) &&
-				 !(rWidget instanceof MaterialCardAction))
+				 !(rWidget instanceof MaterialCardAction) &&
+				 !(rWidget instanceof MaterialCardReveal))
 		{
 			if (aCardContent == null)
 			{

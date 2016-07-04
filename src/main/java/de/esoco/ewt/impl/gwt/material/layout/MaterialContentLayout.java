@@ -20,10 +20,13 @@ import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
+import gwt.material.design.client.ui.MaterialCardReveal;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialCollapsibleHeader;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
+import gwt.material.design.client.ui.MaterialCollectionItem;
+import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialContainer;
 import gwt.material.design.client.ui.MaterialFooter;
 import gwt.material.design.client.ui.MaterialHeader;
@@ -48,7 +51,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	/********************************************************************
 	 * Internal enumeration of the different content areas to consider.
 	 */
-	private enum ContentArea { GLOBAL, CARD, COLLAPSIBLE }
+	private enum ContentArea { GLOBAL, CARD, COLLAPSIBLE, COLLECTION }
 
 	//~ Instance fields --------------------------------------------------------
 
@@ -92,6 +95,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 				aLayoutWidget = createCollapsibleContentContainer(eLayout);
 				break;
 
+			case COLLECTION:
+				aLayoutWidget = createCollectionContentContainer(eLayout);
+				break;
+
 			case GLOBAL:
 				aLayoutWidget = createGlobalContentContainer(eLayout);
 				break;
@@ -125,6 +132,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 				aLayoutWidget = new MaterialCardContent();
 				break;
 
+			case SECONDARY_CONTENT:
+				aLayoutWidget = new MaterialCardReveal();
+				break;
+
 			case FOOTER:
 				aLayoutWidget = new MaterialCardAction();
 				break;
@@ -156,6 +167,31 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 
 			case CONTENT:
 				aLayoutWidget = new MaterialCollapsibleBody();
+				break;
+
+			default:
+				aLayoutWidget = null;
+		}
+
+		return aLayoutWidget;
+	}
+
+	/***************************************
+	 * Creates the content layout widgets for a {@link MaterialCollapsible}
+	 * container.
+	 *
+	 * @param  eLayout The content layout type
+	 *
+	 * @return A new widget container or NULL if no match was available
+	 */
+	MaterialWidget createCollectionContentContainer(Layout eLayout)
+	{
+		MaterialWidget aLayoutWidget;
+
+		switch (eLayout)
+		{
+			case SECONDARY_CONTENT:
+				aLayoutWidget = new MaterialCollectionSecondary();
 				break;
 
 			default:
@@ -211,6 +247,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		if (rWidget instanceof MaterialCollapsibleItem)
 		{
 			eContentArea = ContentArea.COLLAPSIBLE;
+		}
+		else if (rWidget instanceof MaterialCollectionItem)
+		{
+			eContentArea = ContentArea.COLLECTION;
 		}
 		else if (rWidget instanceof MaterialCard)
 		{

@@ -89,6 +89,7 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 
 			case HEADER:
 			case CONTENT:
+			case SECONDARY_CONTENT:
 			case FOOTER:
 				aLayout = new MaterialContentLayout(eLayout);
 				break;
