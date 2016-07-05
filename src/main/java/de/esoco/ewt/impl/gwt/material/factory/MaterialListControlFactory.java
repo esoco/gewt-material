@@ -55,5 +55,17 @@ public class MaterialListControlFactory
 	static class GewtMaterialListBox extends MaterialListBox
 		implements IsListControlWidget
 	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * Overridden to disable because of a but in GWT Material.
+		 *
+		 * @see https://github.com/GwtMaterialDesign/gwt-material/issues/388
+		 * @see MaterialListBox#setEnabled(boolean)
+		 */
+		@Override
+		public void setEnabled(boolean bEnabled)
+		{
+		}
 	}
 }
