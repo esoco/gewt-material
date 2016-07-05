@@ -16,20 +16,30 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.constants.Axis;
+import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.NavBarType;
+import gwt.material.design.client.ui.MaterialAnchorButton;
+import gwt.material.design.client.ui.MaterialFAB;
+import gwt.material.design.client.ui.MaterialFABList;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
 import gwt.material.design.client.ui.MaterialSideNav;
 
+import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
+import de.esoco.lib.property.Alignment;
+
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.LayoutProperties.FLOAT;
 
 
 /********************************************************************
@@ -44,6 +54,8 @@ public class MaterialMenuLayout extends MenuLayout
 	private MaterialNavBar     aNavBar;
 	private MaterialNavSection aNavSection;
 
+	private MaterialFABList aMaterialFABList;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -55,19 +67,26 @@ public class MaterialMenuLayout extends MenuLayout
 						  StyleData  rStyleData,
 						  int		 nIndex)
 	{
-		if (aNavBar != null &&
-			aNavSection == null &&
-			!(rWidget instanceof MaterialNavBrand))
+		if (aMaterialFABList != null)
 		{
-			aNavSection = new MaterialNavSection();
-			aNavSection.setFloat(Float.RIGHT);
-			aNavBar.add(aNavSection);
+			aMaterialFABList.add(rWidget);
 		}
+		else
+		{
+			if (aNavBar != null &&
+				aNavSection == null &&
+				!(rWidget instanceof MaterialNavBrand))
+			{
+				aNavSection = new MaterialNavSection();
+				aNavSection.setFloat(Float.RIGHT);
+				aNavBar.add(aNavSection);
+			}
 
-		super.addWidget(aNavSection != null ? aNavSection : rContainer,
-						rWidget,
-						rStyleData,
-						nIndex);
+			super.addWidget(aNavSection != null ? aNavSection : rContainer,
+							rWidget,
+							rStyleData,
+							nIndex);
+		}
 	}
 
 	/***************************************
@@ -90,9 +109,28 @@ public class MaterialMenuLayout extends MenuLayout
 		Container rContainer,
 		StyleData rContainerStyle)
 	{
+		Alignment  eFloatAlign = rContainerStyle.getProperty(FLOAT, null);
+		boolean    bVertical   = rContainerStyle.hasFlag(StyleFlag.VERTICAL);
 		HasWidgets aMenuWidget;
 
-		if (rContainerStyle.hasFlag(StyleFlag.VERTICAL))
+		if (eFloatAlign != null)
+		{
+			MaterialFAB aMaterialFAB = new MaterialFAB();
+
+			aMaterialFABList = new MaterialFABList();
+
+			aMaterialFAB.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+
+			MaterialAnchorButton aMenuButton =
+				new MaterialAnchorButton(ButtonType.FLOATING);
+
+			GewtMaterial.checkApplyIcon(aMenuButton, rContainerStyle);
+			aMaterialFAB.add(aMenuButton);
+			aMaterialFAB.add(aMaterialFABList);
+
+			aMenuWidget = aMaterialFAB;
+		}
+		else if (bVertical)
 		{
 			aMenuWidget = new MaterialSideNav();
 		}

@@ -18,7 +18,7 @@ targetCompatibility = 1.7
 
 repositories {
 	mavenCentral()
-    jcenter()
+	jcenter()
 }
 
 dependencies
@@ -32,8 +32,8 @@ dependencies
 		compile 'de.esoco:gewt:1.+'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.1'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.3'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.2'
 }
 
 gwt {

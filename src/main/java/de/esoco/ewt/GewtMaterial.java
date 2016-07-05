@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
+import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.HasTextAlign;
 import gwt.material.design.client.constants.IconPosition;
@@ -47,9 +48,11 @@ import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
+import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_SIZE;
@@ -179,6 +182,27 @@ public class GewtMaterial
 										 : IconPosition.RIGHT);
 			}
 		}
+	}
+
+	/***************************************
+	 * Checks whether certain styles need to be converted and applied to the a
+	 * widget.
+	 *
+	 * @param rWidget The material widget to apply styles to
+	 * @param rStyle  The style data to check for styles
+	 */
+	public static void checkApplyStyles(Widget rWidget, StyleData rStyle)
+	{
+		Alignment eFloatAlign = rStyle.getProperty(FLOAT, null);
+
+		if (eFloatAlign != null && rWidget instanceof HasFloat)
+		{
+			((HasFloat) rWidget).setFloat(eFloatAlign == Alignment.BEGIN
+										  ? Float.LEFT : Float.RIGHT);
+		}
+
+		checkApplyAlignment(rWidget, rStyle);
+		checkApplyIcon(rWidget, rStyle);
 	}
 
 	/***************************************

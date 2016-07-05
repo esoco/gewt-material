@@ -46,7 +46,7 @@ public abstract class AbstractMaterialLayout extends GenericLayout
 		MaterialWidget aContainer =
 			creatMaterialLayoutContainer(rContainer, rContainerStyle);
 
-		GewtMaterial.checkApplyAlignment(aContainer, rContainerStyle);
+		GewtMaterial.checkApplyStyles(aContainer, rContainerStyle);
 
 		return aContainer;
 	}

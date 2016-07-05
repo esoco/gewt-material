@@ -16,23 +16,33 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
-import gwt.material.design.client.ui.MaterialSwitch;
-import gwt.material.design.client.ui.html.Span;
-
 import com.google.gwt.user.client.ui.HasHTML;
+import com.google.gwt.user.client.ui.HasText;
 
 
 /********************************************************************
- * A subclass of {@link MaterialSwitch} that implements the methods of {@link
- * HasHTML} to set the switch label.
+ * A subclass of {@link InternalMaterialSwitch} that implements the methods of
+ * {@link HasHTML} to set the switch label.
  *
  * @author eso
  */
-public class GewtMaterialSwitch extends MaterialSwitch implements HasHTML
+public class GewtMaterialSwitch extends InternalMaterialSwitch
+	implements HasText
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private Span aTextSpan;
+	boolean bFirstHandler = true;
+
+	private String sText;
+
+	//~ Constructors -----------------------------------------------------------
+
+	/***************************************
+	 * Creates a new instance.
+	 */
+	public GewtMaterialSwitch()
+	{
+	}
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -40,40 +50,9 @@ public class GewtMaterialSwitch extends MaterialSwitch implements HasHTML
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getHTML()
-	{
-		return getText();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
 	public String getText()
 	{
-		return aTextSpan != null ? aTextSpan.getText() : "";
-	}
-
-	/***************************************
-	 * @see gwt.material.design.client.ui.MaterialSwitch#setEnabled(boolean)
-	 */
-	@Override
-	public void setEnabled(boolean rEnabled)
-	{
-		// TODO: workaround for MaterialSwitch bug that overrides styles in setEnabled
-		boolean bVisible = isVisible();
-
-		super.setEnabled(rEnabled);
-		setVisible(bVisible);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setHTML(String sHtml)
-	{
-		setText(sHtml);
+		return sText;
 	}
 
 	/***************************************
@@ -82,21 +61,7 @@ public class GewtMaterialSwitch extends MaterialSwitch implements HasHTML
 	@Override
 	public void setText(String sText)
 	{
-		if (sText != null && sText.length() > 0)
-		{
-			if (aTextSpan == null)
-			{
-				aTextSpan = new Span();
-				aTextSpan.addStyleName("switchLabel");
-				getLabel().add(aTextSpan);
-			}
-
-			aTextSpan.setText(sText);
-		}
-		else if (aTextSpan != null)
-		{
-			getLabel().remove(aTextSpan);
-			aTextSpan = null;
-		}
+		super.setOnLabel(sText);
+		this.sText = sText;
 	}
 }

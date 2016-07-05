@@ -46,8 +46,7 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	{
 		Widget aWidget = createMaterialWidget(rComponent, rStyle);
 
-		GewtMaterial.checkApplyIcon(aWidget, rStyle);
-		GewtMaterial.checkApplyAlignment(aWidget, rStyle);
+		GewtMaterial.checkApplyStyles(aWidget, rStyle);
 
 		return (W) aWidget;
 	}

@@ -22,6 +22,7 @@ import gwt.material.design.client.ui.MaterialButton;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Component;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialAnchorButton;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialButton;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialIcon;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialLink;
@@ -34,6 +35,7 @@ import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
+import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.StyleProperties.BUTTON_STYLE;
 
 
@@ -66,6 +68,10 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 		else if (eButtonStyle == ButtonStyle.ICON)
 		{
 			aButtonWidget = new GewtMaterialIcon();
+		}
+		else if (eButtonStyle == ButtonStyle.FLOAT && rStyle.hasProperty(FLOAT))
+		{
+			aButtonWidget = new GewtMaterialAnchorButton();
 		}
 		else
 		{
