@@ -42,6 +42,7 @@ import com.google.gwt.user.client.ui.HasValue;
  *
  * @author eso
  */
+@SuppressWarnings("boxing")
 class InternalMaterialSwitch extends MaterialWidget
 	implements HasValue<Boolean>, HasClickHandlers, HasError
 {
