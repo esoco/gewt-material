@@ -36,6 +36,7 @@ import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.graphics.Color;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialCheckBoxFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialChildViewFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialListControlFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialRadioButtonFactory;
@@ -237,11 +238,13 @@ public class GewtMaterial
 	{
 		MaterialLayoutFactory aLayoutFactory = new MaterialLayoutFactory();
 
+		EWT.setChildViewFactory(new MaterialChildViewFactory());
 		EWT.setLayoutFactory(aLayoutFactory);
 		EWT.setLayoutMapper(aLayoutFactory);
 
-		initWidgetFactories();
+		registerWidgetFactories();
 
+		// register defaults for widgets not implemented by GewtMaterial
 		EWT.registerDefaultWidgetFactories(false);
 	}
 
@@ -258,7 +261,7 @@ public class GewtMaterial
 	/***************************************
 	 * Initializes the GwtMaterialDesign-specific widget factories.
 	 */
-	private static void initWidgetFactories()
+	private static void registerWidgetFactories()
 	{
 		MaterialListControlFactory aListControlFactory =
 			new MaterialListControlFactory();

@@ -30,6 +30,9 @@ import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialContainer;
 import gwt.material.design.client.ui.MaterialFooter;
 import gwt.material.design.client.ui.MaterialHeader;
+import gwt.material.design.client.ui.MaterialModal;
+import gwt.material.design.client.ui.MaterialModalContent;
+import gwt.material.design.client.ui.MaterialModalFooter;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
@@ -51,7 +54,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	/********************************************************************
 	 * Internal enumeration of the different content areas to consider.
 	 */
-	private enum ContentArea { GLOBAL, CARD, COLLAPSIBLE, COLLECTION }
+	private enum ContentArea { GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MODAL }
 
 	//~ Instance fields --------------------------------------------------------
 
@@ -97,6 +100,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 
 			case COLLECTION:
 				aLayoutWidget = createCollectionContentContainer(eLayout);
+				break;
+
+			case MODAL:
+				aLayoutWidget = createModalContentContainer(eLayout);
 				break;
 
 			case GLOBAL:
@@ -234,27 +241,59 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	}
 
 	/***************************************
+	 * Creates the content layout widgets for a {@link MaterialModal} container.
+	 *
+	 * @param  eLayout The content layout type
+	 *
+	 * @return A new widget container or NULL if no match was available
+	 */
+	MaterialWidget createModalContentContainer(Layout eLayout)
+	{
+		MaterialWidget aLayoutWidget;
+
+		switch (eLayout)
+		{
+			case CONTENT:
+				aLayoutWidget = new MaterialModalContent();
+				break;
+
+			case FOOTER:
+				aLayoutWidget = new MaterialModalFooter();
+				break;
+
+			default:
+				aLayoutWidget = null;
+		}
+
+		return aLayoutWidget;
+	}
+
+	/***************************************
 	 * Returns the content area a certain widget represents.
 	 *
-	 * @param  rWidget
+	 * @param  rParent
 	 *
 	 * @return The content area for this widget
 	 */
-	private ContentArea getContentArea(Widget rWidget)
+	private ContentArea getContentArea(Widget rParent)
 	{
 		ContentArea eContentArea;
 
-		if (rWidget instanceof MaterialCollapsibleItem)
+		if (rParent instanceof MaterialCollapsibleItem)
 		{
 			eContentArea = ContentArea.COLLAPSIBLE;
 		}
-		else if (rWidget instanceof MaterialCollectionItem)
+		else if (rParent instanceof MaterialCollectionItem)
 		{
 			eContentArea = ContentArea.COLLECTION;
 		}
-		else if (rWidget instanceof MaterialCard)
+		else if (rParent instanceof MaterialCard)
 		{
 			eContentArea = ContentArea.CARD;
+		}
+		else if (rParent instanceof MaterialModal)
+		{
+			eContentArea = ContentArea.MODAL;
 		}
 		else
 		{
