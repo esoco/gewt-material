@@ -94,10 +94,6 @@ public class MaterialChildViewFactory extends ChildViewFactory
 	public static class GewtMaterialModal extends MaterialModal
 		implements IsChildViewWidget
 	{
-		//~ Static fields/initializers -----------------------------------------
-
-		private static boolean bBottom = true;
-
 		//~ Instance fields ----------------------------------------------------
 
 		private MaterialTitle aTitle = null;
@@ -115,12 +111,7 @@ public class MaterialChildViewFactory extends ChildViewFactory
 			setOutDuration(500);
 
 //			if (rStyle.hasFlag(Flag.BOTTOM))
-			if (bBottom)
-			{
-				setType(ModalType.BOTTOM_SHEET);
-			}
-
-			bBottom = !bBottom;
+			setType(ModalType.BOTTOM_SHEET);
 		}
 
 		//~ Methods ------------------------------------------------------------
