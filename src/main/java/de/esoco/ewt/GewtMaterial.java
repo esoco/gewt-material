@@ -155,12 +155,9 @@ public class GewtMaterial
 				}
 			}
 
-			RelativeScale eIconSize =
-				rStyle.getProperty(ICON_SIZE, RelativeScale.XLARGE);
+			RelativeScale eIconSize = rStyle.getProperty(ICON_SIZE, null);
 
-			// XLARGE not supported by GwtMaterial, therefore used
-			// as default instead of NULL
-			if (eIconSize != RelativeScale.XLARGE)
+			if (eIconSize != null)
 			{
 				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
 			}
