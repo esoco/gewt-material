@@ -17,7 +17,6 @@
 package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.AbstractButton;
-import gwt.material.design.client.constants.ButtonSize;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.ui.MaterialButton;
 
@@ -31,13 +30,11 @@ import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
 import de.esoco.lib.property.ButtonStyle;
-import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-import static de.esoco.lib.property.LayoutProperties.BUTTON_SIZE;
 import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.StyleProperties.BUTTON_STYLE;
 
@@ -60,8 +57,6 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	{
 		ButtonStyle eButtonStyle =
 			rStyle.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT);
-
-		RelativeScale eButtonSize = rStyle.getProperty(BUTTON_SIZE, null);
 
 		ButtonType     eButtonType   = mapButtonType(eButtonStyle);
 		AbstractButton aButtonWidget;
@@ -88,10 +83,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 			aButtonWidget.setType(eButtonType);
 		}
 
-		if (eButtonSize == RelativeScale.LARGE)
-		{
-			aButtonWidget.setSize(ButtonSize.LARGE);
-		}
+		GewtMaterial.checkApplyButtonSize(aButtonWidget, rStyle);
 
 		aButtonWidget.setWaves(GewtMaterial.getDefaultAnimation());
 

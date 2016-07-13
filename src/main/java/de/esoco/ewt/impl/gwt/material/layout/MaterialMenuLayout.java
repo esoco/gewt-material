@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.NavBarType;
@@ -64,12 +65,18 @@ public class MaterialMenuLayout extends MenuLayout
 	@Override
 	public void addWidget(HasWidgets rContainer,
 						  Widget	 rWidget,
-						  StyleData  rStyleData,
+						  StyleData  rStyle,
 						  int		 nIndex)
 	{
 		if (aMaterialFABList != null)
 		{
 			aMaterialFABList.add(rWidget);
+
+			if (rWidget instanceof AbstractButton)
+			{
+				GewtMaterial.checkApplyButtonSize((AbstractButton) rWidget,
+												  rStyle);
+			}
 		}
 		else
 		{
@@ -84,7 +91,7 @@ public class MaterialMenuLayout extends MenuLayout
 
 			super.addWidget(aNavSection != null ? aNavSection : rContainer,
 							rWidget,
-							rStyleData,
+							rStyle,
 							nIndex);
 		}
 	}
@@ -124,6 +131,7 @@ public class MaterialMenuLayout extends MenuLayout
 			MaterialAnchorButton aMenuButton =
 				new MaterialAnchorButton(ButtonType.FLOATING);
 
+			GewtMaterial.checkApplyButtonSize(aMenuButton, rContainerStyle);
 			GewtMaterial.checkApplyIcon(aMenuButton, rContainerStyle);
 			aMaterialFAB.add(aMenuButton);
 			aMaterialFAB.add(aMaterialFABList);

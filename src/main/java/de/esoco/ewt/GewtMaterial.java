@@ -16,9 +16,11 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
+import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.HasTextAlign;
+import gwt.material.design.client.constants.ButtonSize;
 import gwt.material.design.client.constants.IconPosition;
 import gwt.material.design.client.constants.IconSize;
 import gwt.material.design.client.constants.IconType;
@@ -53,6 +55,7 @@ import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
+import static de.esoco.lib.property.LayoutProperties.BUTTON_SIZE;
 import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_ALIGN;
@@ -85,9 +88,9 @@ public class GewtMaterial
 	//~ Static methods ---------------------------------------------------------
 
 	/***************************************
-	 * Applies any alignment settings from the style data to the given widget.
+	 * Applies any alignment settings from a style data to the given widget.
 	 *
-	 * @param rWidget rHasTextAlign The material widget with alignment
+	 * @param rWidget The material widget with alignment
 	 * @param rStyle  The style to check for alignment
 	 */
 	public static void checkApplyAlignment(Widget rWidget, StyleData rStyle)
@@ -128,9 +131,27 @@ public class GewtMaterial
 	}
 
 	/***************************************
-	 * Applies any icon definition from the style data to the given widget.
+	 * Applies any button size settings from a style data to the given button.
 	 *
-	 * @param rWidget rHasIcon The material widget with icon attribute
+	 * @param rButton The button widget to apply the size to
+	 * @param rStyle  The style to check for alignment
+	 */
+	public static void checkApplyButtonSize(
+		AbstractButton rButton,
+		StyleData	   rStyle)
+	{
+		RelativeScale eButtonSize = rStyle.getProperty(BUTTON_SIZE, null);
+
+		if (eButtonSize == RelativeScale.LARGE)
+		{
+			rButton.setSize(ButtonSize.LARGE);
+		}
+	}
+
+	/***************************************
+	 * Applies any icon definition from a style data to the given widget.
+	 *
+	 * @param rWidget The material widget with icon attribute
 	 * @param rStyle  The style to check for icon definitions
 	 */
 	public static void checkApplyIcon(Widget rWidget, StyleData rStyle)
