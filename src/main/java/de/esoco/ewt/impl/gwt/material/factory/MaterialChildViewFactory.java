@@ -24,6 +24,7 @@ import de.esoco.ewt.component.ChildView.ChildViewFactory;
 import de.esoco.ewt.component.ChildView.IsChildViewWidget;
 import de.esoco.ewt.component.View;
 import de.esoco.ewt.style.ViewStyle;
+import de.esoco.ewt.style.ViewStyle.Flag;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -110,8 +111,10 @@ public class MaterialChildViewFactory extends ChildViewFactory
 			setInDuration(500);
 			setOutDuration(500);
 
-//			if (rStyle.hasFlag(Flag.BOTTOM))
-			setType(ModalType.BOTTOM_SHEET);
+			if (rStyle.hasFlag(Flag.BOTTOM))
+			{
+				setType(ModalType.BOTTOM_SHEET);
+			}
 		}
 
 		//~ Methods ------------------------------------------------------------
