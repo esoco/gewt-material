@@ -26,7 +26,6 @@ import de.esoco.ewt.component.View;
 import de.esoco.ewt.style.ViewStyle;
 import de.esoco.ewt.style.ViewStyle.Flag;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -166,7 +165,6 @@ public class MaterialChildViewFactory extends ChildViewFactory
 		@Override
 		public void show()
 		{
-			GWT.log("openModal");
 			openModal();
 		}
 	}
