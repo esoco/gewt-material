@@ -20,9 +20,14 @@ import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialButton;
 
 import de.esoco.ewt.component.Component;
+import de.esoco.ewt.component.TextControl.IsTextControlWidget;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSearch;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTextBox;
+import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
+
+import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -31,7 +36,7 @@ import de.esoco.ewt.style.StyleFlag;
  * @author eso
  */
 public class MaterialTextBoxFactory
-	extends MaterialWidgetFactory<GewtMaterialTextBox>
+	extends MaterialWidgetFactory<IsTextControlWidget>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -39,17 +44,26 @@ public class MaterialTextBoxFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialTextBox createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
+	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
-		GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
+		Widget aTextWidget;
 
-		if (rStyle.hasFlag(StyleFlag.PASSWORD))
+		if (rComponent.getParent().getLayout() instanceof MenuLayout)
 		{
-			aTextBox.setType(InputType.PASSWORD);
+			aTextWidget = new GewtMaterialSearch();
+		}
+		else
+		{
+			GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
+
+			if (rStyle.hasFlag(StyleFlag.PASSWORD))
+			{
+				aTextBox.setType(InputType.PASSWORD);
+			}
+
+			aTextWidget = aTextBox;
 		}
 
-		return aTextBox;
+		return aTextWidget;
 	}
 }

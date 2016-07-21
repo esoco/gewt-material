@@ -26,7 +26,9 @@ import gwt.material.design.client.ui.MaterialFABList;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
+import gwt.material.design.client.ui.MaterialSearch;
 import gwt.material.design.client.ui.MaterialSideNav;
+import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
@@ -89,10 +91,17 @@ public class MaterialMenuLayout extends MenuLayout
 				aNavBar.add(aNavSection);
 			}
 
-			super.addWidget(aNavSection != null ? aNavSection : rContainer,
-							rWidget,
-							rStyle,
-							nIndex);
+			if (aNavSection != null)
+			{
+				rContainer = aNavSection;
+			}
+
+			if (rWidget instanceof MaterialTextBox)
+			{
+				rWidget = new MaterialSearch();
+			}
+
+			super.addWidget(rContainer, rWidget, rStyle, nIndex);
 		}
 	}
 
