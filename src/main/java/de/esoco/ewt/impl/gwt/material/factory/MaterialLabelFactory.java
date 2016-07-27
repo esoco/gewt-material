@@ -27,6 +27,7 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label.LabelWidgetFactory;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialCardTitle;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialIcon;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialImage;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTitle;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -85,6 +86,10 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 
 				case ICON:
 					aWidget = new GewtMaterialIcon();
+					break;
+
+				case IMAGE:
+					aWidget = new GewtMaterialImage();
 					break;
 
 				case TITLE:
