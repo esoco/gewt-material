@@ -22,6 +22,9 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.ListControl.IsListControlWidget;
 import de.esoco.ewt.style.StyleData;
 
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Widget;
+
 
 /********************************************************************
  * The factory for {@link MaterialListBox} widgets.
@@ -55,10 +58,28 @@ public class MaterialListControlFactory
 	static class GewtMaterialListBox extends MaterialListBox
 		implements IsListControlWidget
 	{
+		//~ Instance fields ----------------------------------------------------
+
+		private boolean bInitialized = false;
+
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
-		 * Overridden to disable because of a but in GWT Material.
+		 * @see #setEnabled(boolean)
+		 */
+		@Override
+		public void onLoad()
+		{
+			super.onLoad();
+
+			if (!bInitialized)
+			{
+				bInitialized = true;
+			}
+		}
+
+		/***************************************
+		 * Overridden because of a bug in GWT Material.
 		 *
 		 * @see https://github.com/GwtMaterialDesign/gwt-material/issues/388
 		 * @see MaterialListBox#setEnabled(boolean)
@@ -66,6 +87,17 @@ public class MaterialListControlFactory
 		@Override
 		public void setEnabled(boolean bEnabled)
 		{
+			super.setEnabled(bEnabled);
+
+			if (bInitialized)
+			{
+				Widget rWidget = getWidget(0);
+
+				if (rWidget instanceof ListBox)
+				{
+					initializeMaterial(rWidget.getElement());
+				}
+			}
 		}
 	}
 }
