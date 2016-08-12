@@ -20,6 +20,7 @@ import gwt.material.design.client.constants.ModalType;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTitle;
 
+import de.esoco.ewt.EWT;
 import de.esoco.ewt.component.ChildView.ChildViewFactory;
 import de.esoco.ewt.component.ChildView.IsChildViewWidget;
 import de.esoco.ewt.component.View;
@@ -152,6 +153,8 @@ public class MaterialChildViewFactory extends ChildViewFactory
 			{
 				aTitle = new MaterialTitle(sTitle);
 				add(aTitle);
+
+				aTitle.addStyleName(EWT.CSS.ewtDialogTitle());
 			}
 			else
 			{
