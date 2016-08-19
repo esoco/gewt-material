@@ -85,6 +85,20 @@ public class GewtMaterialTextBox extends MaterialTextBox
 	}
 
 	/***************************************
+	 * Overridden to remove the invalid style which is set under certain
+	 * conditions on Chrome and IE.
+	 *
+	 * @see MaterialTextBox#setFocus(boolean)
+	 */
+	@Override
+	public void setFocus(boolean bFocused)
+	{
+		super.setFocus(bFocused);
+
+		asGwtValueBoxBase().getElement().removeClassName("invalid");
+	}
+
+	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
