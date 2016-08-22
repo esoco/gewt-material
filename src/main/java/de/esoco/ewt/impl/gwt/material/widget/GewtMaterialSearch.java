@@ -21,6 +21,10 @@ import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+
 
 /********************************************************************
  * A {@link MaterialTextBox} subclass that also implements the interface {@link
@@ -31,6 +35,24 @@ import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 public class GewtMaterialSearch extends MaterialSearch
 	implements IsTextControlWidget
 {
+	//~ Constructors -----------------------------------------------------------
+
+	/***************************************
+	 * Creates a new instance.
+	 */
+	public GewtMaterialSearch()
+	{
+		addCloseHandler(new CloseHandler<String>()
+			{
+				@Override
+				public void onClose(CloseEvent<String> rEvent)
+				{
+					asGwtValueBoxBase().setText("");
+					ValueChangeEvent.fire(asGwtValueBoxBase(), "");
+				}
+			});
+	}
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************

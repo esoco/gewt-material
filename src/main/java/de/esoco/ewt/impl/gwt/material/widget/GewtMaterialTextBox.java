@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
+import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
@@ -85,20 +86,6 @@ public class GewtMaterialTextBox extends MaterialTextBox
 	}
 
 	/***************************************
-	 * Overridden to remove the invalid style which is set under certain
-	 * conditions on Chrome and IE.
-	 *
-	 * @see MaterialTextBox#setFocus(boolean)
-	 */
-	@Override
-	public void setFocus(boolean bFocused)
-	{
-		super.setFocus(bFocused);
-
-		asGwtValueBoxBase().getElement().removeClassName("invalid");
-	}
-
-	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -123,6 +110,18 @@ public class GewtMaterialTextBox extends MaterialTextBox
 	public void setSelectionRange(int nStart, int nLength)
 	{
 		asGwtValueBoxBase().setSelectionRange(nStart, nLength);
+	}
+
+	/***************************************
+	 * @see MaterialTextBox#setType(InputType)
+	 */
+	@Override
+	public void setType(InputType rType)
+	{
+		super.setType(rType);
+
+		// workaround for https://github.com/GwtMaterialDesign/gwt-material/issues/424
+		asGwtValueBoxBase().removeStyleName("validate");
 	}
 
 	/***************************************
