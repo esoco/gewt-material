@@ -66,12 +66,11 @@ class InternalMaterialSwitch extends MaterialWidget
 	public InternalMaterialSwitch()
 	{
 		super(Document.get().createDivElement(), "switch");
+
 		span.setStyleName("lever");
 		input.setType(InputType.CHECKBOX);
 
-		//register click handler here in order to have it at first position
-		// and therefore it will deal with clicks as first and setup the value
-		// right before others get notified.
+		// BF: moved from onLoad()
 		addClickHandler(new ClickHandler()
 			{
 				@Override
@@ -90,45 +89,23 @@ class InternalMaterialSwitch extends MaterialWidget
 	 * @see com.google.gwt.event.dom.client.HasClickHandlers#addClickHandler(com.google.gwt.event.dom.client.ClickHandler)
 	 */
 	@Override
-	public HandlerRegistration addClickHandler(final ClickHandler handler)
+	public HandlerRegistration addClickHandler(final ClickHandler rHandler)
 	{
-		return addDomHandler(new ClickHandler()
-			{
-				@Override
-				public void onClick(ClickEvent event)
-				{
-					if (isEnabled())
-					{
-						handler.onClick(event);
-					}
-				}
-			},
-							 ClickEvent.getType());
+		return addDomHandler(rHandler, ClickEvent.getType());
 	}
 
 	/***************************************
 	 * TODO: DOCUMENT ME!
 	 *
-	 * @param  handler TODO: DOCUMENT ME!
+	 * @param  rHandler TODO: DOCUMENT ME!
 	 *
 	 * @return TODO: DOCUMENT ME!
 	 */
 	@Override
 	public HandlerRegistration addValueChangeHandler(
-		final ValueChangeHandler<Boolean> handler)
+		final ValueChangeHandler<Boolean> rHandler)
 	{
-		return addHandler(new ValueChangeHandler<Boolean>()
-			{
-				@Override
-				public void onValueChange(ValueChangeEvent<Boolean> event)
-				{
-					if (isEnabled())
-					{
-						handler.onValueChange(event);
-					}
-				}
-			},
-						  ValueChangeEvent.getType());
+		return addHandler(rHandler, ValueChangeEvent.getType());
 	}
 
 	/***************************************
@@ -309,20 +286,12 @@ class InternalMaterialSwitch extends MaterialWidget
 	{
 		super.onLoad();
 
-		if (offLabel.getText() != null && !offLabel.getText().isEmpty())
-		{
-			label.add(offLabel);
-		}
-
+		label.add(offLabel);
 		label.add(input);
 		label.add(span);
 		add(label);
 		add(lblError);
 		lblError.getElement().getStyle().setMarginTop(16, Unit.PX);
-
-		if (onLabel.getText() != null && !onLabel.getText().isEmpty())
-		{
-			label.add(onLabel);
-		}
+		label.add(onLabel);
 	}
 }
