@@ -16,6 +16,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
+import gwt.material.design.client.ui.MaterialSwitch;
+
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 
@@ -26,8 +28,7 @@ import com.google.gwt.user.client.ui.HasText;
  *
  * @author eso
  */
-public class GewtMaterialSwitch extends InternalMaterialSwitch
-	implements HasText
+public class GewtMaterialSwitch extends MaterialSwitch implements HasText
 {
 	//~ Instance fields --------------------------------------------------------
 

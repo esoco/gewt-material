@@ -45,7 +45,7 @@ public class GewtMaterialTextArea extends MaterialTextArea
 	@Override
 	public int getCursorPos()
 	{
-		return asGwtValueBoxBase().getCursorPos();
+		return asValueBoxBase().getCursorPos();
 	}
 
 	/***************************************
@@ -61,36 +61,9 @@ public class GewtMaterialTextArea extends MaterialTextArea
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getSelectedText()
-	{
-		return asGwtValueBoxBase().getSelectedText();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isReadOnly()
-	{
-		return asGwtValueBoxBase().isReadOnly();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void setCharacterWidth(int nColumns)
 	{
-		// TODO: check if possible with ValueBoxBase
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCursorPos(int nPosition)
-	{
-		asGwtValueBoxBase().setCursorPos(nPosition);
+		// not supported by base class
 	}
 
 	/***************************************
@@ -106,27 +79,9 @@ public class GewtMaterialTextArea extends MaterialTextArea
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setReadOnly(boolean bReadOnly)
-	{
-		asGwtValueBoxBase().setReadOnly(bReadOnly);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setSelectionRange(int nStart, int nLength)
-	{
-		asGwtValueBoxBase().setSelectionRange(nStart, nLength);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void setVisibleLength(int nColumns)
 	{
-		// TODO: check if possible with ValueBoxBase
+		// not supported by base class
 	}
 
 	/***************************************
@@ -135,6 +90,6 @@ public class GewtMaterialTextArea extends MaterialTextArea
 	@Override
 	public void setVisibleLines(int nRows)
 	{
-		// TODO: check if possible with ValueBoxBase
+		// not supported by base class
 	}
 }

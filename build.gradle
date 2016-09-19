@@ -21,7 +21,7 @@ repositories {
 	jcenter()
 }
 
-dependencies
+dependencies 
 {
 	if (project(':gewt').getProjectDir().exists())
 	{
@@ -32,8 +32,8 @@ dependencies
 		compile 'de.esoco:gewt:1.+'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:1.5.3'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.5.2'
+	compile 'com.github.gwtmaterialdesign:gwt-material:1.6.2'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.6.0'
 }
 
 gwt {

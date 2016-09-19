@@ -47,8 +47,8 @@ public class GewtMaterialSearch extends MaterialSearch
 				@Override
 				public void onClose(CloseEvent<String> rEvent)
 				{
-					asGwtValueBoxBase().setText("");
-					ValueChangeEvent.fire(asGwtValueBoxBase(), "");
+					setText("");
+					ValueChangeEvent.fire(GewtMaterialSearch.this, "");
 				}
 			});
 	}
@@ -61,52 +61,7 @@ public class GewtMaterialSearch extends MaterialSearch
 	@Override
 	public int getCursorPos()
 	{
-		return asGwtValueBoxBase().getCursorPos();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getSelectedText()
-	{
-		return asGwtValueBoxBase().getSelectedText();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isReadOnly()
-	{
-		return asGwtValueBoxBase().isReadOnly();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCursorPos(int nPosition)
-	{
-		asGwtValueBoxBase().setCursorPos(nPosition);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setReadOnly(boolean bReadOnly)
-	{
-		asGwtValueBoxBase().setReadOnly(bReadOnly);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setSelectionRange(int nStart, int nLength)
-	{
-		asGwtValueBoxBase().setSelectionRange(nStart, nLength);
+		return asValueBoxBase().getCursorPos();
 	}
 
 	/***************************************

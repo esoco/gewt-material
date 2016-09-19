@@ -184,6 +184,15 @@ class InternalMaterialSwitch extends MaterialWidget
 	}
 
 	/***************************************
+	 * @see gwt.material.design.client.base.HasError#setHelperText(java.lang.String)
+	 */
+	@Override
+	public void setHelperText(String sHelperText)
+	{
+		errorMixin.setHelperText(sHelperText);
+	}
+
+	/***************************************
 	 * TODO: DOCUMENT ME!
 	 *
 	 * @param input the input to set

@@ -46,7 +46,7 @@ public class GewtMaterialTextBox extends MaterialTextBox
 	@Override
 	public int getCursorPos()
 	{
-		return asGwtValueBoxBase().getCursorPos();
+		return asValueBoxBase().getCursorPos();
 	}
 
 	/***************************************
@@ -62,54 +62,9 @@ public class GewtMaterialTextBox extends MaterialTextBox
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getSelectedText()
-	{
-		return asGwtValueBoxBase().getSelectedText();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isReadOnly()
-	{
-		return asGwtValueBoxBase().isReadOnly();
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCursorPos(int nPosition)
-	{
-		asGwtValueBoxBase().setCursorPos(nPosition);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void setImage(Image rImage)
 	{
 		aImageAttrMixin.setImage(rImage);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setReadOnly(boolean bReadOnly)
-	{
-		asGwtValueBoxBase().setReadOnly(bReadOnly);
-	}
-
-	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setSelectionRange(int nStart, int nLength)
-	{
-		asGwtValueBoxBase().setSelectionRange(nStart, nLength);
 	}
 
 	/***************************************
@@ -121,7 +76,7 @@ public class GewtMaterialTextBox extends MaterialTextBox
 		super.setType(rType);
 
 		// workaround for https://github.com/GwtMaterialDesign/gwt-material/issues/424
-		asGwtValueBoxBase().removeStyleName("validate");
+		asValueBoxBase().removeStyleName("validate");
 	}
 
 	/***************************************
@@ -130,5 +85,6 @@ public class GewtMaterialTextBox extends MaterialTextBox
 	@Override
 	public void setVisibleLength(int nColumns)
 	{
+		// not supported by base class
 	}
 }
