@@ -18,8 +18,8 @@ package de.esoco.ewt.impl.gwt.material.layout;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.MainView.MainViewLayout;
+import de.esoco.ewt.layout.DefaultLayoutFactory;
 import de.esoco.ewt.layout.GenericLayout;
-import de.esoco.ewt.layout.LayoutFactory.DefaultLayoutFactory;
 import de.esoco.ewt.layout.LayoutMapper;
 import de.esoco.ewt.style.StyleData;
 
