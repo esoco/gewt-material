@@ -23,7 +23,6 @@ import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 
 
 /********************************************************************
@@ -47,8 +46,7 @@ public class GewtMaterialSearch extends MaterialSearch
 				@Override
 				public void onClose(CloseEvent<String> rEvent)
 				{
-					setText("");
-					ValueChangeEvent.fire(GewtMaterialSearch.this, "");
+					setValue("", true);
 				}
 			});
 	}
