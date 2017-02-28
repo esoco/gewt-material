@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.client.base.MaterialWidget;
+import gwt.material.design.client.base.helper.StyleHelper;
 import gwt.material.design.client.constants.CollapsibleType;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
@@ -30,6 +31,7 @@ import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.ListLayoutStyle;
+import de.esoco.lib.property.SingleSelection;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,12 +47,13 @@ import static de.esoco.lib.property.StyleProperties.MULTI_SELECTION;
  * @author eso
  */
 public class MaterialListLayout extends AbstractMaterialLayout
+	implements SingleSelection
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private ListLayoutStyle eListStyle;
-
+	private ListLayoutStyle		   eListStyle;
 	private MaterialCollectionItem aCurrentItem;
+	private SingleSelection		   aSelectionWidget;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -108,6 +111,28 @@ public class MaterialListLayout extends AbstractMaterialLayout
 	 * {@inheritDoc}
 	 */
 	@Override
+	public int getSelectionIndex()
+	{
+		return aSelectionWidget != null ? aSelectionWidget.getSelectionIndex()
+										: -1;
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setSelection(int nIndex)
+	{
+		if (aSelectionWidget != null)
+		{
+			aSelectionWidget.setSelection(nIndex);
+		}
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
 	protected MaterialWidget creatMaterialLayoutContainer(
 		Container rContainer,
 		StyleData rContainerStyle)
@@ -124,15 +149,75 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		}
 		else
 		{
-			MaterialCollapsible aCollapsible = new MaterialCollapsible();
+			GewtMaterialCollapsible aCollapsible =
+				new GewtMaterialCollapsible();
 
 			aCollapsible.setAccordion(!rContainerStyle.hasFlag(MULTI_SELECTION));
 			aCollapsible.setType(eListStyle == ListLayoutStyle.POPOUT
 								 ? CollapsibleType.POPOUT
 								 : CollapsibleType.FLAT);
 			aContainerWidget = aCollapsible;
+			aSelectionWidget = aCollapsible;
 		}
 
 		return aContainerWidget;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * A {@link MaterialCollapsible} subclass that adds selection functionality.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialCollapsible extends MaterialCollapsible
+		implements SingleSelection
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getSelectionIndex()
+		{
+			int nSelection = -1;
+			int nIndex     = 0;
+
+			for (Widget rItem : getChildren())
+			{
+				if (StyleHelper.containsStyle(rItem.getElement().getClassName(),
+											  "active"))
+				{
+					nSelection = nIndex;
+
+					break;
+				}
+				else
+				{
+					nIndex++;
+				}
+			}
+
+			return nSelection;
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setSelection(int nIndex)
+		{
+			if (nIndex >= 0)
+			{
+				setActive(nIndex + 1);
+			}
+			else
+			{
+				clearActive();
+			}
+
+			initCollapsible();
+		}
 	}
 }
