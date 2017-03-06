@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import de.esoco.ewt.component.CheckBox;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.List;
 import de.esoco.ewt.component.ListBox;
+import de.esoco.ewt.component.ProgressBar;
 import de.esoco.ewt.component.RadioButton;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
@@ -41,6 +42,7 @@ import de.esoco.ewt.impl.gwt.material.factory.MaterialCheckBoxFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialChildViewFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialListControlFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialProgressBarFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialRadioButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
@@ -52,7 +54,7 @@ import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.IsWidget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
 import static de.esoco.lib.property.LayoutProperties.BUTTON_SIZE;
@@ -93,7 +95,7 @@ public class GewtMaterial
 	 * @param rWidget The material widget with alignment
 	 * @param rStyle  The style to check for alignment
 	 */
-	public static void checkApplyAlignment(Widget rWidget, StyleData rStyle)
+	public static void checkApplyAlignment(IsWidget rWidget, StyleData rStyle)
 	{
 		if (rWidget instanceof HasTextAlign)
 		{
@@ -154,7 +156,7 @@ public class GewtMaterial
 	 * @param rWidget The material widget with icon attribute
 	 * @param rStyle  The style to check for icon definitions
 	 */
-	public static void checkApplyIcon(Widget rWidget, StyleData rStyle)
+	public static void checkApplyIcon(IsWidget rWidget, StyleData rStyle)
 	{
 		if (rWidget instanceof HasIcon)
 		{
@@ -210,7 +212,7 @@ public class GewtMaterial
 	 * @param rWidget The material widget to apply styles to
 	 * @param rStyle  The style data to check for styles
 	 */
-	public static void checkApplyStyles(Widget rWidget, StyleData rStyle)
+	public static void checkApplyStyles(IsWidget rWidget, StyleData rStyle)
 	{
 		Alignment eFloatAlign = rStyle.getProperty(FLOAT, null);
 
@@ -304,6 +306,9 @@ public class GewtMaterial
 								  true);
 		EWT.registerWidgetFactory(TextField.class,
 								  new MaterialTextBoxFactory(),
+								  true);
+		EWT.registerWidgetFactory(ProgressBar.class,
+								  new MaterialProgressBarFactory(),
 								  true);
 	}
 }

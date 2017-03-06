@@ -16,23 +16,21 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.base.MaterialWidget;
+import gwt.material.design.client.ui.MaterialButton;
 
-import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Component;
-import de.esoco.ewt.impl.gwt.WidgetFactory;
+import de.esoco.ewt.component.ProgressBar.IsProgressBarWidget;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialProgress;
 import de.esoco.ewt.style.StyleData;
-
-import com.google.gwt.user.client.ui.IsWidget;
 
 
 /********************************************************************
- * The base class for all {@link MaterialWidget} factories.
+ * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
-public abstract class MaterialWidgetFactory<W extends IsWidget>
-	implements WidgetFactory<W>
+public class MaterialProgressBarFactory
+	extends MaterialWidgetFactory<IsProgressBarWidget>
 {
 	//~ Methods ----------------------------------------------------------------
 
@@ -40,26 +38,10 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public final W createWidget(Component rComponent, StyleData rStyle)
-	{
-		IsWidget aWidget = createMaterialWidget(rComponent, rStyle);
-
-		GewtMaterial.checkApplyStyles(aWidget, rStyle);
-
-		return (W) aWidget;
-	}
-
-	/***************************************
-	 * Must be implemented by subclasses to create the {@link MaterialWidget}
-	 * for the given component.
-	 *
-	 * @param  rComponent The component to create the widget for
-	 * @param  rStyle     The style of the new widget
-	 *
-	 * @return The new material widget instance
-	 */
-	protected abstract IsWidget createMaterialWidget(
+	public IsProgressBarWidget createMaterialWidget(
 		Component rComponent,
-		StyleData rStyle);
+		StyleData rStyle)
+	{
+		return new GewtMaterialProgress();
+	}
 }
