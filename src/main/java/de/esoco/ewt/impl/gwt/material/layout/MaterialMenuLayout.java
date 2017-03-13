@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,6 +52,12 @@ import static de.esoco.lib.property.LayoutProperties.FLOAT;
  */
 public class MaterialMenuLayout extends MenuLayout
 {
+	//~ Static fields/initializers ---------------------------------------------
+
+	private static MaterialNavBar aGlobalMenu = null;
+
+	private static int nNextId = 1;
+
 	//~ Instance fields --------------------------------------------------------
 
 	private MaterialNavBar     aNavBar;
@@ -149,12 +155,30 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else if (bVertical)
 		{
-			aMenuWidget = new MaterialSideNav();
+			MaterialSideNav aSideNav = new MaterialSideNav();
+
+			aMenuWidget = aSideNav;
+
+			if (aGlobalMenu != null)
+			{
+				String sId = "sideMenu" + nNextId++;
+
+				aSideNav.setCloseOnClick(true);
+				aSideNav.setShowOnAttach(false);
+				aSideNav.setAlwaysShowActivator(false);
+				aSideNav.setId(sId);
+				aGlobalMenu.setActivates(sId);
+			}
 		}
 		else
 		{
 			aNavBar     = new MaterialNavBar();
 			aMenuWidget = aNavBar;
+
+			if (aGlobalMenu == null)
+			{
+				aGlobalMenu = aNavBar;
+			}
 
 			// TODO: apply style
 			aNavBar.setType(NavBarType.FIXED);
