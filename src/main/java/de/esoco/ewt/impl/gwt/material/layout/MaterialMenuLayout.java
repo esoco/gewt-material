@@ -148,29 +148,27 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else if (bVertical)
 		{
-			MaterialSideNav aSideNav = new MaterialSideNav();
+			MaterialSideNav aSideNav = new GewtMaterialSideNav();
 
 			aMenuWidget = aSideNav;
 
 			if (aGlobalMenu != null)
 			{
-				String sId = "sideMenu" + nNextId++;
-
+				aSideNav.setId("GlobalSideNav");
 				aSideNav.setCloseOnClick(true);
 				aSideNav.setShowOnAttach(false);
-				aSideNav.setAlwaysShowActivator(false);
-				aSideNav.setId(sId);
-				aGlobalMenu.setActivates(sId);
+				aSideNav.setAlwaysShowActivator(true);
 			}
 		}
 		else
 		{
-			aNavBar     = new MaterialNavBar();
+			aNavBar     = new GewtMaterialNavBar();
 			aMenuWidget = aNavBar;
 
 			if (aGlobalMenu == null)
 			{
 				aGlobalMenu = aNavBar;
+				aGlobalMenu.setActivates("GlobalSideNav");
 			}
 
 			// TODO: apply style
@@ -178,5 +176,36 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 
 		return aMenuWidget;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * TODO: DOCUMENT ME!
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialNavBar extends MaterialNavBar
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * @see gwt.material.design.client.ui.MaterialNavBar#onLoad()
+		 */
+		@Override
+		protected void onLoad()
+		{
+			super.onLoad();
+			getElement().setAttribute("data-activates", "GlobalSideNav");
+		}
+	}
+
+	/********************************************************************
+	 * TODO: DOCUMENT ME!
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialSideNav extends MaterialSideNav
+	{
 	}
 }

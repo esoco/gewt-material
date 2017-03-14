@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,9 +21,6 @@ import gwt.material.design.client.ui.MaterialListBox;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.ListControl.IsListControlWidget;
 import de.esoco.ewt.style.StyleData;
-
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -58,46 +55,5 @@ public class MaterialListControlFactory
 	static class GewtMaterialListBox extends MaterialListBox
 		implements IsListControlWidget
 	{
-		//~ Instance fields ----------------------------------------------------
-
-		private boolean bInitialized = false;
-
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * @see #setEnabled(boolean)
-		 */
-		@Override
-		public void onLoad()
-		{
-			super.onLoad();
-
-			if (!bInitialized)
-			{
-				bInitialized = true;
-			}
-		}
-
-		/***************************************
-		 * Overridden because of a bug in GWT Material.
-		 *
-		 * @see https://github.com/GwtMaterialDesign/gwt-material/issues/388
-		 * @see MaterialListBox#setEnabled(boolean)
-		 */
-		@Override
-		public void setEnabled(boolean bEnabled)
-		{
-			super.setEnabled(bEnabled);
-
-			if (bInitialized)
-			{
-				Widget rWidget = getWidget(0);
-
-				if (rWidget instanceof ListBox)
-				{
-					initializeMaterial(rWidget.getElement());
-				}
-			}
-		}
 	}
 }

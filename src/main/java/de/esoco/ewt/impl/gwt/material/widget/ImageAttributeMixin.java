@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
-import gwt.material.design.addins.client.stepper.base.mixin.AbstractMixin;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.constants.IconType;
 
@@ -24,7 +23,7 @@ import de.esoco.ewt.graphics.Icon;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
-import com.google.gwt.user.client.ui.UIObject;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -32,12 +31,14 @@ import com.google.gwt.user.client.ui.UIObject;
  *
  * @author eso
  */
-public class ImageAttributeMixin<T extends UIObject & HasIcon>
-	extends AbstractMixin<T> implements ImageAttribute
+public class ImageAttributeMixin<T extends Widget & HasIcon>
+	implements ImageAttribute
 {
 	//~ Instance fields --------------------------------------------------------
 
 	private Image rImage;
+
+	T rWidget;
 
 	//~ Constructors -----------------------------------------------------------
 
@@ -46,7 +47,7 @@ public class ImageAttributeMixin<T extends UIObject & HasIcon>
 	 */
 	public ImageAttributeMixin(T rWidget)
 	{
-		super(rWidget);
+		this.rWidget = rWidget;
 	}
 
 	//~ Methods ----------------------------------------------------------------
@@ -70,7 +71,7 @@ public class ImageAttributeMixin<T extends UIObject & HasIcon>
 
 		if (rImage instanceof Icon)
 		{
-			uiObject.setIconType(IconType.valueOf(((Icon) rImage).getName()));
+			rWidget.setIconType(IconType.valueOf(((Icon) rImage).getName()));
 		}
 	}
 }

@@ -217,7 +217,7 @@ public class MaterialListLayout extends AbstractMaterialLayout
 				clearActive();
 			}
 
-			initCollapsible();
+			collapsible();
 		}
 	}
 }

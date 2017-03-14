@@ -30,12 +30,12 @@ dependencies
 		compile 'de.esoco:gewt:1.+'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:1.6.2'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:1.6.0'
+	compile 'com.github.gwtmaterialdesign:gwt-material:2.0-rc4'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:2.0-rc4'
 }
 
 gwt {
-    gwtVersion='2.7.0'
+    gwtVersion='2.8.0'
     modules 'de.esoco.GewtMaterial'
 }
 
