@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
+import gwt.material.design.client.base.mixin.HTMLMixin;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardContent;
@@ -34,6 +35,7 @@ import de.esoco.ewt.style.StyleFlag;
 
 import de.esoco.lib.property.LabelStyle;
 
+import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -77,7 +79,7 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 				case DEFAULT:
 					aWidget =
 						rStyle.hasFlag(HAS_IMAGES) ? new GewtMaterialIcon()
-												   : new MaterialLabel();
+												   : new GewtMaterialLabel();
 					break;
 
 				case BRAND:
@@ -117,5 +119,40 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 		}
 
 		return aWidget;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * Material label that also implements {@link HasHTML}.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialLabel extends MaterialLabel
+		implements HasHTML
+	{
+		//~ Instance fields ----------------------------------------------------
+
+		private HTMLMixin<GewtMaterialLabel> aHtmlMixin = new HTMLMixin<>(this);
+
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String getHTML()
+		{
+			return aHtmlMixin.getHTML();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setHTML(String sHtml)
+		{
+			aHtmlMixin.setHTML(sHtml);
+		}
 	}
 }
