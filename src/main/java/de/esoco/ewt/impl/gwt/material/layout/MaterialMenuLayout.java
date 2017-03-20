@@ -54,8 +54,6 @@ public class MaterialMenuLayout extends MenuLayout
 
 	private static MaterialNavBar aGlobalMenu = null;
 
-	private static int nNextId = 1;
-
 	//~ Instance fields --------------------------------------------------------
 
 	private MaterialNavBar     aNavBar;
@@ -181,7 +179,7 @@ public class MaterialMenuLayout extends MenuLayout
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * TODO: DOCUMENT ME!
+	 * GEWT {@link MaterialNavBar} subclass.
 	 *
 	 * @author eso
 	 */
@@ -190,7 +188,7 @@ public class MaterialMenuLayout extends MenuLayout
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
-		 * @see gwt.material.design.client.ui.MaterialNavBar#onLoad()
+		 * {@inheritDoc}
 		 */
 		@Override
 		protected void onLoad()
