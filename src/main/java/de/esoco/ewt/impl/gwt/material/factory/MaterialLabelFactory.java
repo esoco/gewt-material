@@ -83,7 +83,7 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 					break;
 
 				case BRAND:
-					aWidget = new MaterialNavBrand();
+					aWidget = new GewtMaterialNavBrand();
 					break;
 
 				case ICON:
@@ -154,5 +154,15 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 		{
 			aHtmlMixin.setHTML(sHtml);
 		}
+	}
+
+	/********************************************************************
+	 * Subclassed to implement {@link HasText}.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialNavBrand extends MaterialNavBrand
+		implements HasText
+	{
 	}
 }

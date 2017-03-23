@@ -133,12 +133,12 @@ public class GewtMaterial
 	}
 
 	/***************************************
-	 * Applies any button size settings from a style data to the given button.
+	 * Applies any button scale settings from a style data to the given button.
 	 *
 	 * @param rButton The button widget to apply the size to
 	 * @param rStyle  The style to check for alignment
 	 */
-	public static void checkApplyButtonSize(
+	public static void checkApplyButtonScale(
 		AbstractButton rButton,
 		StyleData	   rStyle)
 	{

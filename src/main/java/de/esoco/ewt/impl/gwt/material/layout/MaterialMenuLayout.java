@@ -79,8 +79,8 @@ public class MaterialMenuLayout extends MenuLayout
 
 			if (rWidget instanceof AbstractButton)
 			{
-				GewtMaterial.checkApplyButtonSize((AbstractButton) rWidget,
-												  rStyle);
+				GewtMaterial.checkApplyButtonScale((AbstractButton) rWidget,
+												   rStyle);
 			}
 		}
 		else
@@ -138,7 +138,7 @@ public class MaterialMenuLayout extends MenuLayout
 			MaterialAnchorButton aMenuButton =
 				new MaterialAnchorButton(ButtonType.FLOATING);
 
-			GewtMaterial.checkApplyButtonSize(aMenuButton, rContainerStyle);
+			GewtMaterial.checkApplyButtonScale(aMenuButton, rContainerStyle);
 			GewtMaterial.checkApplyIcon(aMenuButton, rContainerStyle);
 			aMaterialFAB.add(aMenuButton);
 			aMaterialFAB.add(aMaterialFABList);
@@ -147,7 +147,7 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else if (bVertical)
 		{
-			MaterialSideNav aSideNav = new GewtMaterialSideNav();
+			MaterialSideNav aSideNav = new MaterialSideNav();
 
 			aMenuWidget = aSideNav;
 
@@ -162,7 +162,7 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else
 		{
-			aNavBar     = new GewtMaterialNavBar();
+			aNavBar     = new MaterialNavBar();
 			aMenuWidget = aNavBar;
 
 			if (aGlobalMenu == null)
@@ -176,36 +176,5 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 
 		return aMenuWidget;
-	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * GEWT {@link MaterialNavBar} subclass.
-	 *
-	 * @author eso
-	 */
-	public static class GewtMaterialNavBar extends MaterialNavBar
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setActivates(String sId)
-		{
-			insert(getNavMenu(), 0);
-			super.setActivates(sId);
-		}
-	}
-
-	/********************************************************************
-	 * TODO: DOCUMENT ME!
-	 *
-	 * @author eso
-	 */
-	public static class GewtMaterialSideNav extends MaterialSideNav
-	{
 	}
 }

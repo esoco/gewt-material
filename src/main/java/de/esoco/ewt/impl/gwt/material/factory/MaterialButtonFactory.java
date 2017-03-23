@@ -83,7 +83,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 			aButtonWidget.setType(eButtonType);
 		}
 
-		GewtMaterial.checkApplyButtonSize(aButtonWidget, rStyle);
+		GewtMaterial.checkApplyButtonScale(aButtonWidget, rStyle);
 
 		aButtonWidget.setWaves(GewtMaterial.getDefaultAnimation());
 
