@@ -157,7 +157,7 @@ public class MaterialMenuLayout extends MenuLayout
 				aSideNav.setCloseOnClick(true);
 				aSideNav.setShowOnAttach(false);
 				aSideNav.setType(SideNavType.PUSH);
-				aSideNav.setAlwaysShowActivator(false);
+				aSideNav.setAlwaysShowActivator(true);
 			}
 		}
 		else
