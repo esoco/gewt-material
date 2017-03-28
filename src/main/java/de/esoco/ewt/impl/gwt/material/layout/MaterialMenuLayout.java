@@ -52,7 +52,7 @@ public class MaterialMenuLayout extends MenuLayout
 {
 	//~ Static fields/initializers ---------------------------------------------
 
-	private static MaterialNavBar aGlobalMenu = null;
+	private static MaterialNavBar aRecentNavBar = null;
 
 	//~ Instance fields --------------------------------------------------------
 
@@ -150,7 +150,7 @@ public class MaterialMenuLayout extends MenuLayout
 
 			aMenuWidget = aSideNav;
 
-			if (aGlobalMenu != null)
+			if (aRecentNavBar != null)
 			{
 				aSideNav.setId("GlobalSideNav");
 				aSideNav.setFixed(false);
@@ -161,14 +161,11 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else
 		{
-			aNavBar     = new MaterialNavBar();
-			aMenuWidget = aNavBar;
+			aNavBar		  = new MaterialNavBar();
+			aMenuWidget   = aNavBar;
+			aRecentNavBar = aNavBar;
 
-			if (aGlobalMenu == null)
-			{
-				aGlobalMenu = aNavBar;
-				aGlobalMenu.setActivates("GlobalSideNav");
-			}
+			aRecentNavBar.setActivates("GlobalSideNav");
 
 			// TODO: apply style
 			aNavBar.setType(NavBarType.FIXED);
@@ -189,7 +186,7 @@ public class MaterialMenuLayout extends MenuLayout
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
-		 * @see gwt.material.design.client.ui.MaterialSideNav#onLoad()
+		 * {@inheritDoc}
 		 */
 		@Override
 		protected void onLoad()
