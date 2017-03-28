@@ -20,7 +20,6 @@ import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.NavBarType;
-import gwt.material.design.client.constants.SideNavType;
 import gwt.material.design.client.ui.MaterialAnchorButton;
 import gwt.material.design.client.ui.MaterialFAB;
 import gwt.material.design.client.ui.MaterialFABList;
@@ -147,17 +146,17 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else if (bVertical)
 		{
-			MaterialSideNav aSideNav = new MaterialSideNav();
+			GewtMaterialSideNav aSideNav = new GewtMaterialSideNav();
 
 			aMenuWidget = aSideNav;
 
 			if (aGlobalMenu != null)
 			{
 				aSideNav.setId("GlobalSideNav");
+				aSideNav.setFixed(false);
 				aSideNav.setCloseOnClick(true);
 				aSideNav.setShowOnAttach(false);
-				aSideNav.setType(SideNavType.PUSH);
-				aSideNav.setAlwaysShowActivator(true);
+				aSideNav.setAlwaysShowActivator(false);
 			}
 		}
 		else
@@ -176,5 +175,29 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 
 		return aMenuWidget;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * Subclassed {@link MaterialSideNav} for bug workarounds.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialSideNav extends MaterialSideNav
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * @see gwt.material.design.client.ui.MaterialSideNav#onLoad()
+		 */
+		@Override
+		protected void onLoad()
+		{
+			super.onLoad();
+
+			// set here because else it is overridden in super.onLoad()
+			setFixed(false);
+		}
 	}
 }
