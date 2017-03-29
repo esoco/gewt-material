@@ -719,6 +719,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	 *      com.google.gwt.user.client.Element, int, boolean)
 	 */
 	@Override
+	@SuppressWarnings("deprecation")
 	protected void insert(Widget							 child,
 						  com.google.gwt.user.client.Element container,
 						  int								 beforeIndex,
