@@ -20,6 +20,7 @@ import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.NavBarType;
+import gwt.material.design.client.constants.SideNavType;
 import gwt.material.design.client.ui.MaterialAnchorButton;
 import gwt.material.design.client.ui.MaterialFAB;
 import gwt.material.design.client.ui.MaterialFABList;
@@ -153,7 +154,6 @@ public class MaterialMenuLayout extends MenuLayout
 			if (aRecentNavBar != null)
 			{
 				aSideNav.setId("GlobalSideNav");
-				aSideNav.setFixed(false);
 				aSideNav.setCloseOnClick(true);
 				aSideNav.setShowOnAttach(false);
 				aSideNav.setAlwaysShowActivator(false);
@@ -194,7 +194,7 @@ public class MaterialMenuLayout extends MenuLayout
 			super.onLoad();
 
 			// set here because else it is overridden in super.onLoad()
-			setFixed(false);
+			removeStyleName(SideNavType.FIXED.getCssName());
 		}
 	}
 }
