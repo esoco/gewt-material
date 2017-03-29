@@ -20,17 +20,16 @@ import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.NavBarType;
-import gwt.material.design.client.constants.SideNavType;
 import gwt.material.design.client.ui.MaterialAnchorButton;
 import gwt.material.design.client.ui.MaterialFAB;
 import gwt.material.design.client.ui.MaterialFABList;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
-import gwt.material.design.client.ui.MaterialSideNav;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
+import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSideNav;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -172,29 +171,5 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 
 		return aMenuWidget;
-	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * Subclassed {@link MaterialSideNav} for bug workarounds.
-	 *
-	 * @author eso
-	 */
-	public static class GewtMaterialSideNav extends MaterialSideNav
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		protected void onLoad()
-		{
-			super.onLoad();
-
-			// set here because else it is overridden in super.onLoad()
-			removeStyleName(SideNavType.FIXED.getCssName());
-		}
 	}
 }
