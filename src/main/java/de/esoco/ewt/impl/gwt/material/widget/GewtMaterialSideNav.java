@@ -46,7 +46,6 @@ import gwt.material.design.client.constants.CssName;
 import gwt.material.design.client.constants.Edge;
 import gwt.material.design.client.constants.HideOn;
 import gwt.material.design.client.constants.ShowOn;
-import gwt.material.design.client.constants.SideNavType;
 import gwt.material.design.client.events.ClearActiveEvent;
 import gwt.material.design.client.events.SideNavClosedEvent;
 import gwt.material.design.client.events.SideNavClosedEvent.SideNavClosedHandler;
@@ -121,8 +120,9 @@ public class GewtMaterialSideNav extends MaterialWidget
 
 	private Element activator;
 
-	private final CssTypeMixin<SideNavType, GewtMaterialSideNav> typeMixin =
+	private final CssTypeMixin<SideNavType, GewtMaterialSideNav> typeMixin			   =
 		new CssTypeMixin<>(this);
+	private HandlerRegistration									 overlayOpeningHandler;
 
 	//~ Constructors -----------------------------------------------------------
 
@@ -140,7 +140,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Creates a list and adds the given widgets.
 	 *
-	 * @param widgets no comment
+	 * @param widgets TODO: DOCUMENT ME!
 	 */
 	public GewtMaterialSideNav(final Widget... widgets)
 	{
@@ -155,7 +155,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Creates a new instance.
 	 *
-	 * @param type no comment
+	 * @param type TODO: DOCUMENT ME!
 	 */
 	@UiConstructor
 	public GewtMaterialSideNav(SideNavType type)
@@ -268,7 +268,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Will the body have scroll capability while the menu is open.
 	 *
-	 * @return no comment
+	 * @return TODO: DOCUMENT ME!
 	 */
 	public boolean isAllowBodyScroll()
 	{
@@ -278,7 +278,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Will the activator always be shown.
 	 *
-	 * @return no comment
+	 * @return TODO: DOCUMENT ME!
 	 */
 	public boolean isAlwaysShowActivator()
 	{
@@ -308,7 +308,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Will the menu forcefully show on attachment.
 	 *
-	 * @return no comment
+	 * @return TODO: DOCUMENT ME!
 	 */
 	public boolean isShowOnAttach()
 	{
@@ -328,7 +328,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	 * Allow the body to maintain its scroll capability while the menu is
 	 * visible.
 	 *
-	 * @param allowBodyScroll no comment
+	 * @param allowBodyScroll TODO: DOCUMENT ME!
 	 */
 	public void setAllowBodyScroll(boolean allowBodyScroll)
 	{
@@ -338,7 +338,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Disable the hiding of your activator element.
 	 *
-	 * @param alwaysShowActivator no comment
+	 * @param alwaysShowActivator TODO: DOCUMENT ME!
 	 */
 	public void setAlwaysShowActivator(boolean alwaysShowActivator)
 	{
@@ -350,7 +350,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	 * that if you want this to work you must wrap your item within a {@link
 	 * MaterialLink}.
 	 *
-	 * @param closeOnClick no comment
+	 * @param closeOnClick TODO: DOCUMENT ME!
 	 */
 	public void setCloseOnClick(boolean closeOnClick)
 	{
@@ -360,7 +360,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Set which edge of the window the menu should attach to.
 	 *
-	 * @param edge no comment
+	 * @param edge TODO: DOCUMENT ME!
 	 */
 	public void setEdge(Edge edge)
 	{
@@ -382,7 +382,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	 * appear static. otherwise when set to <code>true</code> will slide in from
 	 * the left.
 	 *
-	 * @param showOnAttach no comment
+	 * @param showOnAttach TODO: DOCUMENT ME!
 	 */
 	public void setShowOnAttach(boolean showOnAttach)
 	{
@@ -392,7 +392,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Define the menu's type specification.
 	 *
-	 * @param type no comment
+	 * @param type TODO: DOCUMENT ME!
 	 */
 	@Override
 	public void setType(SideNavType type)
@@ -412,7 +412,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Set the menu's width in pixels.
 	 *
-	 * @param width no comment
+	 * @param width TODO: DOCUMENT ME!
 	 */
 	public void setWidth(int width)
 	{
@@ -429,11 +429,11 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 *
-	 * @param  child no comment
+	 * @param  child TODO: DOCUMENT ME!
 	 *
-	 * @return no comment
+	 * @return TODO: DOCUMENT ME!
 	 */
 	public Widget wrap(Widget child)
 	{
@@ -508,7 +508,9 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * Provides a Fixed type sidenav which by default on desktop - activator
+	 * will notbe visible but you can configure it by setting the property
+	 * setAlwaysShowActivator() to true
 	 */
 	protected void applyFixedType()
 	{
@@ -518,22 +520,60 @@ public class GewtMaterialSideNav extends MaterialWidget
 					  				if (gwt.material.design.client.js.Window
 					  					.matchMedia("all and (min-width: 992px)"))
 					  				{
-					  					addStyleName(CssName.OPEN);
-					  				}
-					  				else
-					  				{
-					  					removeStyleName(CssName.OPEN);
+					  					Scheduler.get()
+					  					.scheduleDeferred(() ->
+					  									  show());
 					  				}
 
 					  				return true;
 								  });
+
+		$("header").css("paddingLeft", width + "px");
+		$("main").css("paddingLeft", width + "px");
+		$("footer").css("paddingLeft", width + "px");
+	}
+
+	/***************************************
+	 * Provides a float sidenav that will overlay on top of the content not the
+	 * navbar without any grey overlay behind it.
+	 */
+	protected void applyFloatType()
+	{
+		$("header").css("paddingLeft", "0px");
+		$("main").css("paddingLeft", width + "px");
+	}
+
+	/***************************************
+	 * Provides an overlay sidenav just like when opening sidenav on mobile /
+	 * tablet
+	 */
+	protected void applyOverlayType()
+	{
+		setShowOnAttach(false);
+//		getNavMenu().setShowOn(ShowOn.SHOW_ON_LARGE);
+
+		if (overlayOpeningHandler == null)
+		{
+			overlayOpeningHandler =
+				addOpeningHandler(event ->
+			  					{
+			  						Scheduler.get()
+			  						.scheduleDeferred(() ->
+			  										  $("#sidenav-overlay")
+			  										  .css("visibility",
+			  											   "visible"));
+								  });
+		}
+
+		$("header").css("paddingLeft", "0px");
+		$("main").css("paddingLeft", "0px");
 	}
 
 	/***************************************
 	 * Push the header, footer, and main to the right part when Close type is
 	 * applied.
 	 *
-	 * @param width no comment
+	 * @param width TODO: DOCUMENT ME!
 	 */
 	protected void applyPushType(int width)
 	{
@@ -555,11 +595,11 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 *
-	 * @param elem     no comment
-	 * @param width    no comment
-	 * @param duration no comment
+	 * @param elem     TODO: DOCUMENT ME!
+	 * @param width    TODO: DOCUMENT ME!
+	 * @param duration TODO: DOCUMENT ME!
 	 */
 	protected void applyTransition(Element elem, int width, int duration)
 	{
@@ -570,7 +610,25 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * Returns the nav menu.
+	 *
+	 * @return The nav menu
+	 */
+	protected MaterialWidget getNavMenu()
+	{
+		Element navMenuElement =
+			DOMHelper.getElementByAttribute("data-activates", getId());
+
+		if (navMenuElement != null)
+		{
+			return new MaterialWidget(navMenuElement);
+		}
+
+		return null;
+	}
+
+	/***************************************
+	 * TODO: DOCUMENT ME!
 	 */
 	protected void initialize()
 	{
@@ -578,9 +636,9 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 *
-	 * @param strict no comment
+	 * @param strict TODO: DOCUMENT ME!
 	 */
 	protected void initialize(boolean strict)
 	{
@@ -588,24 +646,18 @@ public class GewtMaterialSideNav extends MaterialWidget
 		{
 			activator =
 				DOMHelper.getElementByAttribute("data-activates", getId());
+			getNavMenu().setShowOn(ShowOn.SHOW_ON_MED_DOWN);
 
-			MaterialWidget navMenu = new MaterialWidget(activator);
-
-			navMenu.setShowOn(ShowOn.SHOW_ON_MED_DOWN);
-
-			if (typeMixin.getType() != SideNavType.FIXED)
+			if (alwaysShowActivator && getType() != SideNavType.FIXED)
 			{
-				if (alwaysShowActivator)
-				{
-					navMenu.setShowOn(ShowOn.SHOW_ON_LARGE);
-				}
-				else
-				{
-					navMenu.setHideOn(HideOn.HIDE_ON_LARGE);
-				}
-
-				activator.removeClassName(CssName.NAVMENU_PERMANENT);
+				getNavMenu().setShowOn(ShowOn.SHOW_ON_LARGE);
 			}
+			else
+			{
+				getNavMenu().setHideOn(HideOn.HIDE_ON_LARGE);
+			}
+
+			getNavMenu().removeStyleName(CssName.NAVMENU_PERMANENT);
 		}
 		catch (Exception ex)
 		{
@@ -667,7 +719,6 @@ public class GewtMaterialSideNav extends MaterialWidget
 	 *      com.google.gwt.user.client.Element, int, boolean)
 	 */
 	@Override
-	@SuppressWarnings("deprecation")
 	protected void insert(Widget							 child,
 						  com.google.gwt.user.client.Element container,
 						  int								 beforeIndex,
@@ -687,7 +738,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 */
 	protected void onClosed()
 	{
@@ -695,7 +746,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 */
 	protected void onClosing()
 	{
@@ -748,12 +799,10 @@ public class GewtMaterialSideNav extends MaterialWidget
 
 			$(activator).trigger("menu-out", null);
 		}
-
-		removeStyleName(SideNavType.FIXED.getCssName());
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 */
 	protected void onOpened()
 	{
@@ -766,7 +815,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 */
 	protected void onOpening()
 	{
@@ -781,11 +830,11 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 *
-	 * @param toggle   no comment
-	 * @param width    no comment
-	 * @param duration no comment
+	 * @param toggle   TODO: DOCUMENT ME!
+	 * @param width    TODO: DOCUMENT ME!
+	 * @param duration TODO: DOCUMENT ME!
 	 */
 	protected void onPush(boolean toggle, int width, int duration)
 	{
@@ -810,9 +859,9 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 *
-	 * @param type no comment
+	 * @param type TODO: DOCUMENT ME!
 	 */
 	protected void processType(SideNavType type)
 	{
@@ -828,6 +877,14 @@ public class GewtMaterialSideNav extends MaterialWidget
 
 				case MINI:
 					setWidth(64);
+					break;
+
+				case OVERLAY:
+					applyOverlayType();
+					break;
+
+				case FLOAT:
+					applyFloatType();
 					break;
 
 				case CARD:
@@ -852,10 +909,10 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * no comment
+	 * TODO: DOCUMENT ME!
 	 *
-	 * @param toggle no comment
-	 * @param width  no comment
+	 * @param toggle TODO: DOCUMENT ME!
+	 * @param width  TODO: DOCUMENT ME!
 	 */
 	protected void pushElements(boolean toggle, int width)
 	{

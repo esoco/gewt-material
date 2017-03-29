@@ -30,6 +30,7 @@ import gwt.material.design.client.ui.MaterialNavSection;
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSideNav;
+import de.esoco.ewt.impl.gwt.material.widget.SideNavType;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -153,6 +154,7 @@ public class MaterialMenuLayout extends MenuLayout
 			if (aRecentNavBar != null)
 			{
 				aSideNav.setId("GlobalSideNav");
+				aSideNav.setType(SideNavType.OVERLAY);
 				aSideNav.setCloseOnClick(true);
 				aSideNav.setShowOnAttach(false);
 				aSideNav.setAlwaysShowActivator(false);
