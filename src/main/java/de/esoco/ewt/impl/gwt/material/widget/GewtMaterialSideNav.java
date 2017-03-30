@@ -71,7 +71,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -79,8 +78,12 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import static gwt.material.design.client.js.JsMaterialElement.$;
 
-//@formatter:off
 
+/********************************************************************
+ * TODO: DOCUMENT ME!
+ *
+ * @author eso
+ */
 
 /********************************************************************
  * SideNav is a material component that gives you a lists of menus and other
@@ -103,8 +106,9 @@ import static gwt.material.design.client.js.JsMaterialElement.$;
  *         href="http://gwtmaterialdesign.github.io/gwt-material-demo/#sidenavs">
  *         Material SideNav</a>
  */
-//@formatter:on
 @SuppressWarnings("boxing")
+//@formatter:off
+//@formatter:on
 public class GewtMaterialSideNav extends MaterialWidget
 	implements HasType<SideNavType>, HasSelectables, HasSideNavHandlers
 {
@@ -123,6 +127,10 @@ public class GewtMaterialSideNav extends MaterialWidget
 	private final CssTypeMixin<SideNavType, GewtMaterialSideNav> typeMixin			   =
 		new CssTypeMixin<>(this);
 	private HandlerRegistration									 overlayOpeningHandler;
+	private HandlerRegistration									 floatOpeningHandler;
+	private HandlerRegistration									 floatClosingHandler;
+	private HandlerRegistration									 cardOpeningHandler;
+	private HandlerRegistration									 cardClosingHandler;
 
 	//~ Constructors -----------------------------------------------------------
 
@@ -508,6 +516,29 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
+	 * Applies a card that contains a shadow and this type is good for few
+	 * sidenav link items
+	 */
+	protected void applyCardType()
+	{
+		if (cardOpeningHandler == null)
+		{
+			cardOpeningHandler = addOpenedHandler(event -> setLeft(0));
+		}
+
+		if (cardClosingHandler == null)
+		{
+			cardClosingHandler =
+				addClosedHandler(event ->
+			 					{
+			 						// The additional 20 is the margin of the card sidenav so that
+			 						// it will be hidden fully.
+			 						setLeft(-(width + 20));
+								 });
+		}
+	}
+
+	/***************************************
 	 * Provides a Fixed type sidenav which by default on desktop - activator
 	 * will notbe visible but you can configure it by setting the property
 	 * setAlwaysShowActivator() to true
@@ -528,9 +559,16 @@ public class GewtMaterialSideNav extends MaterialWidget
 					  				return true;
 								  });
 
-		$("header").css("paddingLeft", width + "px");
-		$("main").css("paddingLeft", width + "px");
-		$("footer").css("paddingLeft", width + "px");
+		Scheduler.get()
+				 .scheduleDeferred(() ->
+					   			{
+					   				$("header").css("paddingLeft",
+					   								this.width + "px");
+					   				$("main").css("paddingLeft",
+					   							  this.width + "px");
+					   				$("footer").css("paddingLeft",
+					   								this.width + "px");
+								   });
 	}
 
 	/***************************************
@@ -539,8 +577,37 @@ public class GewtMaterialSideNav extends MaterialWidget
 	 */
 	protected void applyFloatType()
 	{
-		$("header").css("paddingLeft", "0px");
-		$("main").css("paddingLeft", width + "px");
+		$("main").css("transition", "0.2s all");
+
+		if (showOnAttach != null && showOnAttach)
+		{
+			Scheduler.get()
+					 .scheduleDeferred(() ->
+					   				{
+					   					$("header").css("paddingLeft", "0px");
+					   					$("main").css("paddingLeft",
+					   								  this.width + "px");
+									   });
+		}
+
+		if (floatOpeningHandler == null)
+		{
+			floatOpeningHandler =
+				addOpeningHandler(event ->
+			  					{
+			  						$("main").css("paddingLeft",
+			  									  this.width + "px");
+								  });
+		}
+
+		if (floatClosingHandler == null)
+		{
+			floatClosingHandler =
+				addClosingHandler(event ->
+			  					{
+			  						$("main").css("paddingLeft", "0px");
+								  });
+		}
 	}
 
 	/***************************************
@@ -550,7 +617,6 @@ public class GewtMaterialSideNav extends MaterialWidget
 	protected void applyOverlayType()
 	{
 		setShowOnAttach(false);
-//		getNavMenu().setShowOn(ShowOn.SHOW_ON_LARGE);
 
 		if (overlayOpeningHandler == null)
 		{
@@ -565,8 +631,12 @@ public class GewtMaterialSideNav extends MaterialWidget
 								  });
 		}
 
-		$("header").css("paddingLeft", "0px");
-		$("main").css("paddingLeft", "0px");
+		Scheduler.get()
+				 .scheduleDeferred(() ->
+					   			{
+					   				$("header").css("paddingLeft", "0px");
+					   				$("main").css("paddingLeft", "0px");
+								   });
 	}
 
 	/***************************************
@@ -588,7 +658,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 					  					show();
 					  				}
 
-					  				pushElements(open, width);
+					  				pushElements(open, this.width);
 
 					  				return true;
 								  });
@@ -755,7 +825,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 
 		if (getType().equals(SideNavType.PUSH))
 		{
-			pushElements(false, width);
+			pushElements(false, this.width);
 		}
 
 		SideNavClosingEvent.fire(this);
@@ -824,7 +894,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 
 		if (getType().equals(SideNavType.PUSH))
 		{
-			pushElements(true, width);
+			pushElements(true, this.width);
 		}
 
 		SideNavOpeningEvent.fire(this);
@@ -884,26 +954,16 @@ public class GewtMaterialSideNav extends MaterialWidget
 					applyOverlayType();
 					break;
 
+				case CARD:
+					applyCardType();
+					break;
+
 				case FLOAT:
 					applyFloatType();
 					break;
 
-				case CARD:
-					new Timer()
-						{
-							@Override
-							public void run()
-							{
-								if (isSmall())
-								{
-									show();
-								}
-							}
-						}.schedule(500);
-					break;
-
 				case PUSH:
-					applyPushType(width);
+					applyPushType(this.width);
 					break;
 			}
 		}
