@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,6 +73,19 @@ public class GewtMaterialTextArea extends MaterialTextArea
 	public void setImage(Image rImage)
 	{
 		aImageAttrMixin.setImage(rImage);
+	}
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setReadOnly(boolean bReadOnly)
+	{
+		super.setReadOnly(bReadOnly);
+
+		// fix for gwt-material issue
+		// https://github.com/GwtMaterialDesign/gwt-material/issues/595
+		getValueBoxBase().setReadOnly(bReadOnly);
 	}
 
 	/***************************************
