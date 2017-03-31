@@ -20,17 +20,17 @@ import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.NavBarType;
+import gwt.material.design.client.constants.SideNavType;
 import gwt.material.design.client.ui.MaterialAnchorButton;
 import gwt.material.design.client.ui.MaterialFAB;
 import gwt.material.design.client.ui.MaterialFABList;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
+import gwt.material.design.client.ui.MaterialSideNav;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
-import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSideNav;
-import de.esoco.ewt.impl.gwt.material.widget.SideNavType;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -147,14 +147,14 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 		else if (bVertical)
 		{
-			GewtMaterialSideNav aSideNav = new GewtMaterialSideNav();
+			MaterialSideNav aSideNav = new MaterialSideNav();
 
 			aMenuWidget = aSideNav;
 
 			if (aRecentNavBar != null)
 			{
 				aSideNav.setId("GlobalSideNav");
-				aSideNav.setType(SideNavType.OVERLAY);
+				aSideNav.setType(SideNavType.OVERLAY_WITH_HEADER);
 				aSideNav.setCloseOnClick(true);
 				aSideNav.setShowOnAttach(false);
 				aSideNav.setAlwaysShowActivator(false);
