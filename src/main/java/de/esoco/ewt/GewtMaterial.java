@@ -17,8 +17,10 @@
 package de.esoco.ewt;
 
 import gwt.material.design.client.base.AbstractButton;
+import gwt.material.design.client.base.HasDurationTransition;
 import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasIcon;
+import gwt.material.design.client.base.HasInOutDurationTransition;
 import gwt.material.design.client.base.HasTextAlign;
 import gwt.material.design.client.constants.ButtonSize;
 import gwt.material.design.client.constants.IconPosition;
@@ -63,6 +65,7 @@ import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_SIZE;
 import static de.esoco.lib.property.LayoutProperties.TEXT_ALIGN;
+import static de.esoco.lib.property.StyleProperties.ANIMATION_DURATION;
 import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
 
 
@@ -220,6 +223,23 @@ public class GewtMaterial
 		{
 			((HasFloat) rWidget).setFloat(eFloatAlign == Alignment.BEGIN
 										  ? Float.LEFT : Float.RIGHT);
+		}
+
+		Integer rDuration = rStyle.getProperty(ANIMATION_DURATION, null);
+
+		if (rDuration != null)
+		{
+			int nDuration = rDuration.intValue();
+
+			if (rWidget instanceof HasDurationTransition)
+			{
+				((HasDurationTransition) rWidget).setDuration(nDuration);
+			}
+			else if (rWidget instanceof HasInOutDurationTransition)
+			{
+				((HasInOutDurationTransition) rWidget).setInDuration(nDuration);
+				((HasInOutDurationTransition) rWidget).setOutDuration(nDuration);
+			}
 		}
 
 		checkApplyAlignment(rWidget, rStyle);
