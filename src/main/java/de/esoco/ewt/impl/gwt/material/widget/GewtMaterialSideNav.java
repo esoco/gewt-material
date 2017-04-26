@@ -323,6 +323,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * Reinitialize the side nav configurations when changing properties.
 	 */
+	@Override
 	public void reinitialize()
 	{
 		activator = null;
@@ -742,6 +743,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	/***************************************
 	 * DOCUMENT ME!
 	 */
+	@Override
 	protected void initialize()
 	{
 		initialize(true);
