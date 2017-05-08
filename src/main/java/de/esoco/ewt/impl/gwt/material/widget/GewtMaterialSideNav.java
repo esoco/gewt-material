@@ -172,7 +172,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
-	 * @see gwt.material.design.client.base.MaterialWidget#add(com.google.gwt.user.client.ui.Widget)
+	 * @see MaterialWidget#add(com.google.gwt.user.client.ui.IsWidget)
 	 */
 	@Override
 	public void add(Widget child)
@@ -181,7 +181,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * @see gwt.material.design.client.base.HasSideNavHandlers#addClosedHandler(gwt.material.design.client.events.SideNavClosedEvent$SideNavClosedHandler)
+	 * @see HasSideNavHandlers#addClosedHandler(SideNavClosedHandler)
 	 */
 	@Override
 	public HandlerRegistration addClosedHandler(SideNavClosedHandler handler)
@@ -190,7 +190,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * @see gwt.material.design.client.base.HasSideNavHandlers#addClosingHandler(gwt.material.design.client.events.SideNavClosingEvent$SideNavClosingHandler)
+	 * @see HasSideNavHandlers#addClosingHandler(SideNavClosingHandler)
 	 */
 	@Override
 	public HandlerRegistration addClosingHandler(SideNavClosingHandler handler)
@@ -199,7 +199,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * @see gwt.material.design.client.base.HasSideNavHandlers#addOpenedHandler(gwt.material.design.client.events.SideNavOpenedEvent$SideNavOpenedHandler)
+	 * @see HasSideNavHandlers#addOpenedHandler(SideNavOpenedHandler)
 	 */
 	@Override
 	public HandlerRegistration addOpenedHandler(SideNavOpenedHandler handler)
@@ -208,7 +208,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * @see gwt.material.design.client.base.HasSideNavHandlers#addOpeningHandler(gwt.material.design.client.events.SideNavOpeningEvent$SideNavOpeningHandler)
+	 * @see HasSideNavHandlers#addOpeningHandler(SideNavOpeningHandler)
 	 */
 	@Override
 	public HandlerRegistration addOpeningHandler(SideNavOpeningHandler handler)
@@ -829,8 +829,7 @@ public class GewtMaterialSideNav extends MaterialWidget
 	}
 
 	/***************************************
-	 * @see gwt.material.design.client.base.MaterialWidget#insert(com.google.gwt.user.client.ui.Widget,
-	 *      com.google.gwt.user.client.Element, int, boolean)
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("deprecation")

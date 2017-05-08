@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import com.google.gwt.user.client.ui.HasText;
 
 
 /********************************************************************
- * A subclass of {@link InternalMaterialSwitch} that implements the methods of
- * {@link HasHTML} to set the switch label.
+ * A subclass of {@link MaterialSwitch} that implements the methods of {@link
+ * HasHTML} to set the switch label.
  *
  * @author eso
  */

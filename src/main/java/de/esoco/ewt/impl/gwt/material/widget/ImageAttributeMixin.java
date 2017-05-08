@@ -36,14 +36,15 @@ public class ImageAttributeMixin<T extends Widget & HasIcon>
 {
 	//~ Instance fields --------------------------------------------------------
 
+	private T     rWidget;
 	private Image rImage;
-
-	T rWidget;
 
 	//~ Constructors -----------------------------------------------------------
 
 	/***************************************
-	 * {@inheritDoc}
+	 * Creates a new instance.
+	 *
+	 * @param rWidget The widget to provide the image attribute for
 	 */
 	public ImageAttributeMixin(T rWidget)
 	{

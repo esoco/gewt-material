@@ -201,7 +201,7 @@ public class GewtMaterialNavBar extends Nav implements HasActivates,
 	}
 
 	/***************************************
-	 * @see gwt.material.design.client.base.HasType#setType(gwt.material.design.client.constants.NavBarType)
+	 * @see gwt.material.design.client.base.HasType#setType(gwt.material.design.client.constants.Type)
 	 */
 	@Override
 	public void setType(NavBarType type)
