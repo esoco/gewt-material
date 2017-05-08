@@ -1,6 +1,13 @@
 rootProject.name = "gewt-material"
 
-def baseProjects = [':esoco-common',':gewt']
+buildscript {
+    repositories { maven { url 'https://plugins.gradle.org/m2/' }}
+    dependencies { classpath 'gradle.plugin.net.vivin:gradle-semantic-build-versioning:3.0.4' }
+}
+
+apply plugin: 'net.vivin.gradle-semantic-build-versioning'
+
+def baseProjects = [':gewt',':esoco-common']
 
 baseProjects.each { projectName ->
 	include projectName
