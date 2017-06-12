@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
-import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.ui.MaterialImage;
 
 import de.esoco.ewt.graphics.Image;
@@ -35,6 +34,10 @@ import com.google.gwt.user.client.ui.HasText;
 public class GewtMaterialImage extends MaterialImage implements HasText,
 																ImageAttribute
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private Image rImage;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -43,7 +46,7 @@ public class GewtMaterialImage extends MaterialImage implements HasText,
 	@Override
 	public Image getImage()
 	{
-		return null;
+		return rImage;
 	}
 
 	/***************************************
@@ -61,6 +64,8 @@ public class GewtMaterialImage extends MaterialImage implements HasText,
 	@Override
 	public void setImage(Image rImage)
 	{
+		this.rImage = rImage;
+
 		if (rImage instanceof ImageRef)
 		{
 			setUrl(((ImageRef) rImage).getGwtImage().getUrl());
