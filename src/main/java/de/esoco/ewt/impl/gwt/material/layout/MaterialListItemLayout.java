@@ -21,12 +21,12 @@ import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialCollapsibleHeader;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
-import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
 import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Container;
+import de.esoco.ewt.impl.gwt.HasEventHandlingDelay;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Alignment;
@@ -106,7 +106,7 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 
 		if (bIsCollapsible)
 		{
-			aHasWidgets = new MaterialCollapsibleItem();
+			aHasWidgets = new GewtMaterialCollapsibleItem();
 		}
 		else
 		{
@@ -195,5 +195,27 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 		}
 
 		return rWidget;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * Implements {@link de.esoco.ewt.impl.gwt.HasEventHandlingDelay}.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialCollapsibleItem
+		extends MaterialCollapsibleItem implements HasEventHandlingDelay
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getEventHandlingDelay()
+		{
+			return 300;
+		}
 	}
 }
