@@ -166,13 +166,18 @@ public class MaterialListLayout extends AbstractMaterialLayout
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * A {@link MaterialCollapsible} subclass that adds selection functionality.
+	 * A {@link MaterialCollapsible} subclass that also implements single
+	 * selection.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialCollapsible extends MaterialCollapsible
 		implements SingleSelection
 	{
+		//~ Instance fields ----------------------------------------------------
+
+		private int nSelection = -1;
+
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
@@ -181,8 +186,9 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		@Override
 		public int getSelectionIndex()
 		{
-			int nSelection = -1;
-			int nIndex     = 0;
+			int nIndex = 0;
+
+			nSelection = -1;
 
 			for (Widget rItem : getChildren())
 			{
@@ -206,11 +212,27 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setSelection(int nIndex)
+		public void setActive(int nIndex)
 		{
-			if (nIndex >= 0)
+			nSelection = nIndex - 1;
+
+			super.setActive(nIndex);
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setSelection(int nNewSelection)
+		{
+			if (nNewSelection >= 0)
 			{
-				setActive(nIndex + 1);
+				// prevent multiple setting of the same value so that
+				// collapsible animation is not suppressed
+				if (nNewSelection != nSelection)
+				{
+					setActive(nNewSelection + 1);
+				}
 			}
 			else
 			{
