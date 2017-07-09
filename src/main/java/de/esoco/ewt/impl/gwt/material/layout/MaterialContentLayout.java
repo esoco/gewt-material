@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import gwt.material.design.client.ui.MaterialModalFooter;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
-import de.esoco.lib.property.Layout;
+import de.esoco.lib.property.LayoutType;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -58,7 +58,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 
 	//~ Instance fields --------------------------------------------------------
 
-	private Layout eLayout;
+	private LayoutType eLayout;
 
 	//~ Constructors -----------------------------------------------------------
 
@@ -67,7 +67,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 *
 	 * @param eLayout The layout of the content
 	 */
-	public MaterialContentLayout(Layout eLayout)
+	public MaterialContentLayout(LayoutType eLayout)
 	{
 		this.eLayout = eLayout;
 	}
@@ -129,7 +129,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCardContentContainer(Layout eLayout)
+	MaterialWidget createCardContentContainer(LayoutType eLayout)
 	{
 		MaterialWidget aLayoutWidget;
 
@@ -162,7 +162,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCollapsibleContentContainer(Layout eLayout)
+	MaterialWidget createCollapsibleContentContainer(LayoutType eLayout)
 	{
 		MaterialWidget aLayoutWidget;
 
@@ -191,7 +191,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCollectionContentContainer(Layout eLayout)
+	MaterialWidget createCollectionContentContainer(LayoutType eLayout)
 	{
 		MaterialWidget aLayoutWidget;
 
@@ -215,7 +215,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createGlobalContentContainer(Layout eLayout)
+	MaterialWidget createGlobalContentContainer(LayoutType eLayout)
 	{
 		MaterialWidget aLayoutWidget;
 
@@ -247,7 +247,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 *
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createModalContentContainer(Layout eLayout)
+	MaterialWidget createModalContentContainer(LayoutType eLayout)
 	{
 		MaterialWidget aLayoutWidget;
 

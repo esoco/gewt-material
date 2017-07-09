@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
 import de.esoco.ewt.style.StyleData;
 
-import de.esoco.lib.property.Layout;
+import de.esoco.lib.property.LayoutType;
 
 
 /********************************************************************
@@ -41,9 +41,9 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GenericLayout createLayout(Container rParentContainer,
-									  StyleData rContainerStyle,
-									  Layout    eLayout)
+	public GenericLayout createLayout(Container  rParentContainer,
+									  StyleData  rContainerStyle,
+									  LayoutType eLayout)
 	{
 		GenericLayout aLayout;
 

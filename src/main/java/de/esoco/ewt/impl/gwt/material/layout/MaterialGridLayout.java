@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import gwt.material.design.client.ui.MaterialRow;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
-import de.esoco.lib.property.Layout;
+import de.esoco.lib.property.LayoutType;
 
 
 /********************************************************************
@@ -35,7 +35,7 @@ final class MaterialGridLayout extends AbstractMaterialLayout
 {
 	//~ Instance fields --------------------------------------------------------
 
-	private Layout eLayout;
+	private LayoutType eLayout;
 
 	//~ Constructors -----------------------------------------------------------
 
@@ -44,7 +44,7 @@ final class MaterialGridLayout extends AbstractMaterialLayout
 	 *
 	 * @param eLayout The layout
 	 */
-	public MaterialGridLayout(Layout eLayout)
+	public MaterialGridLayout(LayoutType eLayout)
 	{
 		this.eLayout = eLayout;
 	}
@@ -61,7 +61,7 @@ final class MaterialGridLayout extends AbstractMaterialLayout
 	{
 		MaterialWidget rContainerWidget;
 
-		if (eLayout == Layout.GRID_ROW)
+		if (eLayout == LayoutType.GRID_ROW)
 		{
 			rContainerWidget = new MaterialRow();
 		}
