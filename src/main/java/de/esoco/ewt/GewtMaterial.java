@@ -38,7 +38,6 @@ import de.esoco.ewt.component.ProgressBar;
 import de.esoco.ewt.component.RadioButton;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
-import de.esoco.ewt.graphics.Color;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialCheckBoxFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialChildViewFactory;
@@ -188,13 +187,12 @@ public class GewtMaterial
 				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
 			}
 
-			int nColor = rStyle.getIntProperty(ICON_COLOR, -1);
+			String sColor = rStyle.getProperty(ICON_COLOR, null);
 
-			if (nColor >= 0)
+			if (sColor != null)
 			{
 				// set on Style because setIconColor expects color names
-				rHasIcon.getIcon().getElement().getStyle()
-						.setColor(Color.toHtml(nColor));
+				rHasIcon.getIcon().getElement().getStyle().setColor(sColor);
 			}
 
 			Alignment eAlignment = rStyle.getProperty(ICON_ALIGN, null);
