@@ -16,6 +16,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.constants.Flex;
+import gwt.material.design.client.constants.WavesType;
 import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialRow;
@@ -58,8 +60,10 @@ public class MaterialTabPanelLayout
 		MaterialColumn  aContentColumn = new MaterialColumn();
 		Widget		    rContentWidget = rTabComponent.getWidget();
 
-		rContentWidget.getElement().setId(sId);
+		aContentColumn.getElement().setId(sId);
 		aContentColumn.setGrid("s12");
+		aTabItem.setFlex(Flex.NONE);
+		aTabItem.setWaves(WavesType.DEFAULT);
 
 		aTabItem.add(aTabLink);
 		aTabBar.add(aTabItem);
