@@ -25,6 +25,8 @@ import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.LayoutType;
 
+import static de.esoco.lib.property.StyleProperties.USE_STANDARD_COMPONENT;
+
 
 /********************************************************************
  * A factory and mapper that creates layouts or maps GEWT layouts to new layouts
@@ -47,6 +49,13 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 	{
 		GenericLayout aLayout;
 
+		if (rContainerStyle.hasFlag(USE_STANDARD_COMPONENT))
+		{
+			return super.createLayout(rParentContainer,
+									  rContainerStyle,
+									  eLayout);
+		}
+
 		switch (eLayout)
 		{
 			case SPLIT:
@@ -57,10 +66,10 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 			case GRID:
 				aLayout = new MaterialFlowLayout();
 				break;
-// TODO: implement GewtMaterialTabPanel (MaterialTab is only the tab bar)
-//			case TABS:
-//				aLayout = new MaterialTabPanelLayout();
-//				break;
+
+			case TABS:
+				aLayout = new MaterialTabPanelLayout();
+				break;
 
 			case STACK:
 				aLayout = new MaterialStackPanelLayout();

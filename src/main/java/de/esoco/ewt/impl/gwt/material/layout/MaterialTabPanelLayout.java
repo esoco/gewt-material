@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,12 +16,17 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.ui.MaterialColumn;
+import gwt.material.design.client.ui.MaterialLink;
+import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialTab;
 import gwt.material.design.client.ui.MaterialTabItem;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
+
+import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
@@ -31,8 +36,12 @@ import de.esoco.ewt.style.StyleData;
  * @author eso
  */
 public class MaterialTabPanelLayout
-	extends MaterialSwitchPanelLayout<MaterialTab, MaterialTabItem>
+	extends MaterialSwitchPanelLayout<MaterialRow, MaterialTabItem>
 {
+	//~ Instance fields --------------------------------------------------------
+
+	private MaterialTab aTabBar;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -43,21 +52,39 @@ public class MaterialTabPanelLayout
 						String    sStepTitle,
 						boolean   bCloseable)
 	{
-		MaterialTabItem aTabItem = new MaterialTabItem();
+		String		    sId			   = "tab" + aTabBar.getChildren().size();
+		MaterialTabItem aTabItem	   = new MaterialTabItem();
+		MaterialLink    aTabLink	   = new MaterialLink(sStepTitle, sId);
+		MaterialColumn  aContentColumn = new MaterialColumn();
+		Widget		    rContentWidget = rTabComponent.getWidget();
 
-		aTabItem.add(rTabComponent.getWidget());
-		getPanelWidget().add(aTabItem);
+		rContentWidget.getElement().setId(sId);
+		aContentColumn.setGrid("s12");
 
-		addContentWidget(rTabComponent.getWidget(), aTabItem);
+		aTabItem.add(aTabLink);
+		aTabBar.add(aTabItem);
+		aContentColumn.add(rContentWidget);
+		getPanelWidget().add(aContentColumn);
+
+		addContentWidget(rContentWidget, aTabItem);
 	}
 
 	/***************************************
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MaterialTab createPanelWidget(Container rContainer, StyleData rStyle)
+	public MaterialRow createPanelWidget(Container rContainer, StyleData rStyle)
 	{
-		return new MaterialTab();
+		MaterialRow    aTabPanelContainer = new MaterialRow();
+		MaterialColumn aTabBarColumn	  = new MaterialColumn();
+
+		aTabBar = new MaterialTab();
+
+		aTabBarColumn.setGrid("s12");
+		aTabBarColumn.add(aTabBar);
+		aTabPanelContainer.add(aTabBarColumn);
+
+		return aTabPanelContainer;
 	}
 
 	/***************************************
@@ -66,7 +93,7 @@ public class MaterialTabPanelLayout
 	@Override
 	public int getSelectionIndex()
 	{
-		return getPanelWidget().getTabIndex();
+		return aTabBar.getTabIndex();
 	}
 
 	/***************************************
@@ -75,8 +102,12 @@ public class MaterialTabPanelLayout
 	@Override
 	public void setPageTitle(int nIndex, String sTitle)
 	{
-//		MaterialTabItem rTabItem =
-//			(MaterialTabItem) getPanelWidget().getWidget(nIndex);
+		MaterialTabItem rTabItem =
+			(MaterialTabItem) aTabBar.getChildren().get(nIndex);
+
+		MaterialLink rTabLink = (MaterialLink) rTabItem.getChildren().get(0);
+
+		rTabLink.setText(sTitle);
 	}
 
 	/***************************************
