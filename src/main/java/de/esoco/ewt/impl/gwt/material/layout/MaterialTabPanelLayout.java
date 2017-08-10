@@ -64,10 +64,10 @@ public class MaterialTabPanelLayout
 		aContentColumn.setGrid("s12");
 		aTabItem.setFlex(Flex.NONE);
 
+		getPanelWidget().add(aContentColumn);
+		aContentColumn.add(rContentWidget);
 		aTabItem.add(aTabLink);
 		aTabBar.add(aTabItem);
-		aContentColumn.add(rContentWidget);
-		getPanelWidget().add(aContentColumn);
 
 		addContentWidget(rContentWidget, aTabItem);
 	}
@@ -81,7 +81,7 @@ public class MaterialTabPanelLayout
 		MaterialRow    aTabPanelContainer = new MaterialRow();
 		MaterialColumn aTabBarColumn	  = new MaterialColumn();
 
-		aTabBar = new MaterialTab();
+		aTabBar = new GewtMaterialTab();
 
 		aTabBarColumn.setGrid("s12");
 		aTabBarColumn.add(aTabBar);
@@ -120,5 +120,30 @@ public class MaterialTabPanelLayout
 	public void setSelection(int nIndex)
 	{
 		getPanelWidget().setTabIndex(nIndex);
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * Subclasses to correct wrong initialization.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialTab extends MaterialTab
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * Overridden to initialize after add.
+		 *
+		 * @see MaterialTab#add(Widget)
+		 */
+		@Override
+		public void add(Widget rTabItem)
+		{
+			super.add(rTabItem);
+
+			initialize();
+		}
 	}
 }
