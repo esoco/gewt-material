@@ -27,6 +27,7 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 
@@ -53,7 +54,7 @@ public class MaterialTabPanelLayout
 						String    sStepTitle,
 						boolean   bCloseable)
 	{
-		String		    sId			   = "tab" + aTabBar.getChildren().size();
+		String		    sId			   = DOM.createUniqueId();
 		MaterialTabItem aTabItem	   = new MaterialTabItem();
 		MaterialLink    aTabLink	   = new MaterialLink(sStepTitle, sId);
 		MaterialColumn  aContentColumn = new MaterialColumn();
