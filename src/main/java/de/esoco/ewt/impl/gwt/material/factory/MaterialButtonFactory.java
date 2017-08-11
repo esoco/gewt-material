@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,7 +61,8 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 		ButtonType     eButtonType   = mapButtonType(eButtonStyle);
 		AbstractButton aButtonWidget;
 
-		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
+		if (eButtonType == ButtonType.LINK ||
+			rStyle.hasFlag(StyleFlag.HYPERLINK))
 		{
 			aButtonWidget = new GewtMaterialLink();
 		}
