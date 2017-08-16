@@ -51,6 +51,7 @@ import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Alignment;
+import de.esoco.lib.property.Color;
 import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.core.client.GWT;
@@ -187,12 +188,15 @@ public class GewtMaterial
 				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
 			}
 
-			String sColor = rStyle.getProperty(ICON_COLOR, null);
+			Color rIconColor = rStyle.getProperty(ICON_COLOR, null);
 
-			if (sColor != null)
+			if (rIconColor != null)
 			{
 				// set on Style because setIconColor expects color names
-				rHasIcon.getIcon().getElement().getStyle().setColor(sColor);
+				rHasIcon.getIcon()
+						.getElement()
+						.getStyle()
+						.setColor(rIconColor.toHtml());
 			}
 
 			Alignment eAlignment = rStyle.getProperty(ICON_ALIGN, null);
