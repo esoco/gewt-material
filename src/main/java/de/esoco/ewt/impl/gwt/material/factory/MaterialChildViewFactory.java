@@ -48,7 +48,14 @@ public class MaterialChildViewFactory extends ChildViewFactory
 		View	  rParent,
 		ViewStyle rStyle)
 	{
-		return createViewWidget(rParent, rStyle);
+		if (rStyle.hasFlag(ViewStyle.Flag.MODAL))
+		{
+			return createViewWidget(rParent, rStyle);
+		}
+		else
+		{
+			return super.createChildViewWidget(rParent, rStyle);
+		}
 	}
 
 	/***************************************
@@ -57,7 +64,14 @@ public class MaterialChildViewFactory extends ChildViewFactory
 	@Override
 	public IsChildViewWidget createDialogWidget(View rParent, ViewStyle rStyle)
 	{
-		return createViewWidget(rParent, rStyle);
+		if (rStyle.hasFlag(ViewStyle.Flag.MODAL))
+		{
+			return createViewWidget(rParent, rStyle);
+		}
+		else
+		{
+			return super.createChildViewWidget(rParent, rStyle);
+		}
 	}
 
 	/***************************************
