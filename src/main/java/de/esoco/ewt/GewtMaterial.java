@@ -31,6 +31,7 @@ import gwt.material.design.client.constants.WavesType;
 
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.CheckBox;
+import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Label;
 import de.esoco.ewt.component.List;
 import de.esoco.ewt.component.ListBox;
@@ -283,6 +284,8 @@ public class GewtMaterial
 		EWT.setChildViewFactory(new MaterialChildViewFactory());
 		EWT.setLayoutFactory(aLayoutFactory);
 		EWT.setLayoutMapper(aLayoutFactory);
+
+		Component.registerWidgetStyleHandler((w, s) -> checkApplyStyles(w, s));
 
 		registerWidgetFactories();
 
