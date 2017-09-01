@@ -166,7 +166,7 @@ public class MaterialChildViewFactory extends ChildViewFactory
 			if (aTitle == null)
 			{
 				aTitle = new MaterialTitle(sTitle);
-				add(aTitle);
+				insert(aTitle, 0);
 
 				aTitle.addStyleName(EWT.CSS.ewtDialogTitle());
 			}
