@@ -59,22 +59,6 @@ public class MaterialChildViewFactory extends ChildViewFactory
 	}
 
 	/***************************************
-	 * {@inheritDoc}
-	 */
-	@Override
-	public IsChildViewWidget createDialogWidget(View rParent, ViewStyle rStyle)
-	{
-		if (rStyle.hasFlag(ViewStyle.Flag.MODAL))
-		{
-			return createViewWidget(rParent, rStyle);
-		}
-		else
-		{
-			return super.createChildViewWidget(rParent, rStyle);
-		}
-	}
-
-	/***************************************
 	 * Creates the actual view widget.
 	 *
 	 * @param  rParent The parent view
@@ -129,6 +113,11 @@ public class MaterialChildViewFactory extends ChildViewFactory
 			if (rStyle.hasFlag(Flag.BOTTOM))
 			{
 				setType(ModalType.BOTTOM_SHEET);
+			}
+
+			if (rStyle.hasFlag(Flag.AUTO_HIDE))
+			{
+				setDismissible(true);
 			}
 		}
 
