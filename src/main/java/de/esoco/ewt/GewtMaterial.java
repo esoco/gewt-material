@@ -21,6 +21,7 @@ import gwt.material.design.client.base.HasDurationTransition;
 import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.HasInOutDurationTransition;
+import gwt.material.design.client.base.HasPlaceholder;
 import gwt.material.design.client.base.HasTextAlign;
 import gwt.material.design.client.constants.ButtonSize;
 import gwt.material.design.client.constants.IconPosition;
@@ -60,6 +61,7 @@ import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.IsWidget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
+import static de.esoco.lib.property.ContentProperties.PLACEHOLDER;
 import static de.esoco.lib.property.LayoutProperties.BUTTON_SIZE;
 import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
@@ -220,6 +222,19 @@ public class GewtMaterial
 	 */
 	public static void checkApplyStyles(IsWidget rWidget, StyleData rStyle)
 	{
+		if (rWidget instanceof HasPlaceholder &&
+			rStyle.hasProperty(PLACEHOLDER))
+		{
+			String sPlaceholder = rStyle.getProperty(PLACEHOLDER, null);
+
+			if (sPlaceholder == null)
+			{
+				sPlaceholder = "";
+			}
+
+			((HasPlaceholder) rWidget).setPlaceholder(sPlaceholder);
+		}
+
 		Alignment eFloatAlign = rStyle.getProperty(FLOAT, null);
 
 		if (eFloatAlign != null && rWidget instanceof HasFloat)
