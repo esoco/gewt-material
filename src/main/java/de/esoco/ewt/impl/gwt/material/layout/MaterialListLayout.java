@@ -19,6 +19,7 @@ package de.esoco.ewt.impl.gwt.material.layout;
 import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.base.helper.StyleHelper;
 import gwt.material.design.client.constants.CollapsibleType;
+import gwt.material.design.client.js.JsMaterialElement;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialCollection;
@@ -33,6 +34,7 @@ import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.ListLayoutStyle;
 import de.esoco.lib.property.SingleSelection;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -240,6 +242,23 @@ public class MaterialListLayout extends AbstractMaterialLayout
 			}
 
 			collapsible();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void collapsible(Element rE, boolean rAccordion)
+		{
+			super.collapsible(rE, rAccordion);
+			JsMaterialElement.$(".no-collapse")
+							 .on("click",
+								 e ->
+				 				{
+				 					e.stopPropagation();
+
+				 					return Boolean.TRUE;
+								 });
 		}
 	}
 }
