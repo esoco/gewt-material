@@ -23,13 +23,17 @@ import gwt.material.design.client.constants.SideNavType;
 import gwt.material.design.client.ui.MaterialAnchorButton;
 import gwt.material.design.client.ui.MaterialFAB;
 import gwt.material.design.client.ui.MaterialFABList;
+import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
+import gwt.material.design.client.ui.MaterialSideNav;
+import gwt.material.design.client.ui.MaterialSideNavCard;
+import gwt.material.design.client.ui.MaterialSideNavDrawer;
+import gwt.material.design.client.ui.MaterialSideNavMini;
+import gwt.material.design.client.ui.MaterialSideNavPush;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
-import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialNavBar;
-import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSideNav;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
@@ -57,29 +61,29 @@ public class MaterialMenuLayout extends MenuLayout
 {
 	//~ Static fields/initializers ---------------------------------------------
 
-	private static GewtMaterialNavBar aRecentNavBar = null;
+	private static MaterialNavBar aRecentNavBar = null;
 
-	private static final Map<NavigationMenuStyle, SideNavType> aMenuStyles =
+	private static final Map<NavigationMenuStyle, SideNavType> MENU_STYLES =
 		new HashMap<>(NavigationMenuStyle.values().length);
 
 	static
 	{
-		aMenuStyles.put(NavigationMenuStyle.FIXED, SideNavType.FIXED);
-		aMenuStyles.put(NavigationMenuStyle.CARD, SideNavType.CARD);
-		aMenuStyles.put(NavigationMenuStyle.OVERLAY,
+		MENU_STYLES.put(NavigationMenuStyle.FIXED, SideNavType.FIXED);
+		MENU_STYLES.put(NavigationMenuStyle.CARD, SideNavType.CARD);
+		MENU_STYLES.put(NavigationMenuStyle.OVERLAY,
 						SideNavType.DRAWER_WITH_HEADER);
-		aMenuStyles.put(NavigationMenuStyle.OVERLAY_CONTENT,
+		MENU_STYLES.put(NavigationMenuStyle.OVERLAY_CONTENT,
 						SideNavType.DRAWER);
-		aMenuStyles.put(NavigationMenuStyle.PUSH, SideNavType.PUSH_WITH_HEADER);
-		aMenuStyles.put(NavigationMenuStyle.PUSH_CONTENT, SideNavType.PUSH);
-		aMenuStyles.put(NavigationMenuStyle.SMALL, SideNavType.MINI);
-		aMenuStyles.put(NavigationMenuStyle.SMALL_EXPANDING,
+		MENU_STYLES.put(NavigationMenuStyle.PUSH, SideNavType.PUSH_WITH_HEADER);
+		MENU_STYLES.put(NavigationMenuStyle.PUSH_CONTENT, SideNavType.PUSH);
+		MENU_STYLES.put(NavigationMenuStyle.SMALL, SideNavType.MINI);
+		MENU_STYLES.put(NavigationMenuStyle.SMALL_EXPANDING,
 						SideNavType.MINI_WITH_EXPAND);
 	}
 
 	//~ Instance fields --------------------------------------------------------
 
-	private GewtMaterialNavBar aNavBar;
+	private MaterialNavBar     aNavBar;
 	private MaterialNavSection aNavSection;
 
 	private MaterialFABList aMaterialFABList;
@@ -151,50 +155,124 @@ public class MaterialMenuLayout extends MenuLayout
 
 		if (eFloatAlign != null)
 		{
-			MaterialFAB aMaterialFAB = new MaterialFAB();
-
-			aMaterialFABList = new MaterialFABList();
-
-			aMaterialFAB.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
-
-			MaterialAnchorButton aMenuButton =
-				new MaterialAnchorButton(ButtonType.FLOATING);
-
-			GewtMaterial.checkApplyButtonScale(aMenuButton, rContainerStyle);
-			GewtMaterial.checkApplyIcon(aMenuButton, rContainerStyle);
-			aMaterialFAB.add(aMenuButton);
-			aMaterialFAB.add(aMaterialFABList);
-
-			aMenuWidget = aMaterialFAB;
+			aMenuWidget = createFloatingMenu(rContainerStyle, bVertical);
 		}
 		else if (bVertical)
 		{
-			NavigationMenuStyle eMenuStyle =
-				rContainerStyle.getProperty(NAVIGATION_MENU_STYLE,
-											NavigationMenuStyle.OVERLAY);
-
-			GewtMaterialSideNav aSideNav =
-				new GewtMaterialSideNav(aMenuStyles.get(eMenuStyle));
-
-			aMenuWidget = aSideNav;
-
-			if (aRecentNavBar != null)
-			{
-				aSideNav.setId("GlobalSideNav");
-			}
-
-			aSideNav.setCloseOnClick(true);
-			aSideNav.setShowOnAttach(false);
-			aSideNav.setAlwaysShowActivator(false);
+			aMenuWidget = createSideMenu(rContainerStyle);
 		}
 		else
 		{
-			aNavBar		  = new GewtMaterialNavBar();
-			aMenuWidget   = aNavBar;
-			aRecentNavBar = aNavBar;
-
-			aRecentNavBar.setActivates("GlobalSideNav");
+			aMenuWidget = createTopMenu();
 		}
+
+		return aMenuWidget;
+	}
+
+	/***************************************
+	 * Creates a new floating menu.
+	 *
+	 * @param  rMenuStyle The menu style
+	 * @param  bVertical  TRUE for a vertical menu, FALSE for horizontal
+	 *
+	 * @return The menu container widget
+	 */
+	protected HasWidgets createFloatingMenu(
+		StyleData rMenuStyle,
+		boolean   bVertical)
+	{
+		MaterialFAB aMaterialFAB = new MaterialFAB();
+
+		aMaterialFABList = new MaterialFABList();
+
+		aMaterialFAB.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+
+		MaterialAnchorButton aMenuButton =
+			new MaterialAnchorButton(ButtonType.FLOATING);
+
+		GewtMaterial.checkApplyButtonScale(aMenuButton, rMenuStyle);
+		GewtMaterial.checkApplyIcon(aMenuButton, rMenuStyle);
+		aMaterialFAB.add(aMenuButton);
+		aMaterialFAB.add(aMaterialFABList);
+
+		return aMaterialFAB;
+	}
+
+	/***************************************
+	 * Creates a menu that is displayed at the side of the target area.
+	 *
+	 * @param  rMenuStyle The meniu style
+	 *
+	 * @return The menu container widget
+	 */
+	protected HasWidgets createSideMenu(StyleData rMenuStyle)
+	{
+		HasWidgets		    aMenuWidget;
+		NavigationMenuStyle eMenuStyle =
+			rMenuStyle.getProperty(NAVIGATION_MENU_STYLE,
+								   NavigationMenuStyle.OVERLAY_CONTENT);
+
+		MaterialSideNav aSideNav;
+
+		switch (eMenuStyle)
+		{
+			case CARD:
+				aSideNav = new MaterialSideNavCard();
+				break;
+
+			case OVERLAY:
+			case OVERLAY_CONTENT:
+				aSideNav = new MaterialSideNavDrawer();
+				((MaterialSideNavDrawer) aSideNav).setWithHeader(eMenuStyle ==
+																 NavigationMenuStyle.OVERLAY_CONTENT);
+				break;
+
+			case PUSH:
+			case PUSH_CONTENT:
+				aSideNav = new MaterialSideNavPush();
+				((MaterialSideNavPush) aSideNav).setWithHeader(eMenuStyle ==
+															   NavigationMenuStyle.PUSH_CONTENT);
+				break;
+
+			case SMALL:
+			case SMALL_EXPANDING:
+				aSideNav = new MaterialSideNavMini();
+				((MaterialSideNavMini) aSideNav).setExpandable(eMenuStyle ==
+															   NavigationMenuStyle.SMALL_EXPANDING);
+				break;
+
+			default:
+				aSideNav = new MaterialSideNav();
+		}
+
+		aMenuWidget = aSideNav;
+
+		if (aRecentNavBar != null)
+		{
+			aSideNav.setId("GlobalSideNav");
+		}
+
+		aSideNav.setCloseOnClick(true);
+		aSideNav.setShowOnAttach(false);
+		aSideNav.setAlwaysShowActivator(true);
+
+		return aMenuWidget;
+	}
+
+	/***************************************
+	 * Creates a menu at the top of the target area.
+	 *
+	 * @return The menu container widget
+	 */
+	protected HasWidgets createTopMenu()
+	{
+		HasWidgets aMenuWidget;
+
+		aNavBar		  = new MaterialNavBar();
+		aMenuWidget   = aNavBar;
+		aRecentNavBar = aNavBar;
+
+		aRecentNavBar.setActivates("GlobalSideNav");
 
 		return aMenuWidget;
 	}

@@ -81,7 +81,7 @@ public class MaterialTabPanelLayout
 		MaterialRow    aTabPanelContainer = new MaterialRow();
 		MaterialColumn aTabBarColumn	  = new MaterialColumn();
 
-		aTabBar = new GewtMaterialTab();
+		aTabBar = new MaterialTab();
 
 		aTabBarColumn.setGrid("s12");
 		aTabBarColumn.add(aTabBar);
@@ -120,30 +120,5 @@ public class MaterialTabPanelLayout
 	public void setSelection(int nIndex)
 	{
 		getPanelWidget().setTabIndex(nIndex);
-	}
-
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * Subclasses to correct wrong initialization.
-	 *
-	 * @author eso
-	 */
-	static class GewtMaterialTab extends MaterialTab
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * Overridden to initialize after add.
-		 *
-		 * @see MaterialTab#add(Widget)
-		 */
-		@Override
-		public void add(Widget rTabItem)
-		{
-			super.add(rTabItem);
-
-			initialize();
-		}
 	}
 }

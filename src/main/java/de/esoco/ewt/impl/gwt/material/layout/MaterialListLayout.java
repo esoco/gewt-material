@@ -241,16 +241,16 @@ public class MaterialListLayout extends AbstractMaterialLayout
 				clearActive();
 			}
 
-			collapsible();
+			collapsible(getElement());
 		}
 
 		/***************************************
 		 * {@inheritDoc}
 		 */
 		@Override
-		protected void collapsible(Element rE, boolean rAccordion)
+		protected void collapsible(Element rElement)
 		{
-			super.collapsible(rE, rAccordion);
+			super.collapsible(rElement);
 			JsMaterialElement.$(".no-collapse")
 							 .on("click",
 								 e ->
