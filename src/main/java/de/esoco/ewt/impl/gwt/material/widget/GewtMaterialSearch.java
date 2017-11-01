@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
+import gwt.material.design.client.ui.MaterialIcon;
 import gwt.material.design.client.ui.MaterialSearch;
 import gwt.material.design.client.ui.MaterialTextBox;
 
@@ -49,6 +50,21 @@ public class GewtMaterialSearch extends MaterialSearch
 					setValue("", true);
 				}
 			});
+
+		getIconSearch().addMouseDownHandler(e ->
+											{
+												if (isActive())
+												{
+													close();
+												}
+												else
+												{
+													open();
+												}
+											});
+
+		valueBoxBase.addFocusHandler(e -> setActive(true));
+		valueBoxBase.addBlurHandler(e -> setActive(false));
 	}
 
 	//~ Methods ----------------------------------------------------------------
@@ -60,6 +76,22 @@ public class GewtMaterialSearch extends MaterialSearch
 	public int getCursorPos()
 	{
 		return asValueBoxBase().getCursorPos();
+	}
+
+	/***************************************
+	 * @see MaterialSearch#setActive(boolean)
+	 */
+	@Override
+	public void setActive(boolean bActive)
+	{
+		super.setActive(bActive);
+
+		MaterialIcon rCloseIcon = getIconClose();
+
+		rCloseIcon.setIconColor(null);
+		rCloseIcon.setVisible(bActive);
+		getIconSearch().setIconColor(null);
+		setTextColor(null);
 	}
 
 	/***************************************
