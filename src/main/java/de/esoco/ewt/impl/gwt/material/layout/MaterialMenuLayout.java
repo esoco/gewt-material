@@ -17,6 +17,7 @@
 package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.client.base.AbstractButton;
+import gwt.material.design.client.base.AbstractSideNav;
 import gwt.material.design.client.constants.Axis;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.SideNavType;
@@ -212,7 +213,7 @@ public class MaterialMenuLayout extends MenuLayout
 			rMenuStyle.getProperty(NAVIGATION_MENU_STYLE,
 								   NavigationMenuStyle.OVERLAY_CONTENT);
 
-		MaterialSideNav aSideNav;
+		AbstractSideNav aSideNav;
 
 		switch (eMenuStyle)
 		{

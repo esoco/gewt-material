@@ -68,6 +68,7 @@ public class MaterialTabPanelLayout
 		aContentColumn.add(rContentWidget);
 		aTabItem.add(aTabLink);
 		aTabBar.add(aTabItem);
+		aTabBar.setTabIndex(0);
 
 		addContentWidget(rContentWidget, aTabItem);
 	}
@@ -96,7 +97,16 @@ public class MaterialTabPanelLayout
 	@Override
 	public int getSelectionIndex()
 	{
-		return aTabBar.getTabIndex();
+		int nSelectedTab = aTabBar.getTabIndex();
+
+		// workaround for bug in GMD2.0
+		// https://github.com/GwtMaterialDesign/gwt-material/issues/736
+		if (nSelectedTab > 0)
+		{
+			nSelectedTab--;
+		}
+
+		return nSelectedTab;
 	}
 
 	/***************************************
