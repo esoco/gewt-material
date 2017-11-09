@@ -109,15 +109,11 @@ public class MaterialChildViewFactory extends ChildViewFactory
 		{
 			setInDuration(500);
 			setOutDuration(500);
+			setDismissible(rStyle.hasFlag(Flag.AUTO_HIDE));
 
 			if (rStyle.hasFlag(Flag.BOTTOM))
 			{
 				setType(ModalType.BOTTOM_SHEET);
-			}
-
-			if (rStyle.hasFlag(Flag.AUTO_HIDE))
-			{
-				setDismissible(true);
 			}
 		}
 
