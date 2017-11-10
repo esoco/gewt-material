@@ -251,7 +251,9 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		protected void collapsible(Element rElement)
 		{
 			super.collapsible(rElement);
-			JsMaterialElement.$(".no-collapse")
+
+			JsMaterialElement.$(rElement)
+							 .add(".no-collapse")
 							 .on("click",
 								 e ->
 				 				{
