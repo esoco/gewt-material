@@ -96,6 +96,31 @@ public class GewtMaterial
 	//~ Static methods ---------------------------------------------------------
 
 	/***************************************
+	 * Determines the {@link IconType} constant for a string containing the icon
+	 * name to a widget. If the type cannot be matched a default will be used
+	 * and a resource error will be logged (with {@link GWT#log(String)}).
+	 *
+	 * @param sIcon    The icon name in upper case
+	 * @param rHasIcon The widget to apply the icon to
+	 */
+	public static void applyIconType(String sIcon, HasIcon rHasIcon)
+	{
+		IconType eIconType = null;
+
+		try
+		{
+			eIconType = IconType.valueOf(sIcon);
+		}
+		catch (IllegalArgumentException e)
+		{
+			GWT.log("No icon type for " + sIcon);
+			eIconType = IconType.HELP;
+		}
+
+		rHasIcon.setIconType(eIconType);
+	}
+
+	/***************************************
 	 * Applies any alignment settings from a style data to the given widget.
 	 *
 	 * @param rWidget The material widget with alignment
@@ -168,30 +193,20 @@ public class GewtMaterial
 		{
 			HasIcon rHasIcon = (HasIcon) rWidget;
 
-			String sIcon = rStyle.getProperty(ICON, null);
+			String		  sIcon		 = rStyle.getProperty(ICON, null);
+			RelativeScale eIconSize  = rStyle.getProperty(ICON_SIZE, null);
+			Color		  rIconColor = rStyle.getProperty(ICON_COLOR, null);
+			Alignment     eAlignment = rStyle.getProperty(ICON_ALIGN, null);
 
 			if (sIcon != null)
 			{
-				try
-				{
-					IconType eIconType = IconType.valueOf(sIcon);
-
-					rHasIcon.setIconType(eIconType);
-				}
-				catch (IllegalArgumentException e)
-				{
-					GWT.log("No icon type for " + sIcon);
-				}
+				applyIconType(sIcon, rHasIcon);
 			}
-
-			RelativeScale eIconSize = rStyle.getProperty(ICON_SIZE, null);
 
 			if (eIconSize != null)
 			{
 				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
 			}
-
-			Color rIconColor = rStyle.getProperty(ICON_COLOR, null);
 
 			if (rIconColor != null)
 			{
@@ -201,8 +216,6 @@ public class GewtMaterial
 						.getStyle()
 						.setColor(rIconColor.toHtml());
 			}
-
-			Alignment eAlignment = rStyle.getProperty(ICON_ALIGN, null);
 
 			if (eAlignment != null)
 			{

@@ -17,8 +17,8 @@
 package de.esoco.ewt.impl.gwt.material.widget;
 
 import gwt.material.design.client.base.HasIcon;
-import gwt.material.design.client.constants.IconType;
 
+import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.graphics.Icon;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
@@ -72,7 +72,7 @@ public class ImageAttributeMixin<T extends Widget & HasIcon>
 
 		if (rImage instanceof Icon)
 		{
-			rWidget.setIconType(IconType.valueOf(((Icon) rImage).getName()));
+			GewtMaterial.applyIconType(((Icon) rImage).getName(), rWidget);
 		}
 	}
 }
