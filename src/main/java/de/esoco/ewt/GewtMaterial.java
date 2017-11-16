@@ -18,6 +18,7 @@ package de.esoco.ewt;
 
 import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.base.HasDurationTransition;
+import gwt.material.design.client.base.HasError;
 import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.HasInOutDurationTransition;
@@ -59,6 +60,7 @@ import de.esoco.lib.property.RelativeScale;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
 import static de.esoco.lib.property.ContentProperties.PLACEHOLDER;
@@ -94,6 +96,35 @@ public class GewtMaterial
 	}
 
 	//~ Static methods ---------------------------------------------------------
+
+	/***************************************
+	 * @see Component#applyComponentErrorState(Component, String)
+	 */
+	public static void applyComponentErrorState(
+		Component rComponent,
+		String    sMessage)
+	{
+		Widget rWidget = rComponent.getWidget();
+
+		if (rWidget instanceof HasError)
+		{
+			HasError rHasError = (HasError) rWidget;
+
+			if (sMessage != null)
+			{
+				rHasError.setError(rComponent.getContext()
+								   .expandResource(sMessage));
+			}
+			else
+			{
+				rHasError.clearErrorOrSuccess();
+			}
+		}
+		else
+		{
+			Component.applyComponentErrorState(rComponent, sMessage);
+		}
+	}
 
 	/***************************************
 	 * Determines the {@link IconType} constant for a string containing the icon
@@ -313,7 +344,8 @@ public class GewtMaterial
 		EWT.setLayoutFactory(aLayoutFactory);
 		EWT.setLayoutMapper(aLayoutFactory);
 
-		Component.registerWidgetStyleHandler((w, s) -> checkApplyStyles(w, s));
+		Component.setWidgetStyleHandler((w, s) -> checkApplyStyles(w, s));
+		Component.setWidgetErrorStateHandler(GewtMaterial::applyComponentErrorState);
 
 		registerWidgetFactories();
 
