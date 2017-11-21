@@ -16,7 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
-import gwt.material.design.client.constants.Flex;
+import gwt.material.design.client.js.JsMaterialElement;
 import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialRow;
@@ -62,7 +62,6 @@ public class MaterialTabPanelLayout
 
 		aContentColumn.getElement().setId(sId);
 		aContentColumn.setGrid("s12");
-		aTabItem.setFlex(Flex.NONE);
 
 		getPanelWidget().add(aContentColumn);
 		aContentColumn.add(rContentWidget);
@@ -82,7 +81,7 @@ public class MaterialTabPanelLayout
 		MaterialRow    aTabPanelContainer = new MaterialRow();
 		MaterialColumn aTabBarColumn	  = new MaterialColumn();
 
-		aTabBar = new MaterialTab();
+		aTabBar = new GewtMaterialTab();
 
 		aTabBarColumn.setGrid("s12");
 		aTabBarColumn.add(aTabBar);
@@ -97,16 +96,7 @@ public class MaterialTabPanelLayout
 	@Override
 	public int getSelectionIndex()
 	{
-		int nSelectedTab = aTabBar.getTabIndex();
-
-		// workaround for bug in GMD2.0
-		// https://github.com/GwtMaterialDesign/gwt-material/issues/736
-		if (nSelectedTab > 0)
-		{
-			nSelectedTab--;
-		}
-
-		return nSelectedTab;
+		return aTabBar.getTabIndex();
 	}
 
 	/***************************************
@@ -130,5 +120,29 @@ public class MaterialTabPanelLayout
 	public void setSelection(int nIndex)
 	{
 		getPanelWidget().setTabIndex(nIndex);
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * Subclassed to fix a GMD bug.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialTab extends MaterialTab
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void load()
+		{
+			// workaround for bug in GMD2.0
+			// https://github.com/GwtMaterialDesign/gwt-material/issues/736
+			JsMaterialElement.$(getElement()).find(".indicator").remove();
+			super.load();
+		}
 	}
 }
