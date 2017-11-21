@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.base.HasActive;
 import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
@@ -37,6 +38,7 @@ import gwt.material.design.client.ui.MaterialModalFooter;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
+import de.esoco.lib.property.ActiveState;
 import de.esoco.lib.property.LayoutType;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -169,7 +171,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		switch (eLayout)
 		{
 			case HEADER:
-				aLayoutWidget = new MaterialCollapsibleHeader();
+				aLayoutWidget = new GewtMaterialCollapsibleHeader();
 				break;
 
 			case CONTENT:
@@ -301,5 +303,54 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		}
 
 		return eContentArea;
+	}
+
+	//~ Inner Classes ----------------------------------------------------------
+
+	/********************************************************************
+	 * Subclassed to implement the {@link HasActive} interface.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialCollapsibleHeader
+		extends MaterialCollapsibleHeader implements ActiveState
+	{
+		//~ Constructors -------------------------------------------------------
+
+		/***************************************
+		 * Creates a new instance.
+		 */
+		public GewtMaterialCollapsibleHeader()
+		{
+		}
+
+		/***************************************
+		 * Creates a new instance.
+		 *
+		 * @param rWidgets The header widgets
+		 */
+		public GewtMaterialCollapsibleHeader(Widget... rWidgets)
+		{
+			super(rWidgets);
+		}
+
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isActive()
+		{
+			return getStyleName().contains("active");
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setActive(boolean bActive)
+		{
+		}
 	}
 }

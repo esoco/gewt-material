@@ -21,12 +21,14 @@ import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialCollapsibleHeader;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
+import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
 import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.impl.gwt.HasEventHandlingDelay;
+import de.esoco.ewt.impl.gwt.material.layout.MaterialContentLayout.GewtMaterialCollapsibleHeader;
 import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Alignment;
@@ -129,7 +131,7 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 	{
 		if (rWidget instanceof MaterialTitle)
 		{
-			rWidget = new MaterialCollapsibleHeader(rWidget);
+			rWidget = new GewtMaterialCollapsibleHeader(rWidget);
 		}
 		else
 		{
