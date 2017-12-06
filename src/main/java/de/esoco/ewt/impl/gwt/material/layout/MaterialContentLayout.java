@@ -351,6 +351,9 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		@Override
 		public void setActive(boolean bActive)
 		{
+			MaterialCollapsible rParent = (MaterialCollapsible) getParent();
+
+			rParent.setActive(rParent.getWidgetIndex(this) + 1);
 		}
 	}
 }
