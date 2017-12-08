@@ -24,7 +24,6 @@ import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
 import gwt.material.design.client.ui.MaterialCollectionSecondary;
-import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.impl.gwt.HasEventHandlingDelay;
@@ -129,41 +128,34 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 	 */
 	private Widget createCollapsibleItemWidget(Widget rWidget)
 	{
-		if (rWidget instanceof MaterialTitle)
+		if (aItemHeader == null)
 		{
-			rWidget = new GewtMaterialCollapsibleHeader(rWidget);
-		}
-		else
-		{
-			if (aItemHeader == null)
+			if (rWidget instanceof MaterialCollapsibleHeader)
 			{
-				if (rWidget instanceof MaterialCollapsibleHeader)
-				{
-					aItemHeader = (MaterialCollapsibleHeader) rWidget;
-				}
-				else
-				{
-					aItemHeader = new MaterialCollapsibleHeader(rWidget);
-					rWidget     = aItemHeader;
-				}
-			}
-			else if (aItemBody == null)
-			{
-				if (rWidget instanceof MaterialCollapsibleBody)
-				{
-					aItemBody = (MaterialCollapsibleBody) rWidget;
-				}
-				else
-				{
-					aItemBody = new MaterialCollapsibleBody(rWidget);
-					rWidget   = aItemBody;
-				}
+				aItemHeader = (MaterialCollapsibleHeader) rWidget;
 			}
 			else
 			{
-				aItemBody.add(rWidget);
-				rWidget = null;
+				aItemHeader = new GewtMaterialCollapsibleHeader(rWidget);
+				rWidget     = aItemHeader;
 			}
+		}
+		else if (aItemBody == null)
+		{
+			if (rWidget instanceof MaterialCollapsibleBody)
+			{
+				aItemBody = (MaterialCollapsibleBody) rWidget;
+			}
+			else
+			{
+				aItemBody = new MaterialCollapsibleBody(rWidget);
+				rWidget   = aItemBody;
+			}
+		}
+		else
+		{
+			aItemBody.add(rWidget);
+			rWidget = null;
 		}
 
 		return rWidget;
