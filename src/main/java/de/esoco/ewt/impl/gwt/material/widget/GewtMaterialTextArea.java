@@ -37,6 +37,16 @@ public class GewtMaterialTextArea extends MaterialTextArea
 	private ImageAttributeMixin<GewtMaterialTextArea> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
+	//~ Constructors -----------------------------------------------------------
+
+	/***************************************
+	 * Creates a new instance.
+	 */
+	public GewtMaterialTextArea()
+	{
+		setResizeRule(ResizeRule.AUTO);
+	}
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
