@@ -37,10 +37,12 @@ public class MaterialListControlFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialListBox createMaterialWidget(
+	public IsListControlWidget createMaterialWidget(
 		Component rComponent,
 		StyleData rStyle)
 	{
+		// MaterialList box ist considerable slower than original
+//		return new GwtListBox();
 		return new GewtMaterialListBox();
 	}
 
@@ -55,5 +57,15 @@ public class MaterialListControlFactory
 	static class GewtMaterialListBox extends MaterialListBox
 		implements IsListControlWidget
 	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setTitle(String sText)
+		{
+			super.setTitle(sText);
+		}
 	}
 }
