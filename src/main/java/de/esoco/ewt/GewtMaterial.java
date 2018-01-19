@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,14 +20,18 @@ import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.base.HasDurationTransition;
 import gwt.material.design.client.base.HasError;
 import gwt.material.design.client.base.HasFloat;
+import gwt.material.design.client.base.HasHideOn;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.HasInOutDurationTransition;
 import gwt.material.design.client.base.HasPlaceholder;
 import gwt.material.design.client.base.HasTextAlign;
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.constants.ButtonSize;
+import gwt.material.design.client.constants.HideOn;
 import gwt.material.design.client.constants.IconPosition;
 import gwt.material.design.client.constants.IconSize;
 import gwt.material.design.client.constants.IconType;
+import gwt.material.design.client.constants.ShowOn;
 import gwt.material.design.client.constants.TextAlign;
 import gwt.material.design.client.constants.WavesType;
 
@@ -55,6 +59,7 @@ import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.Color;
+import de.esoco.lib.property.LayoutVisibility;
 import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.core.client.GWT;
@@ -69,6 +74,7 @@ import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_ALIGN;
 import static de.esoco.lib.property.LayoutProperties.ICON_SIZE;
+import static de.esoco.lib.property.LayoutProperties.LAYOUT_VISIBILITY;
 import static de.esoco.lib.property.LayoutProperties.TEXT_ALIGN;
 import static de.esoco.lib.property.StyleProperties.ANIMATION_DURATION;
 import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
@@ -258,6 +264,65 @@ public class GewtMaterial
 	}
 
 	/***************************************
+	 * Applies any alignment settings from a style data to the given widget.
+	 *
+	 * @param rWidget The material widget with alignment
+	 * @param rStyle  The style to check for alignment
+	 */
+	public static void checkApplyLayoutVisibility(
+		IsWidget  rWidget,
+		StyleData rStyle)
+	{
+		LayoutVisibility eVisibility =
+			rStyle.getProperty(LAYOUT_VISIBILITY, null);
+
+		if (eVisibility != null)
+		{
+			HideOn eHideOn = null;
+
+			switch (eVisibility)
+			{
+				case ALWAYS:
+					eHideOn = HideOn.NONE;
+					break;
+
+				case LARGE:
+					eHideOn = HideOn.HIDE_ON_MED_DOWN;
+					break;
+
+				case MEDIUM:
+					((MaterialWidget) rWidget).setVisible(false);
+					((MaterialWidget) rWidget).setShowOn(ShowOn.SHOW_ON_MED);
+					break;
+
+				case MEDIUM_AND_LARGE:
+					eHideOn = HideOn.HIDE_ON_SMALL;
+					break;
+
+				case SMALL:
+					eHideOn = HideOn.HIDE_ON_MED_UP;
+					break;
+
+				case SMALL_AND_LARGE:
+					eHideOn = HideOn.HIDE_ON_MED;
+					break;
+
+				case SMALL_AND_MEDIUM:
+					eHideOn = HideOn.HIDE_ON_LARGE;
+					break;
+
+				default:
+					assert false : "No match for visibility " + eVisibility;
+			}
+
+			if (eHideOn != null)
+			{
+				((HasHideOn) rWidget).setHideOn(eHideOn);
+			}
+		}
+	}
+
+	/***************************************
 	 * Checks whether certain styles need to be converted and applied to the a
 	 * widget.
 	 *
@@ -304,6 +369,7 @@ public class GewtMaterial
 			}
 		}
 
+		checkApplyLayoutVisibility(rWidget, rStyle);
 		checkApplyAlignment(rWidget, rStyle);
 		checkApplyIcon(rWidget, rStyle);
 	}

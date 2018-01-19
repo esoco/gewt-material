@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package de.esoco.ewt.impl.gwt.material.factory;
 
 import gwt.material.design.client.base.MaterialWidget;
 
-import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.impl.gwt.WidgetFactory;
 import de.esoco.ewt.style.StyleData;
@@ -43,11 +42,7 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	@SuppressWarnings("unchecked")
 	public final W createWidget(Component rComponent, StyleData rStyle)
 	{
-		IsWidget aWidget = createMaterialWidget(rComponent, rStyle);
-
-		GewtMaterial.checkApplyStyles(aWidget, rStyle);
-
-		return (W) aWidget;
+		return (W) createMaterialWidget(rComponent, rStyle);
 	}
 
 	/***************************************
