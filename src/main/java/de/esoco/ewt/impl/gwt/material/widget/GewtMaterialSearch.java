@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,9 +22,6 @@ import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
-
 
 /********************************************************************
  * A {@link MaterialTextBox} subclass that also implements the interface {@link
@@ -42,26 +39,9 @@ public class GewtMaterialSearch extends MaterialSearch
 	 */
 	public GewtMaterialSearch()
 	{
-		addCloseHandler(new CloseHandler<String>()
-			{
-				@Override
-				public void onClose(CloseEvent<String> rEvent)
-				{
-					setValue("", true);
-				}
-			});
+		addCloseHandler(e -> setValue("", true));
 
-		getIconSearch().addMouseDownHandler(e ->
-											{
-												if (isActive())
-												{
-													close();
-												}
-												else
-												{
-													open();
-												}
-											});
+		getIconSearch().addMouseDownHandler(e -> toggleActive());
 
 		valueBoxBase.addFocusHandler(e -> setActive(true));
 		valueBoxBase.addBlurHandler(e -> setActive(false));
@@ -100,5 +80,20 @@ public class GewtMaterialSearch extends MaterialSearch
 	@Override
 	public void setVisibleLength(int nColumns)
 	{
+	}
+
+	/***************************************
+	 * Toggles the active state of this search field.
+	 */
+	private void toggleActive()
+	{
+		if (isActive())
+		{
+			close();
+		}
+		else
+		{
+			open();
+		}
 	}
 }

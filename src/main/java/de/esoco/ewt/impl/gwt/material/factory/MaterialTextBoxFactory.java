@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,14 +16,16 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
+import gwt.material.design.client.base.AbstractSideNav;
 import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialNavBar;
+import gwt.material.design.client.ui.MaterialNavSection;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSearch;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTextBox;
-import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
 import de.esoco.ewt.style.StyleFlag;
 
@@ -46,9 +48,12 @@ public class MaterialTextBoxFactory
 	@Override
 	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
+		Widget rWidget     = rComponent.getParent().getWidget();
 		Widget aTextWidget;
 
-		if (rComponent.getParent().getLayout() instanceof MenuLayout)
+		if (rWidget instanceof MaterialNavBar ||
+			rWidget instanceof AbstractSideNav ||
+			rWidget instanceof MaterialNavSection)
 		{
 			aTextWidget = new GewtMaterialSearch();
 		}

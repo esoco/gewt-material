@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.base.AbstractSideNav;
 import gwt.material.design.client.base.HasActive;
 import gwt.material.design.client.base.MaterialWidget;
+import gwt.material.design.client.constants.HideOn;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
@@ -34,6 +36,8 @@ import gwt.material.design.client.ui.MaterialHeader;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialModalContent;
 import gwt.material.design.client.ui.MaterialModalFooter;
+import gwt.material.design.client.ui.MaterialNavBar;
+import gwt.material.design.client.ui.MaterialNavSection;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
@@ -56,7 +60,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	/********************************************************************
 	 * Internal enumeration of the different content areas to consider.
 	 */
-	private enum ContentArea { GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MODAL }
+	private enum ContentArea
+	{
+		GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MENU, MODAL
+	}
 
 	//~ Instance fields --------------------------------------------------------
 
@@ -106,6 +113,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 
 			case MODAL:
 				aLayoutWidget = createModalContentContainer(eLayout);
+				break;
+
+			case MENU:
+				aLayoutWidget = createMenuContentContainer(eLayout);
 				break;
 
 			case GLOBAL:
@@ -243,6 +254,32 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	}
 
 	/***************************************
+	 * Creates the content layout widgets for a {@link MaterialHeader}
+	 * container.
+	 *
+	 * @param  eLayout The content layout type
+	 *
+	 * @return A new widget container or NULL if no match was available
+	 */
+	MaterialWidget createMenuContentContainer(LayoutType eLayout)
+	{
+		MaterialWidget aLayoutWidget;
+
+		switch (eLayout)
+		{
+			case SECONDARY_CONTENT:
+				aLayoutWidget = new MaterialNavSection();
+				aLayoutWidget.setHideOn(HideOn.NONE);
+				break;
+
+			default:
+				aLayoutWidget = null;
+		}
+
+		return aLayoutWidget;
+	}
+
+	/***************************************
 	 * Creates the content layout widgets for a {@link MaterialModal} container.
 	 *
 	 * @param  eLayout The content layout type
@@ -296,6 +333,11 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		else if (rParent instanceof MaterialModal)
 		{
 			eContentArea = ContentArea.MODAL;
+		}
+		else if (rParent instanceof MaterialNavBar ||
+				 rParent instanceof AbstractSideNav)
+		{
+			eContentArea = ContentArea.MENU;
 		}
 		else
 		{
