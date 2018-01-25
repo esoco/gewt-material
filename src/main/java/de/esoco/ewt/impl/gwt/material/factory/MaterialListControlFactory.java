@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,8 +41,6 @@ public class MaterialListControlFactory
 		Component rComponent,
 		StyleData rStyle)
 	{
-		// MaterialList box ist considerable slower than original
-//		return new GwtListBox();
 		return new GewtMaterialListBox();
 	}
 
@@ -57,7 +55,26 @@ public class MaterialListControlFactory
 	static class GewtMaterialListBox extends MaterialListBox
 		implements IsListControlWidget
 	{
+		//~ Constructors -------------------------------------------------------
+
+		/***************************************
+		 * Creates a new instance.
+		 */
+		public GewtMaterialListBox()
+		{
+			setOld(false);
+		}
+
 		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void addItem(String rValue)
+		{
+			super.addItem(rValue, false);
+		}
 
 		/***************************************
 		 * {@inheritDoc}

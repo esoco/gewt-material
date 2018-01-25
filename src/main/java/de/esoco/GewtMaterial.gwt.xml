@@ -7,5 +7,6 @@
 	<inherits name='de.esoco.GEWT' />	
 	<inherits name='gwt.material.design.GwtMaterialDesignBasic' />
 	<inherits name='gwt.material.design.addins.GWTMaterialAddins'/>
+	<inherits name="gwt.material.design.GwtMaterialTable"/>
 			
 </module>

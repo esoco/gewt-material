@@ -43,6 +43,7 @@ import de.esoco.ewt.component.List;
 import de.esoco.ewt.component.ListBox;
 import de.esoco.ewt.component.ProgressBar;
 import de.esoco.ewt.component.RadioButton;
+import de.esoco.ewt.component.Table;
 import de.esoco.ewt.component.TextArea;
 import de.esoco.ewt.component.TextField;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialButtonFactory;
@@ -52,6 +53,7 @@ import de.esoco.ewt.impl.gwt.material.factory.MaterialLabelFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialListControlFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialProgressBarFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialRadioButtonFactory;
+import de.esoco.ewt.impl.gwt.material.factory.MaterialTableFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
@@ -460,6 +462,9 @@ public class GewtMaterial
 								  true);
 		EWT.registerWidgetFactory(ProgressBar.class,
 								  new MaterialProgressBarFactory(),
+								  true);
+		EWT.registerWidgetFactory(Table.class,
+								  new MaterialTableFactory(),
 								  true);
 	}
 }
