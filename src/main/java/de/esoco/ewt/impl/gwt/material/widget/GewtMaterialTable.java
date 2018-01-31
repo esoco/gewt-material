@@ -16,16 +16,21 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.widget;
 
+import gwt.material.design.client.data.AbstractDataView;
 import gwt.material.design.client.data.DataSource;
+import gwt.material.design.client.data.SelectionType;
+import gwt.material.design.client.data.component.RowComponent;
 import gwt.material.design.client.data.loader.LoadCallback;
 import gwt.material.design.client.data.loader.LoadConfig;
 import gwt.material.design.client.data.loader.LoadResult;
 import gwt.material.design.client.ui.pager.MaterialDataPager;
 import gwt.material.design.client.ui.table.MaterialDataTable;
 import gwt.material.design.client.ui.table.cell.Column;
+import gwt.material.design.jquery.client.api.JQuery;
 
 import de.esoco.ewt.UserInterfaceContext;
 import de.esoco.ewt.component.TableControl.IsTableControlWidget;
+import de.esoco.ewt.event.EventType;
 import de.esoco.ewt.impl.gwt.GewtEventDispatcher;
 
 import de.esoco.lib.model.Callback;
@@ -34,6 +39,7 @@ import de.esoco.lib.model.DataModel;
 import de.esoco.lib.model.RemoteDataModel;
 import de.esoco.lib.model.SortableDataModel;
 import de.esoco.lib.property.ContentType;
+import de.esoco.lib.property.Indexed;
 import de.esoco.lib.property.TitleAttribute;
 
 import java.sql.Time;
@@ -45,6 +51,7 @@ import java.util.List;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.ui.Composite;
@@ -65,8 +72,8 @@ public class GewtMaterialTable extends Composite
 
 	private UserInterfaceContext rContext;
 
-	private MaterialDataTable<DataModel<?>> aMaterialTable;
-	private MaterialDataPager<DataModel<?>> aPager = null;
+	private GewtMaterialDataTable<DataModel<?>> aMaterialTable;
+	private MaterialDataPager<DataModel<?>>     aPager = null;
 
 	private DataModel<DataModel<?>>     rDataModel;
 	private DataModel<ColumnDefinition> rColumns;
@@ -82,10 +89,7 @@ public class GewtMaterialTable extends Composite
 	{
 		this.rContext = rContext;
 
-		aMaterialTable = new MaterialDataTable<>();
-
-		initWidget(aMaterialTable);
-		setTableTitle(null);
+		initWidget(aMaterialTable = new GewtMaterialDataTable<>());
 	}
 
 	//~ Static methods ---------------------------------------------------------
@@ -153,8 +157,7 @@ public class GewtMaterialTable extends Composite
 	@Override
 	public DataModel<?> getSelection()
 	{
-		// TODO Add method code here
-		return null;
+		return aMaterialTable.getSelection();
 	}
 
 	/***************************************
@@ -163,7 +166,10 @@ public class GewtMaterialTable extends Composite
 	@Override
 	public int getSelectionIndex()
 	{
-		return -1;
+		DataModel<?> rSelection = getSelection();
+
+		return rSelection instanceof Indexed ? ((Indexed) rSelection)
+											 .getIndex() : -1;
 	}
 
 	/***************************************
@@ -258,13 +264,14 @@ public class GewtMaterialTable extends Composite
 			DataModelDataSource aDataSource =
 				new DataModelDataSource(rDataModel);
 
+			aMaterialTable.setDataSource(aDataSource);
+
 			if (aPager == null)
 			{
-				createPager(aDataSource);
+				addPager();
 			}
 			else
 			{
-				aMaterialTable.setDataSource(aDataSource);
 				aPager.setDataSource(aDataSource);
 			}
 		}
@@ -285,6 +292,20 @@ public class GewtMaterialTable extends Composite
 	@Override
 	public void setEventDispatcher(GewtEventDispatcher rEventDispatcher)
 	{
+		if (aMaterialTable.getSelectionType() == SelectionType.NONE)
+		{
+			aMaterialTable.addRowShortPressHandler(e ->
+												   rEventDispatcher
+												   .dispatchEvent(EventType.SELECTION));
+		}
+		else
+		{
+			aMaterialTable.addRowSelectHandler(e ->
+											   rEventDispatcher.dispatchEvent(EventType.SELECTION));
+		}
+
+		aMaterialTable.addRowDoubleClickHandler(e ->
+												rEventDispatcher.dispatchEvent(EventType.ACTION));
 	}
 
 	/***************************************
@@ -302,6 +323,7 @@ public class GewtMaterialTable extends Composite
 	@Override
 	public void setSelection(int nIndex)
 	{
+		setSelection(nIndex, false);
 	}
 
 	/***************************************
@@ -310,6 +332,7 @@ public class GewtMaterialTable extends Composite
 	@Override
 	public void setSelection(int nIndex, boolean bFireEvent)
 	{
+		// currently not supported by material table
 	}
 
 	/***************************************
@@ -347,15 +370,30 @@ public class GewtMaterialTable extends Composite
 	}
 
 	/***************************************
-	 * Creates the table data pager.
-	 *
-	 * @param aDataSource
+	 * {@inheritDoc}
 	 */
-	private void createPager(DataModelDataSource aDataSource)
+	@Override
+	protected void initWidget(Widget rWidget)
 	{
-		aPager = new MaterialDataPager<>(aMaterialTable, aDataSource);
+		super.initWidget(rWidget);
+
+		setTableTitle(null);
+
+		aMaterialTable.setSelectionType(SelectionType.SINGLE);
+	}
+
+	/***************************************
+	 * Adds the pager to the material table.
+	 */
+	private void addPager()
+	{
+		aPager =
+			new MaterialDataPager<>(aMaterialTable,
+									aMaterialTable.getDataSource());
 
 		aMaterialTable.add(aPager);
+		aPager.setLimitOptions(5, 10, 20, 25, 50);
+		aPager.setLimit(10);
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
@@ -495,6 +533,76 @@ public class GewtMaterialTable extends Composite
 		protected void updateUi()
 		{
 			super.updateUi();
+		}
+	}
+
+	/********************************************************************
+	 * Extended material data table.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialDataTable<T> extends MaterialDataTable<T>
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * Returns the selection.
+		 *
+		 * @return The selection
+		 */
+		public T getSelection()
+		{
+			T rSelection = null;
+
+			if (getSelectionType() == SelectionType.NONE)
+			{
+				Element[] aRowElements =
+					getScaffolding().getTable()
+									.getJsElement()
+									.find("tr.data-row")
+									.toArray();
+
+				for (Element rRowElement : aRowElements)
+				{
+					if (JQuery.$(rRowElement).hasClass("selected"))
+					{
+						rSelection = getModelByRowElement(rRowElement);
+
+						break;
+					}
+				}
+			}
+			else
+			{
+				List<T> rSelectedRows = getSelectedRowModels(false);
+
+				rSelection =
+					rSelectedRows.isEmpty() ? null : rSelectedRows.get(0);
+			}
+
+			return rSelection;
+		}
+
+		/***************************************
+		 * Copied from {@link AbstractDataView} to find the selection when the
+		 * {@link SelectionType} is NONE.
+		 *
+		 * @param  rRowElement The row element
+		 *
+		 * @return The data model of the row or NULL for none
+		 */
+		T getModelByRowElement(Element rRowElement)
+		{
+			for (RowComponent<T> rRow : getView().getRows())
+			{
+				if (rRow.isRendered() &&
+					rRow.getWidget().getElement().equals(rRowElement))
+				{
+					return rRow.getData();
+				}
+			}
+
+			return null;
 		}
 	}
 
