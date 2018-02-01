@@ -19,6 +19,8 @@ package de.esoco.ewt.impl.gwt.material.widget;
 import gwt.material.design.client.data.AbstractDataView;
 import gwt.material.design.client.data.DataSource;
 import gwt.material.design.client.data.SelectionType;
+import gwt.material.design.client.data.SortContext;
+import gwt.material.design.client.data.SortDir;
 import gwt.material.design.client.data.component.RowComponent;
 import gwt.material.design.client.data.loader.LoadCallback;
 import gwt.material.design.client.data.loader.LoadConfig;
@@ -38,8 +40,11 @@ import de.esoco.lib.model.ColumnDefinition;
 import de.esoco.lib.model.DataModel;
 import de.esoco.lib.model.RemoteDataModel;
 import de.esoco.lib.model.SortableDataModel;
+import de.esoco.lib.model.SortableDataModel.SortMode;
 import de.esoco.lib.property.ContentType;
 import de.esoco.lib.property.Indexed;
+import de.esoco.lib.property.SortDirection;
+import de.esoco.lib.property.StyleProperties;
 import de.esoco.lib.property.TitleAttribute;
 
 import java.sql.Time;
@@ -58,6 +63,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.CONTENT_TYPE;
+import static de.esoco.lib.property.StateProperties.SORT_DIRECTION;
 
 
 /********************************************************************
@@ -391,9 +397,35 @@ public class GewtMaterialTable extends Composite
 			new MaterialDataPager<>(aMaterialTable,
 									aMaterialTable.getDataSource());
 
-		aMaterialTable.add(aPager);
 		aPager.setLimitOptions(5, 10, 20, 25, 50);
-		aPager.setLimit(10);
+
+		aMaterialTable.add(aPager);
+		aMaterialTable.addColumnSortHandler(e ->
+											handleColumnSort(e.getSortContext()));
+	}
+
+	/***************************************
+	 * Handles the sorting by a certain column.
+	 *
+	 * @param rSortContext The material sort context
+	 */
+	private void handleColumnSort(SortContext<DataModel<?>> rSortContext)
+	{
+		if (rDataModel instanceof SortableDataModel)
+		{
+			SortableDataModel<DataModel<?>> rSortableModel =
+				(SortableDataModel<DataModel<?>>) rDataModel;
+
+			TableColumn<?> rSortColumn =
+				(TableColumn<?>) rSortContext.getSortColumn();
+
+			rSortableModel.removeSorting();
+			rSortableModel.setSortMode(rSortColumn.getColumnDefinition().getId(),
+									   rSortContext.getSortDir() == SortDir.ASC
+									   ? SortMode.ASCENDING
+									   : SortMode.DESCENDING);
+			aPager.gotoPage(aPager.getCurrentPage());
+		}
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
@@ -506,37 +538,6 @@ public class GewtMaterialTable extends Composite
 	}
 
 	/********************************************************************
-	 * Subclassed for optimizations.
-	 *
-	 * @author eso
-	 */
-	static class DataPager<T> extends MaterialDataPager<T>
-	{
-		//~ Constructors -------------------------------------------------------
-
-		/***************************************
-		 * Creates a new instance.
-		 *
-		 * @see MaterialDataPager#MaterialDataPager(MaterialDataTable, DataSource)
-		 */
-		public DataPager(MaterialDataTable<T> rTable, DataSource<T> rDataSource)
-		{
-			super(rTable, rDataSource);
-		}
-
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * @see gwt.material.design.client.ui.pager.MaterialDataPager#updateUi()
-		 */
-		@Override
-		protected void updateUi()
-		{
-			super.updateUi();
-		}
-	}
-
-	/********************************************************************
 	 * Extended material data table.
 	 *
 	 * @author eso
@@ -611,11 +612,13 @@ public class GewtMaterialTable extends Composite
 	 *
 	 * @author eso
 	 */
-	abstract class IndexedColumn<C> extends Column<DataModel<?>, C>
+	abstract class TableColumn<C> extends Column<DataModel<?>, C>
 	{
 		//~ Instance fields ----------------------------------------------------
 
-		private final int nIndex;
+		private ColumnDefinition rColumnDef;
+		private final int		 nIndex;
+		private boolean			 bSortable;
 
 		//~ Constructors -------------------------------------------------------
 
@@ -626,17 +629,49 @@ public class GewtMaterialTable extends Composite
 		 * @param rCell      The cell for rendering values
 		 * @param nIndex     The column index
 		 */
-		public IndexedColumn(ColumnDefinition rColumnDef,
-							 Cell<C>		  rCell,
-							 int			  nIndex)
+		public TableColumn(ColumnDefinition rColumnDef,
+						   Cell<C>			rCell,
+						   int				nIndex)
 		{
 			super(rCell);
 
+			this.rColumnDef = rColumnDef;
+			this.nIndex     = nIndex;
+			this.bSortable  = rColumnDef.hasFlag(StyleProperties.SORTABLE);
+
+			SortDirection eSortDirection =
+				rColumnDef.getProperty(SORT_DIRECTION, null);
+
+			if (eSortDirection != null)
+			{
+				setAutoSort(true);
+				setDefaultSortAscending(eSortDirection ==
+										SortDirection.ASCENDING);
+			}
+
 			setName(rContext.expandResource(rColumnDef.getTitle()));
-			this.nIndex = nIndex;
 		}
 
 		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * Returns the columnDef value.
+		 *
+		 * @return The columnDef value
+		 */
+		public final ColumnDefinition getColumnDefinition()
+		{
+			return rColumnDef;
+		}
+
+		/***************************************
+		 * @see gwt.material.design.client.ui.table.cell.Column#isSortable()
+		 */
+		@Override
+		public boolean isSortable()
+		{
+			return bSortable;
+		}
 
 		/***************************************
 		 * Returns the column index.
@@ -666,7 +701,7 @@ public class GewtMaterialTable extends Composite
 	 *
 	 * @author eso
 	 */
-	class DateColumn extends IndexedColumn<Date>
+	class DateColumn extends TableColumn<Date>
 	{
 		//~ Constructors -------------------------------------------------------
 
@@ -708,7 +743,7 @@ public class GewtMaterialTable extends Composite
 	 *
 	 * @author eso
 	 */
-	class TextColumn extends IndexedColumn<String>
+	class TextColumn extends TableColumn<String>
 	{
 		//~ Constructors -------------------------------------------------------
 
