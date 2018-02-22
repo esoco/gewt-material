@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,7 +67,6 @@ public class MaterialTabPanelLayout
 		aContentColumn.add(rContentWidget);
 		aTabItem.add(aTabLink);
 		aTabBar.add(aTabItem);
-		aTabBar.setTabIndex(0);
 
 		addContentWidget(rContentWidget, aTabItem);
 	}
