@@ -40,7 +40,6 @@ import de.esoco.lib.model.ColumnDefinition;
 import de.esoco.lib.model.DataModel;
 import de.esoco.lib.model.RemoteDataModel;
 import de.esoco.lib.model.SortableDataModel;
-import de.esoco.lib.model.SortableDataModel.SortMode;
 import de.esoco.lib.property.ContentType;
 import de.esoco.lib.property.Indexed;
 import de.esoco.lib.property.SortDirection;
@@ -420,10 +419,12 @@ public class GewtMaterialTable extends Composite
 				(TableColumn<?>) rSortContext.getSortColumn();
 
 			rSortableModel.removeSorting();
-			rSortableModel.setSortMode(rSortColumn.getColumnDefinition().getId(),
-									   rSortContext.getSortDir() == SortDir.ASC
-									   ? SortMode.ASCENDING
-									   : SortMode.DESCENDING);
+			rSortableModel.setSortDirection(rSortColumn.getColumnDefinition()
+											.getId(),
+											rSortContext.getSortDir() ==
+											SortDir.ASC
+											? SortDirection.ASCENDING
+											: SortDirection.DESCENDING);
 			aPager.gotoPage(aPager.getCurrentPage());
 		}
 	}
