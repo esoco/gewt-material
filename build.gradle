@@ -29,9 +29,9 @@ dependencies
 		compile 'de.esoco:gewt:1.+'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:2.0'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:2.0'
-	compile 'com.github.gwtmaterialdesign:gwt-material-table:2.0'
+	compile 'com.github.gwtmaterialdesign:gwt-material:2.0.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:2.0.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material-table:2.0.1'
 }
 
 gwt {
