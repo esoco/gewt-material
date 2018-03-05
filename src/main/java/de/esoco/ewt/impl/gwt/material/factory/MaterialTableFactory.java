@@ -42,6 +42,6 @@ public class MaterialTableFactory
 		Component rComponent,
 		StyleData rStyle)
 	{
-		return new GewtMaterialTable(rComponent.getContext());
+		return new GewtMaterialTable(rComponent.getContext(), rStyle);
 	}
 }

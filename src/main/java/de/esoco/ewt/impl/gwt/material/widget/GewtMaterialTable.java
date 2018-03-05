@@ -18,10 +18,13 @@ package de.esoco.ewt.impl.gwt.material.widget;
 
 import gwt.material.design.client.data.AbstractDataView;
 import gwt.material.design.client.data.DataSource;
+import gwt.material.design.client.data.DataView;
 import gwt.material.design.client.data.SelectionType;
 import gwt.material.design.client.data.SortContext;
 import gwt.material.design.client.data.SortDir;
 import gwt.material.design.client.data.component.RowComponent;
+import gwt.material.design.client.data.infinite.HasLoader;
+import gwt.material.design.client.data.infinite.InfiniteDataView;
 import gwt.material.design.client.data.loader.LoadCallback;
 import gwt.material.design.client.data.loader.LoadConfig;
 import gwt.material.design.client.data.loader.LoadResult;
@@ -34,6 +37,7 @@ import de.esoco.ewt.UserInterfaceContext;
 import de.esoco.ewt.component.TableControl.IsTableControlWidget;
 import de.esoco.ewt.event.EventType;
 import de.esoco.ewt.impl.gwt.GewtEventDispatcher;
+import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.model.Callback;
 import de.esoco.lib.model.ColumnDefinition;
@@ -44,6 +48,7 @@ import de.esoco.lib.property.ContentType;
 import de.esoco.lib.property.Indexed;
 import de.esoco.lib.property.SortDirection;
 import de.esoco.lib.property.StyleProperties;
+import de.esoco.lib.property.TableStyle;
 import de.esoco.lib.property.TitleAttribute;
 
 import java.sql.Time;
@@ -60,9 +65,11 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.Range;
 
 import static de.esoco.lib.property.ContentProperties.CONTENT_TYPE;
 import static de.esoco.lib.property.StateProperties.SORT_DIRECTION;
+import static de.esoco.lib.property.StyleProperties.TABLE_STYLE;
 
 
 /********************************************************************
@@ -78,7 +85,6 @@ public class GewtMaterialTable extends Composite
 	private UserInterfaceContext rContext;
 
 	private GewtMaterialDataTable<DataModel<?>> aMaterialTable;
-	private MaterialDataPager<DataModel<?>>     aPager = null;
 
 	private DataModel<DataModel<?>>     rDataModel;
 	private DataModel<ColumnDefinition> rColumns;
@@ -89,12 +95,28 @@ public class GewtMaterialTable extends Composite
 	 * Creates a new instance.
 	 *
 	 * @param rContext The user interface context
+	 * @param rStyle   The table style
 	 */
-	public GewtMaterialTable(UserInterfaceContext rContext)
+	public GewtMaterialTable(UserInterfaceContext rContext, StyleData rStyle)
 	{
 		this.rContext = rContext;
 
-		initWidget(aMaterialTable = new GewtMaterialDataTable<>());
+		switch (rStyle.getProperty(TABLE_STYLE, TableStyle.FIXED))
+		{
+			case AUTO_LOAD:
+				aMaterialTable = new GewtMaterialInfiniteDataTable<>();
+				break;
+
+			case PAGED:
+				aMaterialTable = new GewtMaterialPagingDataTable<>();
+				break;
+
+			default:
+				aMaterialTable = new GewtMaterialDataTable<>();
+				aMaterialTable.setVisibleRange(new Range(0, 100));
+		}
+
+		initWidget(aMaterialTable);
 	}
 
 	//~ Static methods ---------------------------------------------------------
@@ -210,6 +232,7 @@ public class GewtMaterialTable extends Composite
 	@Override
 	public void repaint()
 	{
+		aMaterialTable.update();
 	}
 
 	/***************************************
@@ -269,16 +292,8 @@ public class GewtMaterialTable extends Composite
 			DataModelDataSource aDataSource =
 				new DataModelDataSource(rDataModel);
 
-			aMaterialTable.setDataSource(aDataSource);
-
-			if (aPager == null)
-			{
-				addPager();
-			}
-			else
-			{
-				aPager.setDataSource(aDataSource);
-			}
+			aMaterialTable.updateDataSource(aDataSource);
+			aMaterialTable.update();
 		}
 	}
 
@@ -385,20 +400,6 @@ public class GewtMaterialTable extends Composite
 		setTableTitle(null);
 
 		aMaterialTable.setSelectionType(SelectionType.SINGLE);
-	}
-
-	/***************************************
-	 * Adds the pager to the material table.
-	 */
-	private void addPager()
-	{
-		aPager =
-			new MaterialDataPager<>(aMaterialTable,
-									aMaterialTable.getDataSource());
-
-		aPager.setLimitOptions(5, 10, 20, 25, 50);
-
-		aMaterialTable.add(aPager);
 		aMaterialTable.addColumnSortHandler(e ->
 											handleColumnSort(e.getSortContext()));
 	}
@@ -425,7 +426,8 @@ public class GewtMaterialTable extends Composite
 											SortDir.ASC
 											? SortDirection.ASCENDING
 											: SortDirection.DESCENDING);
-			aPager.gotoPage(aPager.getCurrentPage());
+
+			aMaterialTable.update();
 		}
 	}
 
@@ -523,7 +525,8 @@ public class GewtMaterialTable extends Composite
 			DataModel<DataModel<?>>  rModel)
 		{
 			int nOffset = rLoadConfig.getOffset();
-			int nLimit  = rLoadConfig.getLimit();
+			int nLimit  =
+				Math.min(rLoadConfig.getLimit(), rModel.getElementCount());
 
 			List<DataModel<?>> rData = new ArrayList<>(nLimit);
 
@@ -539,12 +542,120 @@ public class GewtMaterialTable extends Composite
 	}
 
 	/********************************************************************
+	 * A data table that supports infinite data scrolling.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialInfiniteDataTable<T>
+		extends GewtMaterialDataTable<T> implements HasLoader
+	{
+		//~ Constructors -------------------------------------------------------
+
+		/***************************************
+		 * Creates a new instance with a dummy data source.
+		 */
+		public GewtMaterialInfiniteDataTable()
+		{
+			super(new InfiniteDataView<>(10,
+					new DataSource<T>()
+					{
+						@Override
+						public void load(
+							LoadConfig<T>   loadConfig,
+							LoadCallback<T> callback)
+						{
+						}
+						@Override
+						public boolean useRemoteSort()
+						{
+							return false;
+						}
+					}));
+		}
+
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getLoaderBuffer()
+		{
+			return ((InfiniteDataView<T>) view).getLoaderBuffer();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getLoaderDelay()
+		{
+			return ((InfiniteDataView<T>) view).getLoaderDelay();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isLoading()
+		{
+			return ((InfiniteDataView<T>) view).isLoading();
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setLoaderBuffer(int nLoaderBuffer)
+		{
+			((InfiniteDataView<T>) view).setLoaderBuffer(nLoaderBuffer);
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setLoaderDelay(int nLoaderDelay)
+		{
+			((InfiniteDataView<T>) view).setLoaderDelay(nLoaderDelay);
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void updateDataSource(DataSource<T> rDataSource)
+		{
+			super.updateDataSource(rDataSource);
+		}
+	}
+
+	/********************************************************************
 	 * Extended material data table.
 	 *
 	 * @author eso
 	 */
 	static class GewtMaterialDataTable<T> extends MaterialDataTable<T>
 	{
+		//~ Constructors -------------------------------------------------------
+
+		/***************************************
+		 * Creates a new instance with a default view.
+		 */
+		public GewtMaterialDataTable()
+		{
+		}
+
+		/***************************************
+		 * Creates a new instance with a specific data view.
+		 *
+		 * @param rDataView The data view
+		 */
+		public GewtMaterialDataTable(DataView<T> rDataView)
+		{
+			super(rDataView);
+		}
+
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
@@ -586,6 +697,31 @@ public class GewtMaterialTable extends Composite
 		}
 
 		/***************************************
+		 * Updates this table by refreshing the view.
+		 */
+		public void update()
+		{
+			DataView<T> rView = getView();
+
+			if (rView.isSetup())
+			{
+				rView.setRedraw(true);
+				rView.refresh();
+			}
+		}
+
+		/***************************************
+		 * Must be implemented by subclasses to update the source for table
+		 * data.
+		 *
+		 * @param rDataSource The new data source
+		 */
+		public void updateDataSource(DataSource<T> rDataSource)
+		{
+			setDataSource(rDataSource);
+		}
+
+		/***************************************
 		 * Copied from {@link AbstractDataView} to find the selection when the
 		 * {@link SelectionType} is NONE.
 		 *
@@ -605,6 +741,50 @@ public class GewtMaterialTable extends Composite
 			}
 
 			return null;
+		}
+	}
+
+	/********************************************************************
+	 * Extended material data table.
+	 *
+	 * @author eso
+	 */
+	static class GewtMaterialPagingDataTable<T> extends GewtMaterialDataTable<T>
+	{
+		//~ Instance fields ----------------------------------------------------
+
+		private MaterialDataPager<T> aPager = null;
+
+		//~ Constructors -------------------------------------------------------
+
+		/***************************************
+		 * Creates a new instance.
+		 */
+		public GewtMaterialPagingDataTable()
+		{
+		}
+
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void updateDataSource(DataSource<T> rDataSource)
+		{
+			super.updateDataSource(rDataSource);
+
+			if (aPager == null)
+			{
+				aPager = new MaterialDataPager<>(this, rDataSource);
+
+				aPager.setLimitOptions(5, 10, 20, 25, 50);
+				add(aPager);
+			}
+			else
+			{
+				aPager.setDataSource(rDataSource);
+			}
 		}
 	}
 
