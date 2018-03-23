@@ -325,14 +325,16 @@ public class GewtMaterial
 	}
 
 	/***************************************
-	 * Checks whether certain styles need to be converted and applied to the a
-	 * widget.
+	 * Checks whether certain styles need to be converted and applied to the
+	 * widget of a GEWT component.
 	 *
-	 * @param rWidget The material widget to apply styles to
-	 * @param rStyle  The style data to check for styles
+	 * @param rComponent The component to apply styles to
+	 * @param rStyle     The style data to check for styles
 	 */
-	public static void checkApplyStyles(IsWidget rWidget, StyleData rStyle)
+	public static void checkApplyStyles(Component rComponent, StyleData rStyle)
 	{
+		Widget rWidget = rComponent.getWidget();
+
 		if (rWidget instanceof HasPlaceholder &&
 			rStyle.hasProperty(PLACEHOLDER))
 		{
@@ -342,10 +344,26 @@ public class GewtMaterial
 			{
 				sPlaceholder = "";
 			}
+			else
+			{
+				sPlaceholder = EWT.expandResource(rComponent, sPlaceholder);
+			}
 
 			((HasPlaceholder) rWidget).setPlaceholder(sPlaceholder);
 		}
 
+		checkApplyStyles(rWidget, rStyle);
+	}
+
+	/***************************************
+	 * Checks whether certain styles need to be converted and applied to a
+	 * material widget.
+	 *
+	 * @param rWidget The material widget to apply styles to
+	 * @param rStyle  The style data to check for styles
+	 */
+	public static void checkApplyStyles(Widget rWidget, StyleData rStyle)
+	{
 		Alignment eFloatAlign = rStyle.getProperty(FLOAT, null);
 
 		if (eFloatAlign != null && rWidget instanceof HasFloat)
@@ -412,7 +430,7 @@ public class GewtMaterial
 		EWT.setLayoutFactory(aLayoutFactory);
 		EWT.setLayoutMapper(aLayoutFactory);
 
-		Component.setWidgetStyleHandler((w, s) -> checkApplyStyles(w, s));
+		Component.setWidgetStyleHandler((c, s) -> checkApplyStyles(c, s));
 		Component.setWidgetErrorStateHandler(GewtMaterial::applyComponentErrorState);
 
 		registerWidgetFactories();
