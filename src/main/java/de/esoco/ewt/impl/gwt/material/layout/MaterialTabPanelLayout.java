@@ -118,7 +118,7 @@ public class MaterialTabPanelLayout
 	@Override
 	public void setSelection(int nIndex)
 	{
-		getPanelWidget().setTabIndex(nIndex);
+		aTabBar.setTabIndex(nIndex);
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
@@ -131,6 +131,17 @@ public class MaterialTabPanelLayout
 	public static class GewtMaterialTab extends MaterialTab
 	{
 		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getTabIndex()
+		{
+			int nTabIndex = super.getTabIndex();
+
+			return nTabIndex >= 0 ? nTabIndex : 0;
+		}
 
 		/***************************************
 		 * {@inheritDoc}
