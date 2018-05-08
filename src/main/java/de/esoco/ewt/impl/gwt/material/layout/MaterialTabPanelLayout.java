@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import gwt.material.design.client.base.HasHref;
 import gwt.material.design.client.js.JsMaterialElement;
 import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialLink;
@@ -55,7 +56,7 @@ public class MaterialTabPanelLayout
 						boolean   bCloseable)
 	{
 		String		    sId			   = DOM.createUniqueId();
-		MaterialTabItem aTabItem	   = new MaterialTabItem();
+		MaterialTabItem aTabItem	   = new GewtMaterialTabItem();
 		MaterialLink    aTabLink	   = new MaterialLink(sStepTitle, sId);
 		MaterialColumn  aContentColumn = new MaterialColumn();
 		Widget		    rContentWidget = rTabComponent.getWidget();
@@ -118,7 +119,7 @@ public class MaterialTabPanelLayout
 	@Override
 	public void setSelection(int nIndex)
 	{
-		getPanelWidget().setTabIndex(nIndex);
+		aTabBar.setTabIndex(nIndex);
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
@@ -136,12 +137,58 @@ public class MaterialTabPanelLayout
 		 * {@inheritDoc}
 		 */
 		@Override
+		public int getTabIndex()
+		{
+			int nTabIndex = super.getTabIndex();
+
+			return nTabIndex >= 0 ? nTabIndex : 0;
+		}
+
+		/***************************************
+		 * {@inheritDoc}
+		 */
+		@Override
 		public void load()
 		{
 			// workaround for bug in GMD2.0
 			// https://github.com/GwtMaterialDesign/gwt-material/issues/736
 			JsMaterialElement.$(getElement()).find(".indicator").remove();
 			super.load();
+		}
+	}
+
+	/********************************************************************
+	 * Subclassed to fix a GMD bug.
+	 *
+	 * @author eso
+	 */
+	public static class GewtMaterialTabItem extends MaterialTabItem
+	{
+		//~ Methods ------------------------------------------------------------
+
+		/***************************************
+		 * @see <a
+		 *      href="https://github.com/GwtMaterialDesign/gwt-material/issues/786">
+		 *      https://github.com/GwtMaterialDesign/gwt-material/issues/786</a>
+		 */
+		@Override
+		public void selectTab()
+		{
+			for (Widget rChild : getChildren())
+			{
+				if (rChild instanceof HasHref)
+				{
+					String sHref = ((HasHref) rChild).getHref();
+
+					if (!sHref.isEmpty())
+					{
+						sHref = sHref.replaceAll("[^a-zA-Z\\d\\s:]", "");
+						((MaterialTab) getParent()).selectTab(sHref);
+
+						break;
+					}
+				}
+			}
 		}
 	}
 }
