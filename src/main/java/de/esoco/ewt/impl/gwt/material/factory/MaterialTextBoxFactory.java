@@ -46,10 +46,12 @@ public class MaterialTextBoxFactory
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
+	public IsTextControlWidget createMaterialWidget(
+		Component rComponent,
+		StyleData rStyle)
 	{
-		Widget rWidget     = rComponent.getParent().getWidget();
-		Widget aTextWidget;
+		Widget			    rWidget     = rComponent.getParent().getWidget();
+		IsTextControlWidget aTextWidget;
 
 		if (rWidget instanceof MaterialNavBar ||
 			rWidget instanceof AbstractSideNav ||

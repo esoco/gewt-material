@@ -42,7 +42,7 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	@SuppressWarnings("unchecked")
 	public final W createWidget(Component rComponent, StyleData rStyle)
 	{
-		return (W) createMaterialWidget(rComponent, rStyle);
+		return createMaterialWidget(rComponent, rStyle);
 	}
 
 	/***************************************
@@ -54,7 +54,7 @@ public abstract class MaterialWidgetFactory<W extends IsWidget>
 	 *
 	 * @return The new material widget instance
 	 */
-	protected abstract IsWidget createMaterialWidget(
+	protected abstract W createMaterialWidget(
 		Component rComponent,
 		StyleData rStyle);
 }

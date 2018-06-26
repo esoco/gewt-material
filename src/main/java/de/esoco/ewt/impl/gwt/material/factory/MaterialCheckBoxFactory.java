@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,7 +49,8 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Widget createMaterialWidget(Component rComponent, StyleData rStyle)
+	@SuppressWarnings("unchecked")
+	public W createMaterialWidget(Component rComponent, StyleData rStyle)
 	{
 		CheckBoxStyle eStyle  = rStyle.getProperty(CHECK_BOX_STYLE, null);
 		Widget		  aWidget;
@@ -70,7 +71,7 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 			aWidget = aCheckBox;
 		}
 
-		return aWidget;
+		return (W) aWidget;
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
