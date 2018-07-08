@@ -16,20 +16,18 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.base.AbstractSideNav;
 import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.MaterialButton;
-import gwt.material.design.client.ui.MaterialNavBar;
-import gwt.material.design.client.ui.MaterialNavSection;
 
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSearch;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
-import de.esoco.ewt.style.StyleFlag;
 
-import com.google.gwt.user.client.ui.Widget;
+import de.esoco.lib.property.TextFieldStyle;
+
+import static de.esoco.lib.property.StyleProperties.TEXT_FIELD_STYLE;
 
 
 /********************************************************************
@@ -50,12 +48,12 @@ public class MaterialTextBoxFactory
 		Component rComponent,
 		StyleData rStyle)
 	{
-		Widget			    rWidget     = rComponent.getParent().getWidget();
 		IsTextControlWidget aTextWidget;
 
-		if (rWidget instanceof MaterialNavBar ||
-			rWidget instanceof AbstractSideNav ||
-			rWidget instanceof MaterialNavSection)
+		TextFieldStyle eStyle =
+			rStyle.getProperty(TEXT_FIELD_STYLE, TextFieldStyle.DEFAULT);
+
+		if (eStyle == TextFieldStyle.SEARCH)
 		{
 			aTextWidget = new GewtMaterialSearch();
 		}
@@ -63,7 +61,7 @@ public class MaterialTextBoxFactory
 		{
 			GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
 
-			if (rStyle.hasFlag(StyleFlag.PASSWORD))
+			if (eStyle == TextFieldStyle.PASSWORD)
 			{
 				aTextBox.setType(InputType.PASSWORD);
 			}
