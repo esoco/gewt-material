@@ -857,7 +857,7 @@ public class GewtMaterialTable extends Composite
 		}
 
 		/***************************************
-		 * @see gwt.material.design.client.ui.table.cell.Column#isSortable()
+		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean isSortable()
