@@ -31,11 +31,11 @@ import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialCollectionItem;
 import gwt.material.design.client.ui.MaterialCollectionSecondary;
 import gwt.material.design.client.ui.MaterialContainer;
+import gwt.material.design.client.ui.MaterialDialog;
+import gwt.material.design.client.ui.MaterialDialogContent;
+import gwt.material.design.client.ui.MaterialDialogFooter;
 import gwt.material.design.client.ui.MaterialFooter;
 import gwt.material.design.client.ui.MaterialHeader;
-import gwt.material.design.client.ui.MaterialModal;
-import gwt.material.design.client.ui.MaterialModalContent;
-import gwt.material.design.client.ui.MaterialModalFooter;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialNavSection;
 
@@ -62,7 +62,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 	 */
 	private enum ContentArea
 	{
-		GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MENU, MODAL
+		GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MENU, DIALOG
 	}
 
 	//~ Instance fields --------------------------------------------------------
@@ -111,7 +111,7 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 				aLayoutWidget = createCollectionContentContainer(eLayout);
 				break;
 
-			case MODAL:
+			case DIALOG:
 				aLayoutWidget = createModalContentContainer(eLayout);
 				break;
 
@@ -293,11 +293,11 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		switch (eLayout)
 		{
 			case CONTENT:
-				aLayoutWidget = new MaterialModalContent();
+				aLayoutWidget = new MaterialDialogContent();
 				break;
 
 			case FOOTER:
-				aLayoutWidget = new MaterialModalFooter();
+				aLayoutWidget = new MaterialDialogFooter();
 				break;
 
 			default:
@@ -330,9 +330,9 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		{
 			eContentArea = ContentArea.CARD;
 		}
-		else if (rParent instanceof MaterialModal)
+		else if (rParent instanceof MaterialDialog)
 		{
-			eContentArea = ContentArea.MODAL;
+			eContentArea = ContentArea.DIALOG;
 		}
 		else if (rParent instanceof MaterialNavBar ||
 				 rParent instanceof AbstractSideNav)

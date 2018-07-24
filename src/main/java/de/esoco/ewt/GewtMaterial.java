@@ -18,7 +18,7 @@ package de.esoco.ewt;
 
 import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.base.HasDurationTransition;
-import gwt.material.design.client.base.HasError;
+import gwt.material.design.client.base.HasErrorText;
 import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasHideOn;
 import gwt.material.design.client.base.HasIcon;
@@ -114,18 +114,18 @@ public class GewtMaterial
 	{
 		Widget rWidget = rComponent.getWidget();
 
-		if (rWidget instanceof HasError)
+		if (rWidget instanceof HasErrorText)
 		{
-			HasError rHasError = (HasError) rWidget;
+			HasErrorText rHasError = (HasErrorText) rWidget;
 
 			if (sMessage != null)
 			{
-				rHasError.setError(rComponent.getContext()
-								   .expandResource(sMessage));
+				rHasError.setErrorText(rComponent.getContext()
+									   .expandResource(sMessage));
 			}
 			else
 			{
-				rHasError.clearErrorOrSuccess();
+				rHasError.clearErrorText();
 			}
 		}
 		else

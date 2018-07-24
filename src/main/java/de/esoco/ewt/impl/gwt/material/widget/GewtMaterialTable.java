@@ -846,22 +846,23 @@ public class GewtMaterialTable extends Composite
 		}
 
 		/***************************************
+		 * Returns the column index.
+		 *
+		 * @return The column index
+		 */
+		@Override
+		public final int getIndex()
+		{
+			return nIndex;
+		}
+
+		/***************************************
 		 * @see gwt.material.design.client.ui.table.cell.Column#isSortable()
 		 */
 		@Override
 		public boolean isSortable()
 		{
 			return bSortable;
-		}
-
-		/***************************************
-		 * Returns the column index.
-		 *
-		 * @return The column index
-		 */
-		protected final int getIndex()
-		{
-			return nIndex;
 		}
 
 		/***************************************

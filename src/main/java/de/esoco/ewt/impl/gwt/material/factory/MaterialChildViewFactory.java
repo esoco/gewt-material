@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.ModalType;
-import gwt.material.design.client.ui.MaterialModal;
+import gwt.material.design.client.constants.DialogType;
+import gwt.material.design.client.ui.MaterialDialog;
 import gwt.material.design.client.ui.MaterialTitle;
 
 import de.esoco.ewt.EWT;
@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
- * A child view factory that creates instances of {@link MaterialModal}.
+ * A child view factory that creates instances of material dialogs.
  *
  * @author eso
  */
@@ -68,7 +68,7 @@ public class MaterialChildViewFactory extends ChildViewFactory
 	 */
 	private IsChildViewWidget createViewWidget(View rParent, ViewStyle rStyle)
 	{
-		GewtMaterialModal aModal	    = new GewtMaterialModal(rStyle);
+		GewtMaterialDialog aModal	    = new GewtMaterialDialog(rStyle);
 		Widget			  rParentWidget = rParent.getWidget();
 
 		if (rParentWidget instanceof HasWidgets)
@@ -86,12 +86,12 @@ public class MaterialChildViewFactory extends ChildViewFactory
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * A {@link MaterialModal} subclass that also implements the child view
+	 * A subclass of material dialogs that also implements the child view
 	 * interface.
 	 *
 	 * @author eso
 	 */
-	public static class GewtMaterialModal extends MaterialModal
+	public static class GewtMaterialDialog extends MaterialDialog
 		implements IsChildViewWidget
 	{
 		//~ Instance fields ----------------------------------------------------
@@ -105,7 +105,7 @@ public class MaterialChildViewFactory extends ChildViewFactory
 		 *
 		 * @param rStyle The view style
 		 */
-		public GewtMaterialModal(ViewStyle rStyle)
+		public GewtMaterialDialog(ViewStyle rStyle)
 		{
 			setInDuration(500);
 			setOutDuration(500);
@@ -113,7 +113,7 @@ public class MaterialChildViewFactory extends ChildViewFactory
 
 			if (rStyle.hasFlag(Flag.BOTTOM))
 			{
-				setType(ModalType.BOTTOM_SHEET);
+				setType(DialogType.BOTTOM_SHEET);
 			}
 		}
 
