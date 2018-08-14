@@ -23,6 +23,8 @@ import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
 import gwt.material.design.client.ui.MaterialCardImage;
 import gwt.material.design.client.ui.MaterialCardReveal;
+import gwt.material.design.client.ui.MaterialCardTitle;
+import gwt.material.design.client.ui.MaterialImage;
 
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
@@ -72,16 +74,42 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 				rWidget = null;
 			}
 		}
-		else if (!(rWidget instanceof MaterialCardContent) &&
-				 !(rWidget instanceof MaterialCardAction) &&
-				 !(rWidget instanceof MaterialCardImage) &&
-				 !(rWidget instanceof MaterialCardReveal))
+		else if (rWidget instanceof MaterialImage &&
+				 aCardImage == null &&
+				 aCardContent == null)
+		{
+			// if first image on card wrap it into card image
+			aCardImage = new MaterialCardImage();
+			aCardImage.add(rWidget);
+			rWidget = aCardImage;
+		}
+		else if (rWidget instanceof MaterialCardContent)
+		{
+			aCardContent = (MaterialCardContent) rWidget;
+		}
+		else if (rWidget instanceof MaterialCardAction)
+		{
+			aCardAction = (MaterialCardAction) rWidget;
+		}
+		else if (rWidget instanceof MaterialCardImage)
+		{
+			aCardImage = (MaterialCardImage) rWidget;
+		}
+		else if (!(rWidget instanceof MaterialCardReveal))
 		{
 			if (aCardContent == null)
 			{
-				aCardContent = new MaterialCardContent();
-				aCardContent.add(rWidget);
-				rWidget = aCardContent;
+				if (rWidget instanceof MaterialCardTitle && aCardImage != null)
+				{
+					aCardImage.add(rWidget);
+					rWidget = null;
+				}
+				else
+				{
+					aCardContent = new MaterialCardContent();
+					aCardContent.add(rWidget);
+					rWidget = aCardContent;
+				}
 			}
 			else
 			{

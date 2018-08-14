@@ -97,20 +97,9 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 					break;
 
 				case TITLE:
-
-					Widget rParentWidget = rComponent.getParent().getWidget();
-
-					if (rParentWidget instanceof MaterialCard ||
-						rParentWidget instanceof MaterialCardContent ||
-						rParentWidget instanceof MaterialCardReveal)
-					{
-						aWidget = new GewtMaterialCardTitle();
-					}
-					else
-					{
-						aWidget = new GewtMaterialTitle();
-					}
-
+					aWidget =
+						isCardElement(rComponent) ? new GewtMaterialCardTitle()
+												  : new GewtMaterialTitle();
 					break;
 
 				default:
@@ -122,6 +111,23 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 		}
 
 		return (W) aWidget;
+	}
+
+	/***************************************
+	 * Checks whether the given component is a child element of a {@link
+	 * MaterialCard} widget.
+	 *
+	 * @param  rComponent The component to check
+	 *
+	 * @return TRUE if it is a child element of a card
+	 */
+	private boolean isCardElement(Component rComponent)
+	{
+		Widget rParentWidget = rComponent.getParent().getWidget();
+
+		return rParentWidget instanceof MaterialCard ||
+			   rParentWidget instanceof MaterialCardContent ||
+			   rParentWidget instanceof MaterialCardReveal;
 	}
 
 	//~ Inner Classes ----------------------------------------------------------
