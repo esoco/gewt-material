@@ -37,10 +37,10 @@ import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.layout.MenuLayout;
 import de.esoco.ewt.style.StyleData;
-import de.esoco.ewt.style.StyleFlag;
 
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.NavigationMenuStyle;
+import de.esoco.lib.property.Orientation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +54,7 @@ import static de.esoco.lib.property.ContentProperties.ELEMENT_ID;
 import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.StateProperties.TARGET_ID;
 import static de.esoco.lib.property.StyleProperties.NAVIGATION_MENU_STYLE;
+import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 
 
 /********************************************************************
@@ -160,15 +161,16 @@ public class MaterialMenuLayout extends MenuLayout
 		Container rContainer,
 		StyleData rContainerStyle)
 	{
-		Alignment  eFloatAlign = rContainerStyle.getProperty(FLOAT, null);
-		boolean    bVertical   = rContainerStyle.hasFlag(StyleFlag.VERTICAL);
-		HasWidgets aMenuWidget;
+		Alignment   eFloatAlign  = rContainerStyle.getProperty(FLOAT, null);
+		Orientation eOrientation =
+			rContainerStyle.getProperty(ORIENTATION, Orientation.HORIZONTAL);
+		HasWidgets  aMenuWidget;
 
 		if (eFloatAlign != null)
 		{
-			aMenuWidget = createFloatingMenu(rContainerStyle, bVertical);
+			aMenuWidget = createFloatingMenu(rContainerStyle, eOrientation);
 		}
-		else if (bVertical)
+		else if (eOrientation == Orientation.VERTICAL)
 		{
 			aMenuWidget = createSideMenu(rContainerStyle);
 		}
@@ -183,20 +185,22 @@ public class MaterialMenuLayout extends MenuLayout
 	/***************************************
 	 * Creates a new floating menu.
 	 *
-	 * @param  rMenuStyle The menu style
-	 * @param  bVertical  TRUE for a vertical menu, FALSE for horizontal
+	 * @param  rMenuStyle   The menu style
+	 * @param  eOrientation bVertical TRUE for a vertical menu, FALSE for
+	 *                      horizontal
 	 *
 	 * @return The menu container widget
 	 */
 	protected HasWidgets createFloatingMenu(
-		StyleData rMenuStyle,
-		boolean   bVertical)
+		StyleData   rMenuStyle,
+		Orientation eOrientation)
 	{
 		MaterialFAB aMaterialFAB = new MaterialFAB();
 
 		aMaterialFABList = new MaterialFABList();
 
-		aMaterialFAB.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+		aMaterialFAB.setAxis(eOrientation == Orientation.VERTICAL
+							 ? Axis.VERTICAL : Axis.HORIZONTAL);
 
 		MaterialAnchorButton aMenuButton =
 			new MaterialAnchorButton(ButtonType.FLOATING);

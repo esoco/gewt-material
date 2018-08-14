@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,10 +23,13 @@ import gwt.material.design.client.ui.MaterialLabel;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
 import de.esoco.ewt.style.StyleData;
-import de.esoco.ewt.style.StyleFlag;
+
+import de.esoco.lib.property.Orientation;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+
+import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 
 
 /********************************************************************
@@ -76,8 +79,9 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 	{
 		aSplitPanel = new MaterialSplitPanel();
 
-		aSplitPanel.setAxis(rStyle.hasFlag(StyleFlag.VERTICAL)
-							? Axis.VERTICAL : Axis.HORIZONTAL);
+		aSplitPanel.setAxis(rStyle.getProperty(ORIENTATION, null) ==
+							Orientation.VERTICAL ? Axis.VERTICAL
+												 : Axis.HORIZONTAL);
 
 		aSplitPanel.add(new MaterialLabel("Left Widget"));
 		aSplitPanel.add(new MaterialLabel("Right Widget"));

@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import gwt.material.design.client.ui.MaterialCardTitle;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+
 
 /********************************************************************
  * A {@link MaterialCardTitle} subclass that also implements {@link
@@ -37,6 +40,15 @@ public class GewtMaterialCardTitle extends MaterialCardTitle
 		new ImageAttributeMixin<>(this);
 
 	//~ Methods ----------------------------------------------------------------
+
+	/***************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HandlerRegistration addClickHandler(ClickHandler rHandler)
+	{
+		return getIcon().addClickHandler(rHandler);
+	}
 
 	/***************************************
 	 * {@inheritDoc}

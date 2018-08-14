@@ -20,6 +20,7 @@ import gwt.material.design.client.base.mixin.HTMLMixin;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardContent;
+import gwt.material.design.client.ui.MaterialCardReveal;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialNavBrand;
@@ -100,7 +101,8 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 					Widget rParentWidget = rComponent.getParent().getWidget();
 
 					if (rParentWidget instanceof MaterialCard ||
-						rParentWidget instanceof MaterialCardContent)
+						rParentWidget instanceof MaterialCardContent ||
+						rParentWidget instanceof MaterialCardReveal)
 					{
 						aWidget = new GewtMaterialCardTitle();
 					}

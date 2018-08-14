@@ -23,6 +23,7 @@ import gwt.material.design.client.base.HasFloat;
 import gwt.material.design.client.base.HasHideOn;
 import gwt.material.design.client.base.HasIcon;
 import gwt.material.design.client.base.HasInOutDurationTransition;
+import gwt.material.design.client.base.HasOrientation;
 import gwt.material.design.client.base.HasPlaceholder;
 import gwt.material.design.client.base.HasTextAlign;
 import gwt.material.design.client.base.MaterialWidget;
@@ -62,12 +63,16 @@ import de.esoco.ewt.style.StyleData;
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.Color;
 import de.esoco.lib.property.LayoutVisibility;
+import de.esoco.lib.property.Orientation;
 import de.esoco.lib.property.RelativeScale;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+
+import static gwt.material.design.client.constants.Orientation.LANDSCAPE;
+import static gwt.material.design.client.constants.Orientation.PORTRAIT;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
 import static de.esoco.lib.property.ContentProperties.PLACEHOLDER;
@@ -80,6 +85,7 @@ import static de.esoco.lib.property.LayoutProperties.LAYOUT_VISIBILITY;
 import static de.esoco.lib.property.LayoutProperties.TEXT_ALIGN;
 import static de.esoco.lib.property.StyleProperties.ANIMATION_DURATION;
 import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
+import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 
 
 /********************************************************************
@@ -364,15 +370,22 @@ public class GewtMaterial
 	 */
 	public static void checkApplyStyles(Widget rWidget, StyleData rStyle)
 	{
-		Alignment eFloatAlign = rStyle.getProperty(FLOAT, null);
+		Alignment   eFloatAlign  = rStyle.getProperty(FLOAT, null);
+		Orientation eOrientation = rStyle.getProperty(ORIENTATION, null);
+		Integer     rDuration    = rStyle.getProperty(ANIMATION_DURATION, null);
+
+		if (eOrientation != null && rWidget instanceof HasOrientation)
+		{
+			((HasOrientation) rWidget).setOrientation(eOrientation ==
+													  Orientation.HORIZONTAL
+													  ? LANDSCAPE : PORTRAIT);
+		}
 
 		if (eFloatAlign != null && rWidget instanceof HasFloat)
 		{
 			((HasFloat) rWidget).setFloat(eFloatAlign == Alignment.BEGIN
 										  ? Float.LEFT : Float.RIGHT);
 		}
-
-		Integer rDuration = rStyle.getProperty(ANIMATION_DURATION, null);
 
 		if (rDuration != null)
 		{

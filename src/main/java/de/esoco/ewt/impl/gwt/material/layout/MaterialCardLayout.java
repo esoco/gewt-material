@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
+import gwt.material.design.client.ui.MaterialCardImage;
 import gwt.material.design.client.ui.MaterialCardReveal;
 
 import de.esoco.ewt.GewtMaterial;
@@ -32,7 +33,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 /********************************************************************
- * GWT Material implementation for list-style layouts.
+ * GWT Material implementation of card layouts.
  *
  * @author eso
  */
@@ -42,6 +43,7 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 
 	private MaterialCardContent aCardContent;
 	private MaterialCardAction  aCardAction;
+	private MaterialCardImage   aCardImage;
 
 	//~ Methods ----------------------------------------------------------------
 
@@ -72,6 +74,7 @@ public class MaterialCardLayout extends AbstractMaterialLayout
 		}
 		else if (!(rWidget instanceof MaterialCardContent) &&
 				 !(rWidget instanceof MaterialCardAction) &&
+				 !(rWidget instanceof MaterialCardImage) &&
 				 !(rWidget instanceof MaterialCardReveal))
 		{
 			if (aCardContent == null)

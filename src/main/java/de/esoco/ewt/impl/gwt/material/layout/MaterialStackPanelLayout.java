@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2016 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,10 @@ import gwt.material.design.client.constants.Axis;
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
-import de.esoco.ewt.style.StyleFlag;
+
+import de.esoco.lib.property.Orientation;
+
+import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 
 
 /********************************************************************
@@ -64,9 +67,9 @@ public class MaterialStackPanelLayout
 	{
 		aStepper = new MaterialStepper();
 
-		boolean bVertical = rStyle.hasFlag(StyleFlag.VERTICAL);
-
-		aStepper.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+		aStepper.setAxis(rStyle.getProperty(ORIENTATION, null) ==
+						 Orientation.VERTICAL ? Axis.VERTICAL
+											  : Axis.HORIZONTAL);
 
 		return aStepper;
 	}
