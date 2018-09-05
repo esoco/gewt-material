@@ -1,12 +1,12 @@
 buildscript { 
 	repositories { jcenter() }
-    dependencies { classpath 'fr.putnami.gwt:putnami-gradle-plugin:0.6.1' }
+    dependencies { classpath 'de.esoco.gwt:gwt-gradle-plugin:1.+' }
 }
 
 apply plugin: 'java'
 apply plugin: 'osgi'
 apply plugin: 'eclipse'
-apply plugin: 'fr.putnami.gwt-lib'
+apply plugin: 'de.esoco.gwt-lib'
 
 project.group   = 'de.esoco'
 
@@ -29,15 +29,14 @@ dependencies
 		compile 'de.esoco:gewt:1.1.4'
 	}
 
-	compile 'com.github.gwtmaterialdesign:gwt-material:2.1'
-	compile 'com.github.gwtmaterialdesign:gwt-material-addins:2.1'
-	compile 'com.github.gwtmaterialdesign:gwt-material-table:2.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material:2.1.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material-addins:2.1.1'
+	compile 'com.github.gwtmaterialdesign:gwt-material-table:2.1.1'
 }
 
-putnami {
+gwt {
     module 'de.esoco.GewtMaterial'
     gwtVersion = '2.8.2'
-    googlePluginEclipse = false
     compile {
 		sourceLevel = '1.8'
 		maxHeapSize = '1024M'
