@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import gwt.material.design.client.ui.MaterialAnchorButton;
 import gwt.material.design.client.ui.MaterialFAB;
 import gwt.material.design.client.ui.MaterialFABList;
 import gwt.material.design.client.ui.MaterialNavBar;
+import gwt.material.design.client.ui.MaterialNavBrand;
 import gwt.material.design.client.ui.MaterialNavSection;
 import gwt.material.design.client.ui.MaterialSideNav;
 import gwt.material.design.client.ui.MaterialSideNavCard;
@@ -73,15 +74,18 @@ public class MaterialMenuLayout extends MenuLayout
 	{
 		MENU_STYLES.put(NavigationMenuStyle.FIXED, SideNavType.FIXED);
 		MENU_STYLES.put(NavigationMenuStyle.CARD, SideNavType.CARD);
-		MENU_STYLES.put(NavigationMenuStyle.OVERLAY,
-						SideNavType.DRAWER_WITH_HEADER);
-		MENU_STYLES.put(NavigationMenuStyle.OVERLAY_CONTENT,
-						SideNavType.DRAWER);
+		MENU_STYLES.put(
+			NavigationMenuStyle.OVERLAY,
+			SideNavType.DRAWER_WITH_HEADER);
+		MENU_STYLES.put(
+			NavigationMenuStyle.OVERLAY_CONTENT,
+			SideNavType.DRAWER);
 		MENU_STYLES.put(NavigationMenuStyle.PUSH, SideNavType.PUSH_WITH_HEADER);
 		MENU_STYLES.put(NavigationMenuStyle.PUSH_CONTENT, SideNavType.PUSH);
 		MENU_STYLES.put(NavigationMenuStyle.SMALL, SideNavType.MINI);
-		MENU_STYLES.put(NavigationMenuStyle.SMALL_EXPANDING,
-						SideNavType.MINI_WITH_EXPAND);
+		MENU_STYLES.put(
+			NavigationMenuStyle.SMALL_EXPANDING,
+			SideNavType.MINI_WITH_EXPAND);
 	}
 
 	//~ Instance fields --------------------------------------------------------
@@ -108,8 +112,9 @@ public class MaterialMenuLayout extends MenuLayout
 
 			if (rWidget instanceof AbstractButton)
 			{
-				GewtMaterial.checkApplyButtonScale((AbstractButton) rWidget,
-												   rStyle);
+				GewtMaterial.checkApplyButtonScale(
+					(AbstractButton) rWidget,
+					rStyle);
 			}
 		}
 		else
@@ -120,14 +125,14 @@ public class MaterialMenuLayout extends MenuLayout
 			}
 			else
 			{
-//				if (!(rWidget instanceof MaterialNavBrand) &&
-//					aNavBar != null &&
-//					aNavSection == null)
-//				{
-//					aNavSection = new MaterialNavSection();
-//					aNavSection.setFloat(Float.RIGHT);
-//					aNavBar.add(aNavSection);
-//				}
+				if (!(rWidget instanceof MaterialNavBrand) &&
+					aNavBar != null &&
+					aNavSection == null)
+				{
+					aNavSection = new MaterialNavSection();
+					aNavSection.setFloat(Float.RIGHT);
+					aNavBar.add(aNavSection);
+				}
 
 				if (aNavSection != null)
 				{
@@ -199,8 +204,9 @@ public class MaterialMenuLayout extends MenuLayout
 
 		aMaterialFABList = new MaterialFABList();
 
-		aMaterialFAB.setAxis(eOrientation == Orientation.VERTICAL
-							 ? Axis.VERTICAL : Axis.HORIZONTAL);
+		aMaterialFAB.setAxis(
+			eOrientation == Orientation.VERTICAL ? Axis.VERTICAL
+												 : Axis.HORIZONTAL);
 
 		MaterialAnchorButton aMenuButton =
 			new MaterialAnchorButton(ButtonType.FLOATING);
@@ -223,8 +229,9 @@ public class MaterialMenuLayout extends MenuLayout
 	protected HasWidgets createSideMenu(StyleData rMenuStyle)
 	{
 		NavigationMenuStyle eMenuStyle =
-			rMenuStyle.getProperty(NAVIGATION_MENU_STYLE,
-								   NavigationMenuStyle.OVERLAY_CONTENT);
+			rMenuStyle.getProperty(
+				NAVIGATION_MENU_STYLE,
+				NavigationMenuStyle.OVERLAY_CONTENT);
 
 		AbstractSideNav aSideNav;
 
@@ -237,22 +244,22 @@ public class MaterialMenuLayout extends MenuLayout
 			case OVERLAY:
 			case OVERLAY_CONTENT:
 				aSideNav = new MaterialSideNavDrawer();
-				((MaterialSideNavDrawer) aSideNav).setWithHeader(eMenuStyle ==
-																 NavigationMenuStyle.OVERLAY_CONTENT);
+				((MaterialSideNavDrawer) aSideNav).setWithHeader(
+					eMenuStyle == NavigationMenuStyle.OVERLAY_CONTENT);
 				break;
 
 			case PUSH:
 			case PUSH_CONTENT:
 				aSideNav = new MaterialSideNavPush();
-				((MaterialSideNavPush) aSideNav).setWithHeader(eMenuStyle ==
-															   NavigationMenuStyle.PUSH_CONTENT);
+				((MaterialSideNavPush) aSideNav).setWithHeader(
+					eMenuStyle == NavigationMenuStyle.PUSH_CONTENT);
 				break;
 
 			case SMALL:
 			case SMALL_EXPANDING:
 				aSideNav = new MaterialSideNavMini();
-				((MaterialSideNavMini) aSideNav).setExpandable(eMenuStyle ==
-															   NavigationMenuStyle.SMALL_EXPANDING);
+				((MaterialSideNavMini) aSideNav).setExpandable(
+					eMenuStyle == NavigationMenuStyle.SMALL_EXPANDING);
 				break;
 
 			default:
@@ -321,7 +328,7 @@ public class MaterialMenuLayout extends MenuLayout
 	//~ Inner Classes ----------------------------------------------------------
 
 	/********************************************************************
-	 * TODO: DOCUMENT ME!
+	 * Overridden to set as visible after onLoad().
 	 *
 	 * @author eso
 	 */
@@ -330,7 +337,7 @@ public class MaterialMenuLayout extends MenuLayout
 		//~ Methods ------------------------------------------------------------
 
 		/***************************************
-		 * @see gwt.material.design.client.ui.MaterialNavBar#onLoad()
+		 * {@inheritDoc}
 		 */
 		@Override
 		protected void onLoad()

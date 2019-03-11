@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,11 +16,9 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
-import gwt.material.design.client.base.HasHref;
 import gwt.material.design.client.js.JsMaterialElement;
-import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialLink;
-import gwt.material.design.client.ui.MaterialRow;
+import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTab;
 import gwt.material.design.client.ui.MaterialTabItem;
 
@@ -39,7 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author eso
  */
 public class MaterialTabPanelLayout
-	extends MaterialSwitchPanelLayout<MaterialRow, MaterialTabItem>
+	extends MaterialSwitchPanelLayout<MaterialPanel, MaterialTabItem>
 {
 	//~ Instance fields --------------------------------------------------------
 
@@ -56,16 +54,15 @@ public class MaterialTabPanelLayout
 						boolean   bCloseable)
 	{
 		String		    sId			   = DOM.createUniqueId();
-		MaterialTabItem aTabItem	   = new GewtMaterialTabItem();
+		MaterialTabItem aTabItem	   = new MaterialTabItem();
 		MaterialLink    aTabLink	   = new MaterialLink(sStepTitle, sId);
-		MaterialColumn  aContentColumn = new MaterialColumn();
+		MaterialPanel   aContentPanel  = new MaterialPanel();
 		Widget		    rContentWidget = rTabComponent.getWidget();
 
-		aContentColumn.getElement().setId(sId);
-		aContentColumn.setGrid("s12");
+		aContentPanel.getElement().setId(sId);
 
-		getPanelWidget().add(aContentColumn);
-		aContentColumn.add(rContentWidget);
+		getPanelWidget().add(aContentPanel);
+		aContentPanel.add(rContentWidget);
 		aTabItem.add(aTabLink);
 		aTabBar.add(aTabItem);
 
@@ -76,16 +73,15 @@ public class MaterialTabPanelLayout
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MaterialRow createPanelWidget(Container rContainer, StyleData rStyle)
+	public MaterialPanel createPanelWidget(
+		Container rContainer,
+		StyleData rStyle)
 	{
-		MaterialRow    aTabPanelContainer = new MaterialRow();
-		MaterialColumn aTabBarColumn	  = new MaterialColumn();
+		MaterialPanel aTabPanelContainer = new MaterialPanel();
 
 		aTabBar = new GewtMaterialTab();
 
-		aTabBarColumn.setGrid("s12");
-		aTabBarColumn.add(aTabBar);
-		aTabPanelContainer.add(aTabBarColumn);
+		aTabPanelContainer.add(aTabBar);
 
 		return aTabPanelContainer;
 	}
@@ -154,41 +150,6 @@ public class MaterialTabPanelLayout
 			// https://github.com/GwtMaterialDesign/gwt-material/issues/736
 			JsMaterialElement.$(getElement()).find(".indicator").remove();
 			super.load();
-		}
-	}
-
-	/********************************************************************
-	 * Subclassed to fix a GMD bug.
-	 *
-	 * @author eso
-	 */
-	public static class GewtMaterialTabItem extends MaterialTabItem
-	{
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
-		 * @see <a
-		 *      href="https://github.com/GwtMaterialDesign/gwt-material/issues/786">
-		 *      https://github.com/GwtMaterialDesign/gwt-material/issues/786</a>
-		 */
-		@Override
-		public void selectTab()
-		{
-			for (Widget rChild : getChildren())
-			{
-				if (rChild instanceof HasHref)
-				{
-					String sHref = ((HasHref) rChild).getHref();
-
-					if (!sHref.isEmpty())
-					{
-						sHref = sHref.replaceAll("[^a-zA-Z\\d\\s:]", "");
-						((MaterialTab) getParent()).selectTab(sHref);
-
-						break;
-					}
-				}
-			}
 		}
 	}
 }
