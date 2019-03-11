@@ -24,7 +24,7 @@ dependencies
 	}
 	else
 	{
-		compile 'de.esoco:gewt:1.2.+'
+		compile 'de.esoco:gewt:1.3.+'
 	}
 
 	compile 'com.github.gwtmaterialdesign:gwt-material:2.1.1'
