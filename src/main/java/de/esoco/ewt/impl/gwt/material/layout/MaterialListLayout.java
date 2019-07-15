@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -72,8 +72,8 @@ public class MaterialListLayout extends AbstractMaterialLayout
 			{
 				MaterialTitle rListTitle = (MaterialTitle) rWidget;
 
-				((MaterialCollection) rContainer).setHeader(rListTitle
-															.getTitle());
+				((MaterialCollection) rContainer).setHeader(
+					rListTitle.getTitle());
 			}
 			else if (!(rWidget instanceof MaterialCollectionItem))
 			{
@@ -98,7 +98,7 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		}
 		else if (!(rWidget instanceof MaterialCollapsibleItem))
 		{
-			rWidget = new MaterialCollapsibleItem(rWidget);
+			rWidget = new MaterialCollapsibleItem<Object>(rWidget);
 		}
 
 		if (rWidget != null)
@@ -138,8 +138,9 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		StyleData rContainerStyle)
 	{
 		eListStyle =
-			rContainerStyle.getProperty(LIST_LAYOUT_STYLE,
-										ListLayoutStyle.SIMPLE);
+			rContainerStyle.getProperty(
+				LIST_LAYOUT_STYLE,
+				ListLayoutStyle.SIMPLE);
 
 		MaterialWidget aContainerWidget;
 
@@ -152,10 +153,11 @@ public class MaterialListLayout extends AbstractMaterialLayout
 			GewtMaterialCollapsible aCollapsible =
 				new GewtMaterialCollapsible();
 
-			aCollapsible.setAccordion(!rContainerStyle.hasFlag(MULTI_SELECTION));
-			aCollapsible.setType(eListStyle == ListLayoutStyle.POPOUT
-								 ? CollapsibleType.POPOUT
-								 : CollapsibleType.FLAT);
+			aCollapsible.setAccordion(
+				!rContainerStyle.hasFlag(MULTI_SELECTION));
+			aCollapsible.setType(
+				eListStyle == ListLayoutStyle.POPOUT ? CollapsibleType.POPOUT
+													 : CollapsibleType.FLAT);
 			aContainerWidget = aCollapsible;
 			aSelectionWidget = aCollapsible;
 		}
@@ -192,8 +194,9 @@ public class MaterialListLayout extends AbstractMaterialLayout
 
 			for (Widget rItem : getChildren())
 			{
-				if (StyleHelper.containsStyle(rItem.getElement().getClassName(),
-											  "active"))
+				if (StyleHelper.containsStyle(
+						rItem.getElement().getClassName(),
+						"active"))
 				{
 					nSelection = nIndex;
 

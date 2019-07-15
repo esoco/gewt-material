@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 
 		if (bIsCollapsible)
 		{
-			aHasWidgets = new GewtMaterialCollapsibleItem();
+			aHasWidgets = new GewtMaterialCollapsibleItem<Object>();
 		}
 		else
 		{
@@ -198,8 +198,8 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 	 *
 	 * @author eso
 	 */
-	public static class GewtMaterialCollapsibleItem
-		extends MaterialCollapsibleItem implements HasEventHandlingDelay
+	public static class GewtMaterialCollapsibleItem<T>
+		extends MaterialCollapsibleItem<T> implements HasEventHandlingDelay
 	{
 		//~ Methods ------------------------------------------------------------
 
