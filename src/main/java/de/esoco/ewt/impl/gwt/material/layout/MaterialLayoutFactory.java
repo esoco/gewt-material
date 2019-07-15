@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2017 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,9 +51,10 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 
 		if (rContainerStyle.hasFlag(USE_STANDARD_COMPONENT))
 		{
-			return super.createLayout(rParentContainer,
-									  rContainerStyle,
-									  eLayout);
+			return super.createLayout(
+				rParentContainer,
+				rContainerStyle,
+				eLayout);
 		}
 
 		switch (eLayout)
@@ -105,9 +106,10 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 
 			default:
 				aLayout =
-					super.createLayout(rParentContainer,
-									   rContainerStyle,
-									   eLayout);
+					super.createLayout(
+						rParentContainer,
+						rContainerStyle,
+						eLayout);
 		}
 
 		return aLayout;

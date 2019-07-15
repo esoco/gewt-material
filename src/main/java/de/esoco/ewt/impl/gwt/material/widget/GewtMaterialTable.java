@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -314,18 +314,17 @@ public class GewtMaterialTable extends Composite
 	{
 		if (aMaterialTable.getSelectionType() == SelectionType.NONE)
 		{
-			aMaterialTable.addRowShortPressHandler(e ->
-												   rEventDispatcher
-												   .dispatchEvent(EventType.SELECTION));
+			aMaterialTable.addRowShortPressHandler(
+				e -> rEventDispatcher.dispatchEvent(EventType.SELECTION));
 		}
 		else
 		{
-			aMaterialTable.addRowSelectHandler(e ->
-											   rEventDispatcher.dispatchEvent(EventType.SELECTION));
+			aMaterialTable.addRowSelectHandler(
+				e -> rEventDispatcher.dispatchEvent(EventType.SELECTION));
 		}
 
-		aMaterialTable.addRowDoubleClickHandler(e ->
-												rEventDispatcher.dispatchEvent(EventType.ACTION));
+		aMaterialTable.addRowDoubleClickHandler(
+			e -> rEventDispatcher.dispatchEvent(EventType.ACTION));
 	}
 
 	/***************************************
@@ -400,8 +399,8 @@ public class GewtMaterialTable extends Composite
 		setTableTitle(null);
 
 		aMaterialTable.setSelectionType(SelectionType.SINGLE);
-		aMaterialTable.addColumnSortHandler(e ->
-											handleColumnSort(e.getSortContext()));
+		aMaterialTable.addColumnSortHandler(
+			e -> handleColumnSort(e.getSortContext()));
 	}
 
 	/***************************************
@@ -420,12 +419,10 @@ public class GewtMaterialTable extends Composite
 				(TableColumn<?>) rSortContext.getSortColumn();
 
 			rSortableModel.removeSorting();
-			rSortableModel.setSortDirection(rSortColumn.getColumnDefinition()
-											.getId(),
-											rSortContext.getSortDir() ==
-											SortDir.ASC
-											? SortDirection.ASCENDING
-											: SortDirection.DESCENDING);
+			rSortableModel.setSortDirection(
+				rSortColumn.getColumnDefinition().getId(),
+				rSortContext.getSortDir() == SortDir.ASC
+				? SortDirection.ASCENDING : SortDirection.DESCENDING);
 
 			aMaterialTable.update();
 		}
@@ -474,8 +471,9 @@ public class GewtMaterialTable extends Composite
 				RemoteDataModel<DataModel<?>> rRemoteModel =
 					(RemoteDataModel<DataModel<?>>) rDataModel;
 
-				rRemoteModel.setWindow(rLoadConfig.getOffset(),
-									   rLoadConfig.getLimit(),
+				rRemoteModel.setWindow(
+					rLoadConfig.getOffset(),
+					rLoadConfig.getLimit(),
 					new Callback<RemoteDataModel<DataModel<?>>>()
 					{
 						@Override
@@ -556,7 +554,9 @@ public class GewtMaterialTable extends Composite
 		 */
 		public GewtMaterialInfiniteDataTable()
 		{
-			super(new InfiniteDataView<>(10,
+			super(
+				new InfiniteDataView<>(
+					10,
 					new DataSource<T>()
 					{
 						@Override
@@ -798,8 +798,6 @@ public class GewtMaterialTable extends Composite
 		//~ Instance fields ----------------------------------------------------
 
 		private ColumnDefinition rColumnDef;
-		private final int		 nIndex;
-		private boolean			 bSortable;
 
 		//~ Constructors -------------------------------------------------------
 
@@ -817,20 +815,18 @@ public class GewtMaterialTable extends Composite
 			super(rCell);
 
 			this.rColumnDef = rColumnDef;
-			this.nIndex     = nIndex;
-			this.bSortable  = rColumnDef.hasFlag(StyleProperties.SORTABLE);
 
 			SortDirection eSortDirection =
 				rColumnDef.getProperty(SORT_DIRECTION, null);
 
 			if (eSortDirection != null)
 			{
-				setAutoSort(true);
-				setDefaultSortAscending(eSortDirection ==
-										SortDirection.ASCENDING);
+				autoSort(true);
+				defaultSortAscending(eSortDirection == SortDirection.ASCENDING);
 			}
 
-			setName(rContext.expandResource(rColumnDef.getTitle()));
+			sortable(rColumnDef.hasFlag(StyleProperties.SORTABLE));
+			name(rContext.expandResource(rColumnDef.getTitle()));
 		}
 
 		//~ Methods ------------------------------------------------------------
@@ -846,26 +842,6 @@ public class GewtMaterialTable extends Composite
 		}
 
 		/***************************************
-		 * Returns the column index.
-		 *
-		 * @return The column index
-		 */
-		@Override
-		public final int getIndex()
-		{
-			return nIndex;
-		}
-
-		/***************************************
-		 * {@inheritDoc}
-		 */
-		@Override
-		public boolean isSortable()
-		{
-			return bSortable;
-		}
-
-		/***************************************
 		 * Returns the raw (unparsed) object value from a row data model.
 		 *
 		 * @param  rRowData The row data model
@@ -874,7 +850,7 @@ public class GewtMaterialTable extends Composite
 		 */
 		protected final Object getRawValue(DataModel<?> rRowData)
 		{
-			return rRowData.getElement(nIndex);
+			return rRowData.getElement(getIndex());
 		}
 	}
 
@@ -895,9 +871,10 @@ public class GewtMaterialTable extends Composite
 		 */
 		public DateColumn(ColumnDefinition rColumnDefinition, int nIndex)
 		{
-			super(rColumnDefinition,
-				  new DateCell(getDateTimeFormat(rColumnDefinition)),
-				  nIndex);
+			super(
+				rColumnDefinition,
+				new DateCell(getDateTimeFormat(rColumnDefinition)),
+				nIndex);
 		}
 
 		//~ Methods ------------------------------------------------------------

@@ -1,6 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This file is a part of the 'gewt-material' project.
-// Copyright 2018 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
+// Copyright 2019 Elmar Sonnenschein, esoco GmbH, Flensburg, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,18 +18,20 @@ package de.esoco.ewt.impl.gwt.material.layout;
 
 import gwt.material.design.addins.client.splitpanel.MaterialSplitPanel;
 import gwt.material.design.client.constants.Axis;
-import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialPanel;
 
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.component.SplitPanel.SplitPanelLayout;
 import de.esoco.ewt.style.StyleData;
 
+import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.Orientation;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.StyleProperties.ORIENTATION;
+import static de.esoco.lib.property.StyleProperties.SPLITTER_SIZE;
 
 
 /********************************************************************
@@ -44,6 +46,10 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 
 	private MaterialSplitPanel aSplitPanel;
 
+	private MaterialPanel aFirst;
+	private MaterialPanel aSecond;
+	private int			  nAdded = 0;
+
 	//~ Methods ----------------------------------------------------------------
 
 	/***************************************
@@ -52,21 +58,25 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 	@Override
 	public void addWidget(HasWidgets rContainer,
 						  Widget	 rWidget,
-						  StyleData  rStyleData)
+						  StyleData  rStyle)
 	{
-//			Alignment eVerticalAlign = rStyleData.getVerticalAlignment();
-//
-//			if (eVerticalAlign == Alignment.BEGIN ||
-//				eVerticalAlign == Alignment.END)
-//			{
-//				rWidget.setHeight("100%");
-//			}
-//			else
-//			{
-//				rWidget.setWidth("100%");
-//			}
+		Alignment eVerticalAlign = rStyle.getVerticalAlignment();
 
-//		aSplitPanel.add(rWidget);
+		if (nAdded == 0)
+		{
+			aFirst.add(rWidget);
+		}
+		else if (nAdded == 1)
+		{
+			aSecond.add(rWidget);
+		}
+		else
+		{
+			throw new IllegalStateException(
+				"Only two children allowed in split panel");
+		}
+
+		nAdded++;
 	}
 
 	/***************************************
@@ -79,15 +89,34 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 	{
 		aSplitPanel = new MaterialSplitPanel();
 
-		aSplitPanel.setAxis(rStyle.getProperty(ORIENTATION, null) ==
-							Orientation.VERTICAL ? Axis.VERTICAL
-												 : Axis.HORIZONTAL);
+		boolean bVertical =
+			rStyle.getProperty(ORIENTATION, null) == Orientation.VERTICAL;
 
-		aSplitPanel.add(new MaterialLabel("Left Widget"));
-		aSplitPanel.add(new MaterialLabel("Right Widget"));
-		aSplitPanel.setLeftMax(1000);
-		aSplitPanel.setRightMax(1000);
-		aSplitPanel.setHeight("500px");
+		int nThickness = rStyle.getIntProperty(SPLITTER_SIZE, -1);
+
+		aSplitPanel.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+
+		if (nThickness > 0)
+		{
+			aSplitPanel.setThickness(nThickness);
+		}
+
+		aFirst  = new MaterialPanel();
+		aSecond = new MaterialPanel();
+
+		aSplitPanel.add(aFirst);
+		aSplitPanel.add(aSecond);
+
+		if (bVertical)
+		{
+			aFirst.setWidth("100%");
+			aSecond.setWidth("100%");
+		}
+		else
+		{
+			aFirst.setHeight("100%");
+			aSecond.setHeight("100%");
+		}
 
 		return aSplitPanel;
 	}
