@@ -9,4 +9,6 @@ buildscript {
 
 apply plugin: 'net.vivin.gradle-semantic-build-versioning'
 
-includeFlat 'gewt', 'esoco-common'
+['gewt', 'esoco-common'].each {
+	project -> if (new File("../$project").exists()) includeFlat project
+}
