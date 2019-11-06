@@ -9,9 +9,4 @@ buildscript {
 
 apply plugin: 'net.vivin.gradle-semantic-build-versioning'
 
-def baseProjects = [':gewt',':esoco-common']
-
-baseProjects.each { projectName ->
-	include projectName
-	project(projectName).projectDir = new File("../sdack/${projectName.substring(1)}")
-}
+includeFlat 'gewt', 'esoco-common'
