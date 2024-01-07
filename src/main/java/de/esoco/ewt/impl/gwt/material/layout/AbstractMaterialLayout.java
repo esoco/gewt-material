@@ -16,14 +16,12 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
-import gwt.material.design.client.base.MaterialWidget;
-
+import com.google.gwt.user.client.ui.HasWidgets;
 import de.esoco.ewt.GewtMaterial;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.style.StyleData;
-
-import com.google.gwt.user.client.ui.HasWidgets;
+import gwt.material.design.client.base.MaterialWidget;
 
 /**
  * The base class for GwtMaterial layouts.
@@ -32,18 +30,15 @@ import com.google.gwt.user.client.ui.HasWidgets;
  */
 public abstract class AbstractMaterialLayout extends GenericLayout {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public final HasWidgets createLayoutContainer(Container rContainer,
-		StyleData rContainerStyle) {
-		MaterialWidget aContainer =
-			creatMaterialLayoutContainer(rContainer, rContainerStyle);
+	public final HasWidgets createLayoutContainer(Container container,
+		StyleData containerStyle) {
+		MaterialWidget materialWidget =
+			creatMaterialLayoutContainer(container, containerStyle);
 
-		GewtMaterial.checkApplyStyles(aContainer, rContainerStyle);
+		GewtMaterial.checkApplyStyles(materialWidget, containerStyle);
 
-		return aContainer;
+		return materialWidget;
 	}
 
 	/**
@@ -52,5 +47,5 @@ public abstract class AbstractMaterialLayout extends GenericLayout {
 	 * @see GenericLayout#createLayoutContainer(Container, StyleData)
 	 */
 	protected abstract MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer, StyleData rContainerStyle);
+		Container container, StyleData containerStyle);
 }

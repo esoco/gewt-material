@@ -22,7 +22,6 @@ import de.esoco.ewt.layout.DefaultLayoutFactory;
 import de.esoco.ewt.layout.GenericLayout;
 import de.esoco.ewt.layout.LayoutMapper;
 import de.esoco.ewt.style.StyleData;
-
 import de.esoco.lib.property.LayoutType;
 
 import static de.esoco.lib.property.StyleProperties.USE_STANDARD_COMPONENT;
@@ -36,83 +35,76 @@ import static de.esoco.lib.property.StyleProperties.USE_STANDARD_COMPONENT;
 public class MaterialLayoutFactory extends DefaultLayoutFactory
 	implements LayoutMapper {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public GenericLayout createLayout(Container rParentContainer,
-		StyleData rContainerStyle, LayoutType eLayout) {
-		GenericLayout aLayout;
+	public GenericLayout createLayout(Container parentContainer,
+		StyleData containerStyle, LayoutType layoutType) {
+		GenericLayout layout;
 
-		if (rContainerStyle.hasFlag(USE_STANDARD_COMPONENT)) {
-			return super.createLayout(rParentContainer, rContainerStyle,
-				eLayout);
+		if (containerStyle.hasFlag(USE_STANDARD_COMPONENT)) {
+			return super.createLayout(parentContainer, containerStyle,
+				layoutType);
 		}
 
-		switch (eLayout) {
+		switch (layoutType) {
 			case SPLIT:
-				aLayout = new MaterialSplitPanelLayout();
+				layout = new MaterialSplitPanelLayout();
 				break;
 
 			case FLOW:
 			case GRID:
-				aLayout = new MaterialFlowLayout();
+				layout = new MaterialFlowLayout();
 				break;
 
 			case TABS:
-				aLayout = new MaterialTabPanelLayout();
+				layout = new MaterialTabPanelLayout();
 				break;
 
 			case STACK:
-				aLayout = new MaterialStackPanelLayout();
+				layout = new MaterialStackPanelLayout();
 				break;
 
 			case CARD:
-				aLayout = new MaterialCardLayout();
+				layout = new MaterialCardLayout();
 				break;
 
 			case GRID_ROW:
 			case GRID_COLUMN:
-				aLayout = new MaterialGridLayout(eLayout);
+				layout = new MaterialGridLayout(layoutType);
 				break;
 
 			case LIST:
-				aLayout = new MaterialListLayout();
+				layout = new MaterialListLayout();
 				break;
 
 			case LIST_ITEM:
-				aLayout = new MaterialListItemLayout();
+				layout = new MaterialListItemLayout();
 				break;
 
 			case MENU:
-				aLayout = new MaterialMenuLayout();
+				layout = new MaterialMenuLayout();
 				break;
 
 			case HEADER:
 			case CONTENT:
 			case SECONDARY_CONTENT:
 			case FOOTER:
-				aLayout = new MaterialContentLayout(eLayout);
+				layout = new MaterialContentLayout(layoutType);
 				break;
 
 			default:
-				aLayout = super.createLayout(rParentContainer, rContainerStyle,
-					eLayout);
+				layout = super.createLayout(parentContainer, containerStyle,
+					layoutType);
 		}
 
-		return aLayout;
+		return layout;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public GenericLayout mapLayout(Container rContainer,
-		GenericLayout aLayout) {
-		if (aLayout instanceof MainViewLayout) {
-			aLayout = new MaterialMainViewLayout();
+	public GenericLayout mapLayout(Container container, GenericLayout layout) {
+		if (layout instanceof MainViewLayout) {
+			layout = new MaterialMainViewLayout();
 		}
 
-		return aLayout;
+		return layout;
 	}
 }

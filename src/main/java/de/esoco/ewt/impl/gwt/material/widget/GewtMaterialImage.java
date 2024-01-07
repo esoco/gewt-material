@@ -33,33 +33,24 @@ import com.google.gwt.user.client.ui.HasText;
 public class GewtMaterialImage extends MaterialImage
 	implements HasText, ImageAttribute {
 
-	private Image rImage;
+	private Image image;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return rImage;
+		return image;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String getText() {
 		return getCaption();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		this.rImage = rImage;
+	public void setImage(Image image) {
+		this.image = image;
 
-		if (rImage instanceof ImageRef) {
-			setUrl(((ImageRef) rImage).getGwtImage().getUrl());
+		if (image instanceof ImageRef) {
+			setUrl(((ImageRef) image).getGwtImage().getUrl());
 		}
 	}
 
@@ -75,7 +66,7 @@ public class GewtMaterialImage extends MaterialImage
 	 * @see HasText#setText(String)
 	 */
 	@Override
-	public void setText(String sText) {
-		setCaption(sText);
+	public void setText(String text) {
+		setCaption(text);
 	}
 }

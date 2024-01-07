@@ -39,67 +39,55 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class MaterialSwitchPanelLayout<P extends IndexedPanel & HasWidgets, W extends MaterialWidget>
 	extends SwitchPanelLayout {
 
-	private P aPanelWidget;
+	private P panelWidget;
 
-	private Map<Widget, W> aSwitchedComponents = new HashMap<>();
+	private Map<Widget, W> switchedComponents = new HashMap<>();
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public final HasWidgets createLayoutContainer(Container rContainer,
-		StyleData rStyle) {
-		aPanelWidget = createPanelWidget(rContainer, rStyle);
+	public final HasWidgets createLayoutContainer(Container container,
+		StyleData style) {
+		panelWidget = createPanelWidget(container, style);
 
-		return aPanelWidget;
+		return panelWidget;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getPageCount() {
-		return aPanelWidget.getWidgetCount();
+		return panelWidget.getWidgetCount();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public int getPageIndex(Component rGroupComponent) {
-		return aPanelWidget.getWidgetIndex(rGroupComponent.getWidget());
+	public int getPageIndex(Component groupComponent) {
+		return panelWidget.getWidgetIndex(groupComponent.getWidget());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void removeWidget(HasWidgets rContainer, Widget rWidget) {
-		super.removeWidget(rContainer, rWidget);
+	public void removeWidget(HasWidgets container, Widget widget) {
+		super.removeWidget(container, widget);
 
-		aSwitchedComponents.remove(rWidget);
+		switchedComponents.remove(widget);
 	}
 
 	/**
 	 * Adds a content widget with the associated wrapping switch widget.
 	 *
-	 * @param rWidget        The content widget
-	 * @param rWrapperWidget The widget that wraps the switched component (not
-	 *                       the component widget itself)
+	 * @param widget        The content widget
+	 * @param wrapperWidget The widget that wraps the switched component (not
+	 *                      the component widget itself)
 	 */
-	protected void addContentWidget(Widget rWidget, W rWrapperWidget) {
-		aSwitchedComponents.put(rWidget, rWrapperWidget);
+	protected void addContentWidget(Widget widget, W wrapperWidget) {
+		switchedComponents.put(widget, wrapperWidget);
 	}
 
 	/**
 	 * Must be implemented to create the widget for the switched panel.
 	 *
-	 * @param rContainer The parent GEWT container
-	 * @param rStyle     The panel widget style
+	 * @param container The parent GEWT container
+	 * @param style     The panel widget style
 	 * @return A new container widget
 	 */
-	protected abstract P createPanelWidget(Container rContainer,
-		StyleData rStyle);
+	protected abstract P createPanelWidget(Container container,
+		StyleData style);
 
 	/**
 	 * Returns the panel widget.
@@ -107,6 +95,6 @@ public abstract class MaterialSwitchPanelLayout<P extends IndexedPanel & HasWidg
 	 * @return The panel widget
 	 */
 	protected final P getPanelWidget() {
-		return aPanelWidget;
+		return panelWidget;
 	}
 }

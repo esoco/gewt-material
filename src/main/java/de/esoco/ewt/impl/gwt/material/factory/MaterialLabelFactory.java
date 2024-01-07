@@ -51,69 +51,67 @@ import static de.esoco.lib.property.StyleProperties.LABEL_STYLE;
 public class MaterialLabelFactory<W extends Widget & HasText>
 	extends MaterialWidgetFactory<W> {
 
-	private LabelWidgetFactory<W> aDefaultFactory = new LabelWidgetFactory<>();
+	private LabelWidgetFactory<W> defaultFactory = new LabelWidgetFactory<>();
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public W createMaterialWidget(Component rComponent, StyleData rStyle) {
-		Widget aWidget = null;
+	public W createMaterialWidget(Component component, StyleData style) {
+		Widget widget = null;
 
-		if (rStyle.hasFlag(StyleFlag.HYPERLINK)) {
-			aWidget = new MaterialLink();
+		if (style.hasFlag(StyleFlag.HYPERLINK)) {
+			widget = new MaterialLink();
 		} else {
-			LabelStyle eLabelStyle =
-				rStyle.getProperty(LABEL_STYLE, LabelStyle.DEFAULT);
+			LabelStyle labelStyle =
+				style.getProperty(LABEL_STYLE, LabelStyle.DEFAULT);
 
-			switch (eLabelStyle) {
+			switch (labelStyle) {
 				case DEFAULT:
-					aWidget = rStyle.hasFlag(HAS_IMAGES) ?
-					          new GewtMaterialIcon() :
-					          new GewtMaterialLabel();
+					widget = style.hasFlag(HAS_IMAGES) ?
+					         new GewtMaterialIcon() :
+					         new GewtMaterialLabel();
 					break;
 
 				case BRAND:
-					aWidget = new GewtMaterialNavBrand();
+					widget = new GewtMaterialNavBrand();
 					break;
 
 				case ICON:
-					aWidget = new GewtMaterialIcon();
+					widget = new GewtMaterialIcon();
 					break;
 
 				case IMAGE:
-					aWidget = new GewtMaterialImage();
+					widget = new GewtMaterialImage();
 					break;
 
 				case TITLE:
-					aWidget = isCardElement(rComponent) ?
-					          new GewtMaterialCardTitle() :
-					          new GewtMaterialTitle();
+					widget = isCardElement(component) ?
+					         new GewtMaterialCardTitle() :
+					         new GewtMaterialTitle();
 					break;
 
 				default:
-					aWidget = aDefaultFactory.createLabelWidget(rComponent,
-						eLabelStyle, rStyle);
+					widget =
+						defaultFactory.createLabelWidget(component, labelStyle,
+							style);
 			}
 		}
 
-		return (W) aWidget;
+		return (W) widget;
 	}
 
 	/**
 	 * Checks whether the given component is a child element of a
 	 * {@link MaterialCard} widget.
 	 *
-	 * @param rComponent The component to check
+	 * @param component The component to check
 	 * @return TRUE if it is a child element of a card
 	 */
-	private boolean isCardElement(Component rComponent) {
-		Widget rParentWidget = rComponent.getParent().getWidget();
+	private boolean isCardElement(Component component) {
+		Widget parentWidget = component.getParent().getWidget();
 
-		return rParentWidget instanceof MaterialCard ||
-			rParentWidget instanceof MaterialCardContent ||
-			rParentWidget instanceof MaterialCardReveal;
+		return parentWidget instanceof MaterialCard ||
+			parentWidget instanceof MaterialCardContent ||
+			parentWidget instanceof MaterialCardReveal;
 	}
 
 	/**
@@ -124,23 +122,22 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 	public static class GewtMaterialLabel extends MaterialLabel
 		implements HasHTML {
 
-		private HTMLMixin<GewtMaterialLabel> aHtmlMixin =
-			new HTMLMixin<>(this);
+		private HTMLMixin<GewtMaterialLabel> htmlMixin = new HTMLMixin<>(this);
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
 		public String getHTML() {
-			return aHtmlMixin.getHTML();
+			return htmlMixin.getHTML();
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setHTML(String sHtml) {
-			aHtmlMixin.setHTML(sHtml);
+		public void setHTML(String html) {
+			htmlMixin.setHTML(html);
 		}
 	}
 

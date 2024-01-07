@@ -31,12 +31,9 @@ import com.google.gwt.user.client.ui.RadioButton;
 public class MaterialRadioButtonFactory
 	extends MaterialWidgetFactory<RadioButton> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public RadioButton createMaterialWidget(Component rComponent,
-		StyleData rStyle) {
+	public RadioButton createMaterialWidget(Component component,
+		StyleData style) {
 		return new MaterialRadioButton();
 	}
 }

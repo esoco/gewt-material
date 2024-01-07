@@ -31,12 +31,9 @@ import de.esoco.ewt.style.StyleData;
 public class MaterialProgressBarFactory
 	extends MaterialWidgetFactory<IsProgressBarWidget> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public IsProgressBarWidget createMaterialWidget(Component rComponent,
-		StyleData rStyle) {
+	public IsProgressBarWidget createMaterialWidget(Component component,
+		StyleData style) {
 		return new GewtMaterialProgress();
 	}
 }

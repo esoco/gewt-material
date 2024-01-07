@@ -79,312 +79,249 @@ import static de.esoco.lib.property.StyleProperties.TABLE_STYLE;
 public class GewtMaterialTable extends Composite
 	implements IsTableControlWidget, TitleAttribute {
 
-	private UserInterfaceContext rContext;
+	private UserInterfaceContext context;
 
-	private GewtMaterialDataTable<DataModel<?>> aMaterialTable;
+	private GewtMaterialDataTable<DataModel<?>> materialTable;
 
-	private DataModel<DataModel<?>> rDataModel;
+	private DataModel<DataModel<?>> dataModel;
 
-	private DataModel<ColumnDefinition> rColumns;
+	private DataModel<ColumnDefinition> columns;
 
 	/**
 	 * Creates a new instance.
 	 *
-	 * @param rContext The user interface context
-	 * @param rStyle   The table style
+	 * @param context The user interface context
+	 * @param style   The table style
 	 */
-	public GewtMaterialTable(UserInterfaceContext rContext, StyleData rStyle) {
-		this.rContext = rContext;
+	public GewtMaterialTable(UserInterfaceContext context, StyleData style) {
+		this.context = context;
 
-		switch (rStyle.getProperty(TABLE_STYLE, TableStyle.FIXED)) {
+		switch (style.getProperty(TABLE_STYLE, TableStyle.FIXED)) {
 			case AUTO_LOAD:
-				aMaterialTable = new GewtMaterialInfiniteDataTable<>();
+				materialTable = new GewtMaterialInfiniteDataTable<>();
 				break;
 
 			case PAGED:
-				aMaterialTable = new GewtMaterialPagingDataTable<>();
+				materialTable = new GewtMaterialPagingDataTable<>();
 				break;
 
 			default:
-				aMaterialTable = new GewtMaterialDataTable<>();
-				aMaterialTable.setVisibleRange(new Range(0, 100));
+				materialTable = new GewtMaterialDataTable<>();
+				materialTable.setVisibleRange(new Range(0, 100));
 		}
 
-		initWidget(aMaterialTable);
+		initWidget(materialTable);
 	}
 
 	/**
 	 * Returns the date time format.
 	 *
-	 * @param rColumnDef sDatatype The date time format
+	 * @param columnDef sDatatype The date time format
 	 * @return The date time format
 	 */
-	public static DateTimeFormat getDateTimeFormat(
-		ColumnDefinition rColumnDef) {
-		String sDatatype = rColumnDef.getDatatype();
-		DateTimeFormat rFormat =
+	public static DateTimeFormat getDateTimeFormat(ColumnDefinition columnDef) {
+		String datatype = columnDef.getDatatype();
+		DateTimeFormat format =
 			DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_SHORT);
 
-		if (rColumnDef.getProperty(CONTENT_TYPE, null) !=
+		if (columnDef.getProperty(CONTENT_TYPE, null) !=
 			ContentType.DATE_TIME) {
-			if (Date.class.getName().endsWith(sDatatype)) {
-				rFormat =
-					DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT);
-			} else if (Time.class.getName().endsWith(sDatatype)) {
-				rFormat =
-					DateTimeFormat.getFormat(PredefinedFormat.TIME_SHORT);
+			if (Date.class.getName().endsWith(datatype)) {
+				format = DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT);
+			} else if (Time.class.getName().endsWith(datatype)) {
+				format = DateTimeFormat.getFormat(PredefinedFormat.TIME_SHORT);
 			}
 		}
 
-		return rFormat;
+		return format;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Widget asWidget() {
 		return this;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public DataModel<ColumnDefinition> getColumns() {
-		return rColumns;
+		return columns;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public DataModel<?> getData() {
-		return rDataModel;
+		return dataModel;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public DataModel<?> getSelection() {
-		return aMaterialTable.getSelection();
+		return materialTable.getSelection();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getSelectionIndex() {
-		DataModel<?> rSelection = getSelection();
+		DataModel<?> selection = getSelection();
 
-		return rSelection instanceof Indexed ?
-		       ((Indexed) rSelection).getIndex() :
+		return selection instanceof Indexed ?
+		       ((Indexed) selection).getIndex() :
 		       -1;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getTabIndex() {
-		return aMaterialTable.getTabIndex();
+		return materialTable.getTabIndex();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String getTableTitle() {
-		return aMaterialTable.getTableTitle().getText();
+		return materialTable.getTableTitle().getText();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean isEnabled() {
-		return aMaterialTable.isEnabled();
+		return materialTable.isEnabled();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void repaint() {
-		aMaterialTable.update();
+		materialTable.update();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setAccessKey(char cKey) {
-		aMaterialTable.setAccessKey(cKey);
+	public void setAccessKey(char key) {
+		materialTable.setAccessKey(key);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setColumns(DataModel<ColumnDefinition> rNewColumns) {
-		if (!rNewColumns.equals(rColumns)) {
-			rColumns = rNewColumns;
+	public void setColumns(DataModel<ColumnDefinition> newColumns) {
+		if (!newColumns.equals(columns)) {
+			columns = newColumns;
 
-			int nColumn = 0;
+			int column = 0;
 
-			aMaterialTable.removeColumns();
+			materialTable.removeColumns();
 
-			for (ColumnDefinition rColumnDef : rNewColumns) {
-				Column<DataModel<?>, ?> aMaterialColumn;
+			for (ColumnDefinition columnDef : newColumns) {
+				Column<DataModel<?>, ?> materialColumn;
 
-				switch (rColumnDef.getDatatype()) {
+				switch (columnDef.getDatatype()) {
 					case "Date":
-						aMaterialColumn = new DateColumn(rColumnDef, nColumn);
+						materialColumn = new DateColumn(columnDef, column);
 						break;
 
 					default:
-						aMaterialColumn = new TextColumn(rColumnDef, nColumn);
+						materialColumn = new TextColumn(columnDef, column);
 				}
 
-				aMaterialTable.addColumn(aMaterialColumn);
-				nColumn++;
+				materialTable.addColumn(materialColumn);
+				column++;
 			}
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public void setData(DataModel<? extends DataModel<?>> rNewData) {
-		if (rNewData != rDataModel) {
-			rDataModel = (DataModel<DataModel<?>>) rNewData;
+	public void setData(DataModel<? extends DataModel<?>> newData) {
+		if (newData != dataModel) {
+			dataModel = (DataModel<DataModel<?>>) newData;
 
-			DataModelDataSource aDataSource =
-				new DataModelDataSource(rDataModel);
+			DataModelDataSource dataSource =
+				new DataModelDataSource(dataModel);
 
-			aMaterialTable.updateDataSource(aDataSource);
-			aMaterialTable.update();
+			materialTable.updateDataSource(dataSource);
+			materialTable.update();
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setEnabled(boolean bEnabled) {
-		aMaterialTable.setEnabled(bEnabled);
+	public void setEnabled(boolean enabled) {
+		materialTable.setEnabled(enabled);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setEventDispatcher(GewtEventDispatcher rEventDispatcher) {
-		if (aMaterialTable.getSelectionType() == SelectionType.NONE) {
-			aMaterialTable.addRowShortPressHandler(
-				e -> rEventDispatcher.dispatchEvent(EventType.SELECTION));
+	public void setEventDispatcher(GewtEventDispatcher eventDispatcher) {
+		if (materialTable.getSelectionType() == SelectionType.NONE) {
+			materialTable.addRowShortPressHandler(
+				e -> eventDispatcher.dispatchEvent(EventType.SELECTION));
 		} else {
-			aMaterialTable.addRowSelectHandler(
-				e -> rEventDispatcher.dispatchEvent(EventType.SELECTION));
+			materialTable.addRowSelectHandler(
+				e -> eventDispatcher.dispatchEvent(EventType.SELECTION));
 		}
 
-		aMaterialTable.addRowDoubleClickHandler(
-			e -> rEventDispatcher.dispatchEvent(EventType.ACTION));
+		materialTable.addRowDoubleClickHandler(
+			e -> eventDispatcher.dispatchEvent(EventType.ACTION));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setFocus(boolean bFocused) {
-		aMaterialTable.setFocus(bFocused);
+	public void setFocus(boolean focused) {
+		materialTable.setFocus(focused);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setSelection(int nIndex) {
-		setSelection(nIndex, false);
+	public void setSelection(int index) {
+		setSelection(index, false);
 	}
 
 	/**
 	 * {@inheritDoc} boolean)
 	 */
 	@Override
-	public void setSelection(int nIndex, boolean bFireEvent) {
+	public void setSelection(int index, boolean fireEvent) {
 		// currently not supported by material table
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setTabIndex(int nIndex) {
-		aMaterialTable.setTabIndex(nIndex);
+	public void setTabIndex(int index) {
+		materialTable.setTabIndex(index);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setTableTitle(String sTableTitle) {
-		aMaterialTable
+	public void setTableTitle(String tableTitle) {
+		materialTable
 			.getScaffolding()
 			.getTopPanel()
-			.setVisible(sTableTitle != null);
+			.setVisible(tableTitle != null);
 
-		if (sTableTitle != null) {
-			aMaterialTable.getTableTitle().setText(sTableTitle);
+		if (tableTitle != null) {
+			materialTable.getTableTitle().setText(tableTitle);
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setVisibleRowCount(int nCount) {
-		aMaterialTable.setVisibleRange(0, nCount);
+	public void setVisibleRowCount(int count) {
+		materialTable.setVisibleRange(0, count);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected void initWidget(Widget rWidget) {
-		super.initWidget(rWidget);
+	protected void initWidget(Widget widget) {
+		super.initWidget(widget);
 
 		setTableTitle(null);
 
-		aMaterialTable.setSelectionType(SelectionType.SINGLE);
-		aMaterialTable.addColumnSortHandler(
+		materialTable.setSelectionType(SelectionType.SINGLE);
+		materialTable.addColumnSortHandler(
 			e -> handleColumnSort(e.getSortContext()));
 	}
 
 	/**
 	 * Handles the sorting by a certain column.
 	 *
-	 * @param rSortContext The material sort context
+	 * @param sortContext The material sort context
 	 */
-	private void handleColumnSort(SortContext<DataModel<?>> rSortContext) {
-		if (rDataModel instanceof SortableDataModel) {
-			SortableDataModel<DataModel<?>> rSortableModel =
-				(SortableDataModel<DataModel<?>>) rDataModel;
+	private void handleColumnSort(SortContext<DataModel<?>> sortContext) {
+		if (dataModel instanceof SortableDataModel) {
+			SortableDataModel<DataModel<?>> sortableModel =
+				(SortableDataModel<DataModel<?>>) dataModel;
 
-			TableColumn<?> rSortColumn =
-				(TableColumn<?>) rSortContext.getSortColumn();
+			TableColumn<?> sortColumn =
+				(TableColumn<?>) sortContext.getSortColumn();
 
-			rSortableModel.removeSorting();
-			rSortableModel.setSortDirection(
-				rSortColumn.getColumnDefinition().getId(),
-				rSortContext.getSortDir() == SortDir.ASC ?
+			sortableModel.removeSorting();
+			sortableModel.setSortDirection(
+				sortColumn.getColumnDefinition().getId(),
+				sortContext.getSortDir() == SortDir.ASC ?
 				SortDirection.ASCENDING :
 				SortDirection.DESCENDING);
 
-			aMaterialTable.update();
+			materialTable.update();
 		}
 	}
 
@@ -397,51 +334,51 @@ public class GewtMaterialTable extends Composite
 	public static class DataModelDataSource
 		implements DataSource<DataModel<?>> {
 
-		private DataModel<DataModel<?>> rDataModel;
+		private DataModel<DataModel<?>> dataModel;
 
 		/**
 		 * Creates a new instance.
 		 *
-		 * @param rDataModel The underlying data model
+		 * @param dataModel The underlying data model
 		 */
 		@SuppressWarnings("unchecked")
-		public DataModelDataSource(DataModel<DataModel<?>> rDataModel) {
-			this.rDataModel = rDataModel;
+		public DataModelDataSource(DataModel<DataModel<?>> dataModel) {
+			this.dataModel = dataModel;
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void load(LoadConfig<DataModel<?>> rLoadConfig,
-			LoadCallback<DataModel<?>> rLoadCallback) {
-			if (rDataModel instanceof RemoteDataModel) {
+		public void load(LoadConfig<DataModel<?>> loadConfig,
+			LoadCallback<DataModel<?>> loadCallback) {
+			if (dataModel instanceof RemoteDataModel) {
 				@SuppressWarnings("unchecked")
-				RemoteDataModel<DataModel<?>> rRemoteModel =
-					(RemoteDataModel<DataModel<?>>) rDataModel;
+				RemoteDataModel<DataModel<?>> remoteModel =
+					(RemoteDataModel<DataModel<?>>) dataModel;
 
-				rRemoteModel.setWindow(rLoadConfig.getOffset(),
-					rLoadConfig.getLimit(),
+				remoteModel.setWindow(loadConfig.getOffset(),
+					loadConfig.getLimit(),
 					new Callback<RemoteDataModel<DataModel<?>>>() {
 						@Override
-						public void onError(Throwable eError) {
-							rLoadCallback.onFailure(eError);
+						public void onError(Throwable error) {
+							loadCallback.onFailure(error);
 						}
 
 						@Override
 						public void onSuccess(
-							RemoteDataModel<DataModel<?>> rRemoteModel) {
-							LoadResult<DataModel<?>> aResult =
-								createLoadResult(rLoadConfig, rRemoteModel);
+							RemoteDataModel<DataModel<?>> remoteModel) {
+							LoadResult<DataModel<?>> result =
+								createLoadResult(loadConfig, remoteModel);
 
-							rLoadCallback.onSuccess(aResult);
+							loadCallback.onSuccess(result);
 						}
 					});
 			} else {
-				LoadResult<DataModel<?>> aResult =
-					createLoadResult(rLoadConfig, rDataModel);
+				LoadResult<DataModel<?>> result =
+					createLoadResult(loadConfig, dataModel);
 
-				rLoadCallback.onSuccess(aResult);
+				loadCallback.onSuccess(result);
 			}
 		}
 
@@ -450,32 +387,32 @@ public class GewtMaterialTable extends Composite
 		 */
 		@Override
 		public boolean useRemoteSort() {
-			return rDataModel instanceof SortableDataModel;
+			return dataModel instanceof SortableDataModel;
 		}
 
 		/**
 		 * Creates the load result for the display of certain table data.
 		 *
-		 * @param rLoadConfig The load configuration
-		 * @param rModel      The model to read the data from
+		 * @param loadConfig The load configuration
+		 * @param model      The model to read the data from
 		 * @return The load result
 		 */
 		LoadResult<DataModel<?>> createLoadResult(
-			LoadConfig<DataModel<?>> rLoadConfig,
-			DataModel<DataModel<?>> rModel) {
-			int nOffset = rLoadConfig.getOffset();
-			int nLimit =
-				Math.min(rLoadConfig.getLimit(), rModel.getElementCount());
+			LoadConfig<DataModel<?>> loadConfig,
+			DataModel<DataModel<?>> model) {
+			int offset = loadConfig.getOffset();
+			int limit =
+				Math.min(loadConfig.getLimit(), model.getElementCount());
 
-			List<DataModel<?>> rData = new ArrayList<>(nLimit);
+			List<DataModel<?>> data = new ArrayList<>(limit);
 
-			nLimit += nOffset;
+			limit += offset;
 
-			for (int i = nOffset; i < nLimit; i++) {
-				rData.add(rModel.getElement(i));
+			for (int i = offset; i < limit; i++) {
+				data.add(model.getElement(i));
 			}
 
-			return new LoadResult<>(rData, nOffset, rModel.getElementCount());
+			return new LoadResult<>(data, offset, model.getElementCount());
 		}
 	}
 
@@ -532,24 +469,24 @@ public class GewtMaterialTable extends Composite
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setLoaderBuffer(int nLoaderBuffer) {
-			((InfiniteDataView<T>) view).setLoaderBuffer(nLoaderBuffer);
+		public void setLoaderBuffer(int loaderBuffer) {
+			((InfiniteDataView<T>) view).setLoaderBuffer(loaderBuffer);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setLoaderDelay(int nLoaderDelay) {
-			((InfiniteDataView<T>) view).setLoaderDelay(nLoaderDelay);
+		public void setLoaderDelay(int loaderDelay) {
+			((InfiniteDataView<T>) view).setLoaderDelay(loaderDelay);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void updateDataSource(DataSource<T> rDataSource) {
-			super.updateDataSource(rDataSource);
+		public void updateDataSource(DataSource<T> dataSource) {
+			super.updateDataSource(dataSource);
 		}
 	}
 
@@ -569,10 +506,10 @@ public class GewtMaterialTable extends Composite
 		/**
 		 * Creates a new instance with a specific data view.
 		 *
-		 * @param rDataView The data view
+		 * @param dataView The data view
 		 */
-		public GewtMaterialDataTable(DataView<T> rDataView) {
-			super(rDataView);
+		public GewtMaterialDataTable(DataView<T> dataView) {
+			super(dataView);
 		}
 
 		/**
@@ -581,41 +518,41 @@ public class GewtMaterialTable extends Composite
 		 * @return The selection
 		 */
 		public T getSelection() {
-			T rSelection = null;
+			T selection = null;
 
 			if (getSelectionType() == SelectionType.NONE) {
-				Element[] aRowElements = getScaffolding()
+				Element[] rowElements = getScaffolding()
 					.getTable()
 					.getJsElement()
 					.find("tr.data-row")
 					.toArray();
 
-				for (Element rRowElement : aRowElements) {
-					if (JQuery.$(rRowElement).hasClass("selected")) {
-						rSelection = getModelByRowElement(rRowElement);
+				for (Element rowElement : rowElements) {
+					if (JQuery.$(rowElement).hasClass("selected")) {
+						selection = getModelByRowElement(rowElement);
 
 						break;
 					}
 				}
 			} else {
-				List<T> rSelectedRows = getSelectedRowModels(false);
+				List<T> selectedRows = getSelectedRowModels(false);
 
-				rSelection =
-					rSelectedRows.isEmpty() ? null : rSelectedRows.get(0);
+				selection = selectedRows.isEmpty() ? null :
+				            selectedRows.get(0);
 			}
 
-			return rSelection;
+			return selection;
 		}
 
 		/**
 		 * Updates this table by refreshing the view.
 		 */
 		public void update() {
-			DataView<T> rView = getView();
+			DataView<T> view = getView();
 
-			if (rView.isSetup()) {
-				rView.setRedraw(true);
-				rView.refresh();
+			if (view.isSetup()) {
+				view.setRedraw(true);
+				view.refresh();
 			}
 		}
 
@@ -623,24 +560,24 @@ public class GewtMaterialTable extends Composite
 		 * Must be implemented by subclasses to update the source for table
 		 * data.
 		 *
-		 * @param rDataSource The new data source
+		 * @param dataSource The new data source
 		 */
-		public void updateDataSource(DataSource<T> rDataSource) {
-			setDataSource(rDataSource);
+		public void updateDataSource(DataSource<T> dataSource) {
+			setDataSource(dataSource);
 		}
 
 		/**
 		 * Copied from {@link AbstractDataView} to find the selection when the
 		 * {@link SelectionType} is NONE.
 		 *
-		 * @param rRowElement The row element
+		 * @param rowElement The row element
 		 * @return The data model of the row or NULL for none
 		 */
-		T getModelByRowElement(Element rRowElement) {
-			for (RowComponent<T> rRow : getView().getRows()) {
-				if (rRow.isRendered() &&
-					rRow.getWidget().getElement().equals(rRowElement)) {
-					return rRow.getData();
+		T getModelByRowElement(Element rowElement) {
+			for (RowComponent<T> row : getView().getRows()) {
+				if (row.isRendered() &&
+					row.getWidget().getElement().equals(rowElement)) {
+					return row.getData();
 				}
 			}
 
@@ -656,7 +593,7 @@ public class GewtMaterialTable extends Composite
 	static class GewtMaterialPagingDataTable<T>
 		extends GewtMaterialDataTable<T> {
 
-		private MaterialDataPager<T> aPager = null;
+		private MaterialDataPager<T> pager = null;
 
 		/**
 		 * Creates a new instance.
@@ -668,16 +605,16 @@ public class GewtMaterialTable extends Composite
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void updateDataSource(DataSource<T> rDataSource) {
-			super.updateDataSource(rDataSource);
+		public void updateDataSource(DataSource<T> dataSource) {
+			super.updateDataSource(dataSource);
 
-			if (aPager == null) {
-				aPager = new MaterialDataPager<>(this, rDataSource);
+			if (pager == null) {
+				pager = new MaterialDataPager<>(this, dataSource);
 
-				aPager.setLimitOptions(5, 10, 20, 25, 50);
-				add(aPager);
+				pager.setLimitOptions(5, 10, 20, 25, 50);
+				add(pager);
 			} else {
-				aPager.setDataSource(rDataSource);
+				pager.setDataSource(dataSource);
 			}
 		}
 	}
@@ -689,31 +626,31 @@ public class GewtMaterialTable extends Composite
 	 */
 	abstract class TableColumn<C> extends Column<DataModel<?>, C> {
 
-		private ColumnDefinition rColumnDef;
+		private ColumnDefinition columnDef;
 
 		/**
 		 * Creates a new instance.
 		 *
-		 * @param rColumnDef The column definition
-		 * @param rCell      The cell for rendering values
-		 * @param nIndex     The column index
+		 * @param columnDef The column definition
+		 * @param cell      The cell for rendering values
+		 * @param index     The column index
 		 */
-		public TableColumn(ColumnDefinition rColumnDef, Cell<C> rCell,
-			int nIndex) {
-			super(rCell);
+		public TableColumn(ColumnDefinition columnDef, Cell<C> cell,
+			int index) {
+			super(cell);
 
-			this.rColumnDef = rColumnDef;
+			this.columnDef = columnDef;
 
-			SortDirection eSortDirection =
-				rColumnDef.getProperty(SORT_DIRECTION, null);
+			SortDirection sortDirection =
+				columnDef.getProperty(SORT_DIRECTION, null);
 
-			if (eSortDirection != null) {
+			if (sortDirection != null) {
 				autoSort(true);
-				defaultSortAscending(eSortDirection == SortDirection.ASCENDING);
+				defaultSortAscending(sortDirection == SortDirection.ASCENDING);
 			}
 
-			sortable(rColumnDef.hasFlag(StyleProperties.SORTABLE));
-			name(rContext.expandResource(rColumnDef.getTitle()));
+			sortable(columnDef.hasFlag(StyleProperties.SORTABLE));
+			name(context.expandResource(columnDef.getTitle()));
 		}
 
 		/**
@@ -722,17 +659,17 @@ public class GewtMaterialTable extends Composite
 		 * @return The columnDef value
 		 */
 		public final ColumnDefinition getColumnDefinition() {
-			return rColumnDef;
+			return columnDef;
 		}
 
 		/**
 		 * Returns the raw (unparsed) object value from a row data model.
 		 *
-		 * @param rRowData The row data model
+		 * @param rowData The row data model
 		 * @return The raw value
 		 */
-		protected final Object getRawValue(DataModel<?> rRowData) {
-			return rRowData.getElement(getIndex());
+		protected final Object getRawValue(DataModel<?> rowData) {
+			return rowData.getElement(getIndex());
 		}
 	}
 
@@ -746,27 +683,27 @@ public class GewtMaterialTable extends Composite
 		/**
 		 * Creates a new instance.
 		 *
-		 * @param rColumnDefinition The column definition
-		 * @param nIndex            The column index
+		 * @param columnDefinition The column definition
+		 * @param index            The column index
 		 */
-		public DateColumn(ColumnDefinition rColumnDefinition, int nIndex) {
-			super(rColumnDefinition,
-				new DateCell(getDateTimeFormat(rColumnDefinition)), nIndex);
+		public DateColumn(ColumnDefinition columnDefinition, int index) {
+			super(columnDefinition,
+				new DateCell(getDateTimeFormat(columnDefinition)), index);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Date getValue(DataModel<?> rRowData) {
-			Object rRawValue = getRawValue(rRowData);
-			Date aDate = null;
+		public Date getValue(DataModel<?> rowData) {
+			Object rawValue = getRawValue(rowData);
+			Date date = null;
 
-			if (rRawValue != null) {
-				aDate = new Date(Long.parseLong(rRawValue.toString()));
+			if (rawValue != null) {
+				date = new Date(Long.parseLong(rawValue.toString()));
 			}
 
-			return aDate;
+			return date;
 		}
 	}
 
@@ -780,22 +717,22 @@ public class GewtMaterialTable extends Composite
 		/**
 		 * Creates a new instance.
 		 *
-		 * @param rColumnDefinition The column definition
-		 * @param nIndex            The column index
+		 * @param columnDefinition The column definition
+		 * @param index            The column index
 		 */
-		public TextColumn(ColumnDefinition rColumnDefinition, int nIndex) {
-			super(rColumnDefinition, new TextCell(), nIndex);
+		public TextColumn(ColumnDefinition columnDefinition, int index) {
+			super(columnDefinition, new TextCell(), index);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String getValue(DataModel<?> rRowData) {
-			Object rRawValue = getRawValue(rRowData);
+		public String getValue(DataModel<?> rowData) {
+			Object rawValue = getRawValue(rowData);
 
-			return rRawValue != null ?
-			       rContext.expandResource(rRawValue.toString()) :
+			return rawValue != null ?
+			       context.expandResource(rawValue.toString()) :
 			       null;
 		}
 	}

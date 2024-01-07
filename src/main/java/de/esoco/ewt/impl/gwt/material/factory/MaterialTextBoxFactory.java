@@ -16,16 +16,14 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.InputType;
-import gwt.material.design.client.ui.MaterialButton;
-
 import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialSearch;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTextBox;
 import de.esoco.ewt.style.StyleData;
-
 import de.esoco.lib.property.TextFieldStyle;
+import gwt.material.design.client.constants.InputType;
+import gwt.material.design.client.ui.MaterialButton;
 
 import static de.esoco.lib.property.StyleProperties.TEXT_FIELD_STYLE;
 
@@ -37,29 +35,25 @@ import static de.esoco.lib.property.StyleProperties.TEXT_FIELD_STYLE;
 public class MaterialTextBoxFactory
 	extends MaterialWidgetFactory<IsTextControlWidget> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public IsTextControlWidget createMaterialWidget(Component rComponent,
-		StyleData rStyle) {
-		IsTextControlWidget aTextWidget;
+	public IsTextControlWidget createMaterialWidget(Component component,
+		StyleData style) {
+		IsTextControlWidget textWidget;
 
-		TextFieldStyle eStyle =
-			rStyle.getProperty(TEXT_FIELD_STYLE, TextFieldStyle.DEFAULT);
+		TextFieldStyle textFieldStyle =
+			style.getProperty(TEXT_FIELD_STYLE, TextFieldStyle.DEFAULT);
 
-		if (eStyle == TextFieldStyle.SEARCH) {
-			aTextWidget = new GewtMaterialSearch();
+		if (textFieldStyle == TextFieldStyle.SEARCH) {
+			textWidget = new GewtMaterialSearch();
 		} else {
-			GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
+			GewtMaterialTextBox textBox = new GewtMaterialTextBox();
 
-			if (eStyle == TextFieldStyle.PASSWORD) {
-				aTextBox.setType(InputType.PASSWORD);
+			if (textFieldStyle == TextFieldStyle.PASSWORD) {
+				textBox.setType(InputType.PASSWORD);
 			}
-
-			aTextWidget = aTextBox;
+			textWidget = textBox;
 		}
 
-		return aTextWidget;
+		return textWidget;
 	}
 }

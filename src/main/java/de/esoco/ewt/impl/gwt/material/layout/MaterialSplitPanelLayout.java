@@ -41,67 +41,61 @@ import static de.esoco.lib.property.StyleProperties.SPLITTER_SIZE;
  */
 public class MaterialSplitPanelLayout extends SplitPanelLayout {
 
-	private MaterialSplitPanel aSplitPanel;
+	private MaterialSplitPanel splitPanel;
 
-	private MaterialPanel aFirst;
+	private MaterialPanel first;
 
-	private MaterialPanel aSecond;
+	private MaterialPanel second;
 
-	private int nAdded = 0;
+	private int added = 0;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addWidget(HasWidgets rContainer, Widget rWidget,
-		StyleData rStyle) {
-		Alignment eVerticalAlign = rStyle.getVerticalAlignment();
+	public void addWidget(HasWidgets container, Widget widget,
+		StyleData style) {
+		Alignment verticalAlign = style.getVerticalAlignment();
 
-		if (nAdded == 0) {
-			aFirst.add(rWidget);
-		} else if (nAdded == 1) {
-			aSecond.add(rWidget);
+		if (added == 0) {
+			first.add(widget);
+		} else if (added == 1) {
+			second.add(widget);
 		} else {
 			throw new IllegalStateException(
 				"Only two children allowed in split panel");
 		}
 
-		nAdded++;
+		added++;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public HasWidgets createLayoutContainer(Container rContainer,
-		StyleData rStyle) {
-		aSplitPanel = new MaterialSplitPanel();
+	public HasWidgets createLayoutContainer(Container container,
+		StyleData style) {
+		splitPanel = new MaterialSplitPanel();
 
-		boolean bVertical =
-			rStyle.getProperty(ORIENTATION, null) == Orientation.VERTICAL;
+		boolean vertical =
+			style.getProperty(ORIENTATION, null) == Orientation.VERTICAL;
 
-		int nThickness = rStyle.getIntProperty(SPLITTER_SIZE, -1);
+		int thickness = style.getIntProperty(SPLITTER_SIZE, -1);
 
-		aSplitPanel.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
+		splitPanel.setAxis(vertical ? Axis.VERTICAL : Axis.HORIZONTAL);
 
-		if (nThickness > 0) {
-			aSplitPanel.setThickness(nThickness);
+		if (thickness > 0) {
+			splitPanel.setThickness(thickness);
 		}
 
-		aFirst = new MaterialPanel();
-		aSecond = new MaterialPanel();
+		first = new MaterialPanel();
+		second = new MaterialPanel();
 
-		aSplitPanel.add(aFirst);
-		aSplitPanel.add(aSecond);
+		splitPanel.add(first);
+		splitPanel.add(second);
 
-		if (bVertical) {
-			aFirst.setWidth("100%");
-			aSecond.setWidth("100%");
+		if (vertical) {
+			first.setWidth("100%");
+			second.setWidth("100%");
 		} else {
-			aFirst.setHeight("100%");
-			aSecond.setHeight("100%");
+			first.setHeight("100%");
+			second.setHeight("100%");
 		}
 
-		return aSplitPanel;
+		return splitPanel;
 	}
 }

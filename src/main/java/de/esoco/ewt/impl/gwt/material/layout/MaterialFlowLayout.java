@@ -16,6 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import com.google.gwt.layout.client.Layout;
 import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialPanel;
 
@@ -29,12 +30,9 @@ import de.esoco.ewt.style.StyleData;
  */
 final class MaterialFlowLayout extends AbstractMaterialLayout {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
-		StyleData rContainerStyle) {
+	protected MaterialWidget creatMaterialLayoutContainer(Container container,
+		StyleData containerStyle) {
 		return new MaterialPanel();
 	}
 }

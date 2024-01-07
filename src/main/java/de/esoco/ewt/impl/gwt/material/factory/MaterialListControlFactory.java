@@ -30,12 +30,9 @@ import de.esoco.ewt.style.StyleData;
 public class MaterialListControlFactory
 	extends MaterialWidgetFactory<IsListControlWidget> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public IsListControlWidget createMaterialWidget(Component rComponent,
-		StyleData rStyle) {
+	public IsListControlWidget createMaterialWidget(Component component,
+		StyleData style) {
 		return new GewtMaterialListBox();
 	}
 
@@ -59,16 +56,16 @@ public class MaterialListControlFactory
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void addItem(String rValue) {
-			super.addItem(rValue, false);
+		public void addItem(String value) {
+			super.addItem(value, false);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setTitle(String sText) {
-			super.setTitle(sText);
+		public void setTitle(String text) {
+			super.setTitle(text);
 		}
 	}
 }

@@ -31,22 +31,16 @@ import com.google.gwt.user.client.ui.HasText;
 public class GewtMaterialButton extends MaterialButton
 	implements HasText, ImageAttribute {
 
-	private ImageAttributeMixin<GewtMaterialButton> aImageAttrMixin =
+	private ImageAttributeMixin<GewtMaterialButton> imageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return aImageAttrMixin.getImage();
+		return imageAttrMixin.getImage();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		aImageAttrMixin.setImage(rImage);
+	public void setImage(Image image) {
+		imageAttrMixin.setImage(image);
 	}
 }

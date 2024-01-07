@@ -31,22 +31,16 @@ import com.google.gwt.user.client.ui.HasText;
 public class GewtMaterialLink extends MaterialLink
 	implements HasText, ImageAttribute {
 
-	private ImageAttributeMixin<GewtMaterialLink> aImageAttrMixin =
+	private ImageAttributeMixin<GewtMaterialLink> imageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return aImageAttrMixin.getImage();
+		return imageAttrMixin.getImage();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		aImageAttrMixin.setImage(rImage);
+	public void setImage(Image image) {
+		imageAttrMixin.setImage(image);
 	}
 }

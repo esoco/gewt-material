@@ -32,23 +32,20 @@ import com.google.gwt.user.client.ui.IsWidget;
 public abstract class MaterialWidgetFactory<W extends IsWidget>
 	implements WidgetFactory<W> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public final W createWidget(Component rComponent, StyleData rStyle) {
-		return createMaterialWidget(rComponent, rStyle);
+	public final W createWidget(Component component, StyleData style) {
+		return createMaterialWidget(component, style);
 	}
 
 	/**
 	 * Must be implemented by subclasses to create the {@link MaterialWidget}
 	 * for the given component.
 	 *
-	 * @param rComponent The component to create the widget for
-	 * @param rStyle     The style of the new widget
+	 * @param component The component to create the widget for
+	 * @param style     The style of the new widget
 	 * @return The new material widget instance
 	 */
-	protected abstract W createMaterialWidget(Component rComponent,
-		StyleData rStyle);
+	protected abstract W createMaterialWidget(Component component,
+		StyleData style);
 }

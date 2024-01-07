@@ -33,30 +33,21 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class GewtMaterialCardTitle extends MaterialCardTitle
 	implements ImageAttribute {
 
-	private ImageAttributeMixin<GewtMaterialCardTitle> aImageAttrMixin =
+	private ImageAttributeMixin<GewtMaterialCardTitle> imageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public HandlerRegistration addClickHandler(ClickHandler rHandler) {
-		return getIcon().addClickHandler(rHandler);
+	public HandlerRegistration addClickHandler(ClickHandler handler) {
+		return getIcon().addClickHandler(handler);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return aImageAttrMixin.getImage();
+		return imageAttrMixin.getImage();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		aImageAttrMixin.setImage(rImage);
+	public void setImage(Image image) {
+		imageAttrMixin.setImage(image);
 	}
 }

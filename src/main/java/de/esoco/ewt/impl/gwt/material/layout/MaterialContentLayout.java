@@ -61,217 +61,214 @@ public class MaterialContentLayout extends AbstractMaterialLayout {
 		GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MENU, DIALOG
 	}
 
-	private LayoutType eLayout;
+	private LayoutType layout;
 
 	/**
 	 * Creates a new instance.
 	 *
-	 * @param eLayout The layout of the content
+	 * @param layout The layout of the content
 	 */
-	public MaterialContentLayout(LayoutType eLayout) {
-		this.eLayout = eLayout;
+	public MaterialContentLayout(LayoutType layout) {
+		this.layout = layout;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
-		StyleData rContainerStyle) {
-		Widget rParentWidget = rContainer.getParent().getWidget();
-		MaterialWidget aLayoutWidget = null;
-		ContentArea eContentArea;
+	protected MaterialWidget creatMaterialLayoutContainer(Container container,
+		StyleData containerStyle) {
+		Widget parentWidget = container.getParent().getWidget();
+		MaterialWidget layoutWidget = null;
+		ContentArea contentArea;
 
-		eContentArea = getContentArea(rParentWidget);
+		contentArea = getContentArea(parentWidget);
 
-		switch (eContentArea) {
+		switch (contentArea) {
 			case CARD:
-				aLayoutWidget = createCardContentContainer(eLayout);
+				layoutWidget = createCardContentContainer(layout);
 				break;
 
 			case COLLAPSIBLE:
-				aLayoutWidget = createCollapsibleContentContainer(eLayout);
+				layoutWidget = createCollapsibleContentContainer(layout);
 				break;
 
 			case COLLECTION:
-				aLayoutWidget = createCollectionContentContainer(eLayout);
+				layoutWidget = createCollectionContentContainer(layout);
 				break;
 
 			case DIALOG:
-				aLayoutWidget = createModalContentContainer(eLayout);
+				layoutWidget = createModalContentContainer(layout);
 				break;
 
 			case MENU:
-				aLayoutWidget = createMenuContentContainer(eLayout);
+				layoutWidget = createMenuContentContainer(layout);
 				break;
 
 			case GLOBAL:
-				aLayoutWidget = createGlobalContentContainer(eLayout);
+				layoutWidget = createGlobalContentContainer(layout);
 				break;
 		}
 
-		if (aLayoutWidget == null) {
+		if (layoutWidget == null) {
 			throw new IllegalArgumentException(
-				"Unsupported content layout " + eLayout + " for " +
-					rParentWidget.getClass().getSimpleName());
+				"Unsupported content layout " + layout + " for " +
+					parentWidget.getClass().getSimpleName());
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
 	 * Creates the content layout widgets for a {@link MaterialCard} container.
 	 *
-	 * @param eLayout The content layout type
+	 * @param layout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCardContentContainer(LayoutType eLayout) {
-		MaterialWidget aLayoutWidget;
+	MaterialWidget createCardContentContainer(LayoutType layout) {
+		MaterialWidget layoutWidget;
 
-		switch (eLayout) {
+		switch (layout) {
 			case CONTENT:
-				aLayoutWidget = new MaterialCardContent();
+				layoutWidget = new MaterialCardContent();
 				break;
 
 			case SECONDARY_CONTENT:
-				aLayoutWidget = new MaterialCardReveal();
+				layoutWidget = new MaterialCardReveal();
 				break;
 
 			case FOOTER:
-				aLayoutWidget = new MaterialCardAction();
+				layoutWidget = new MaterialCardAction();
 				break;
 
 			default:
-				aLayoutWidget = null;
+				layoutWidget = null;
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
 	 * Creates the content layout widgets for a {@link MaterialCollapsible}
 	 * container.
 	 *
-	 * @param eLayout The content layout type
+	 * @param layout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCollapsibleContentContainer(LayoutType eLayout) {
-		MaterialWidget aLayoutWidget;
+	MaterialWidget createCollapsibleContentContainer(LayoutType layout) {
+		MaterialWidget layoutWidget;
 
-		switch (eLayout) {
+		switch (layout) {
 			case HEADER:
-				aLayoutWidget = new GewtMaterialCollapsibleHeader();
+				layoutWidget = new GewtMaterialCollapsibleHeader();
 				break;
 
 			case CONTENT:
-				aLayoutWidget = new MaterialCollapsibleBody();
+				layoutWidget = new MaterialCollapsibleBody();
 				break;
 
 			default:
-				aLayoutWidget = null;
+				layoutWidget = null;
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
 	 * Creates the content layout widgets for a {@link MaterialCollapsible}
 	 * container.
 	 *
-	 * @param eLayout The content layout type
+	 * @param layout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCollectionContentContainer(LayoutType eLayout) {
-		MaterialWidget aLayoutWidget;
+	MaterialWidget createCollectionContentContainer(LayoutType layout) {
+		MaterialWidget layoutWidget;
 
-		switch (eLayout) {
+		switch (layout) {
 			case SECONDARY_CONTENT:
-				aLayoutWidget = new MaterialCollectionSecondary();
+				layoutWidget = new MaterialCollectionSecondary();
 				break;
 
 			default:
-				aLayoutWidget = null;
+				layoutWidget = null;
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
 	 * Creates the global content layout widgets.
 	 *
-	 * @param eLayout The content layout type
+	 * @param layout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createGlobalContentContainer(LayoutType eLayout) {
-		MaterialWidget aLayoutWidget;
+	MaterialWidget createGlobalContentContainer(LayoutType layout) {
+		MaterialWidget layoutWidget;
 
-		switch (eLayout) {
+		switch (layout) {
 			case HEADER:
-				aLayoutWidget = new MaterialHeader();
+				layoutWidget = new MaterialHeader();
 				break;
 
 			case CONTENT:
-				aLayoutWidget = new MaterialContainer();
+				layoutWidget = new MaterialContainer();
 				break;
 
 			case FOOTER:
-				aLayoutWidget = new MaterialFooter();
+				layoutWidget = new MaterialFooter();
 				break;
 
 			default:
-				aLayoutWidget = null;
+				layoutWidget = null;
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
 	 * Creates the content layout widgets for a {@link MaterialHeader}
 	 * container.
 	 *
-	 * @param eLayout The content layout type
+	 * @param layout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createMenuContentContainer(LayoutType eLayout) {
-		MaterialWidget aLayoutWidget;
+	MaterialWidget createMenuContentContainer(LayoutType layout) {
+		MaterialWidget layoutWidget;
 
-		switch (eLayout) {
+		switch (layout) {
 			case SECONDARY_CONTENT:
-				aLayoutWidget = new MaterialNavSection();
-				aLayoutWidget.setHideOn(HideOn.NONE);
+				layoutWidget = new MaterialNavSection();
+				layoutWidget.setHideOn(HideOn.NONE);
 				break;
 
 			default:
-				aLayoutWidget = null;
+				layoutWidget = null;
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
 	 * Creates the content layout widgets for a {@link MaterialModal}
 	 * container.
 	 *
-	 * @param eLayout The content layout type
+	 * @param layout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createModalContentContainer(LayoutType eLayout) {
-		MaterialWidget aLayoutWidget;
+	MaterialWidget createModalContentContainer(LayoutType layout) {
+		MaterialWidget layoutWidget;
 
-		switch (eLayout) {
+		switch (layout) {
 			case CONTENT:
-				aLayoutWidget = new MaterialDialogContent();
+				layoutWidget = new MaterialDialogContent();
 				break;
 
 			case FOOTER:
-				aLayoutWidget = new MaterialDialogFooter();
+				layoutWidget = new MaterialDialogFooter();
 				break;
 
 			default:
-				aLayoutWidget = null;
+				layoutWidget = null;
 		}
 
-		return aLayoutWidget;
+		return layoutWidget;
 	}
 
 	/**
@@ -279,25 +276,25 @@ public class MaterialContentLayout extends AbstractMaterialLayout {
 	 *
 	 * @return The content area for this widget
 	 */
-	private ContentArea getContentArea(Widget rParent) {
-		ContentArea eContentArea;
+	private ContentArea getContentArea(Widget parent) {
+		ContentArea contentArea;
 
-		if (rParent instanceof MaterialCollapsibleItem) {
-			eContentArea = ContentArea.COLLAPSIBLE;
-		} else if (rParent instanceof MaterialCollectionItem) {
-			eContentArea = ContentArea.COLLECTION;
-		} else if (rParent instanceof MaterialCard) {
-			eContentArea = ContentArea.CARD;
-		} else if (rParent instanceof MaterialDialog) {
-			eContentArea = ContentArea.DIALOG;
-		} else if (rParent instanceof MaterialNavBar ||
-			rParent instanceof AbstractSideNav) {
-			eContentArea = ContentArea.MENU;
+		if (parent instanceof MaterialCollapsibleItem) {
+			contentArea = ContentArea.COLLAPSIBLE;
+		} else if (parent instanceof MaterialCollectionItem) {
+			contentArea = ContentArea.COLLECTION;
+		} else if (parent instanceof MaterialCard) {
+			contentArea = ContentArea.CARD;
+		} else if (parent instanceof MaterialDialog) {
+			contentArea = ContentArea.DIALOG;
+		} else if (parent instanceof MaterialNavBar ||
+			parent instanceof AbstractSideNav) {
+			contentArea = ContentArea.MENU;
 		} else {
-			eContentArea = ContentArea.GLOBAL;
+			contentArea = ContentArea.GLOBAL;
 		}
 
-		return eContentArea;
+		return contentArea;
 	}
 
 	/**
@@ -317,10 +314,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout {
 		/**
 		 * Creates a new instance.
 		 *
-		 * @param rWidgets The header widgets
+		 * @param widgets The header widgets
 		 */
-		public GewtMaterialCollapsibleHeader(Widget... rWidgets) {
-			super(rWidgets);
+		public GewtMaterialCollapsibleHeader(Widget... widgets) {
+			super(widgets);
 		}
 
 		/**
@@ -335,10 +332,10 @@ public class MaterialContentLayout extends AbstractMaterialLayout {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setActive(boolean bActive) {
-			MaterialCollapsible rParent = (MaterialCollapsible) getParent();
+		public void setActive(boolean active) {
+			MaterialCollapsible parent = (MaterialCollapsible) getParent();
 
-			rParent.setActive(rParent.getWidgetIndex(this) + 1);
+			parent.setActive(parent.getWidgetIndex(this) + 1);
 		}
 	}
 }

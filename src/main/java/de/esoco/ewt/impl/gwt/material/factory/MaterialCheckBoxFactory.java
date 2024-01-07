@@ -16,21 +16,18 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.CheckBoxType;
-import gwt.material.design.client.ui.MaterialCheckBox;
-import gwt.material.design.client.ui.MaterialSwitch;
-
-import de.esoco.ewt.component.Component;
-import de.esoco.ewt.impl.gwt.HasEventHandlingDelay;
-import de.esoco.ewt.style.StyleData;
-
-import de.esoco.lib.property.CheckBoxStyle;
-
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
+import de.esoco.ewt.component.Component;
+import de.esoco.ewt.impl.gwt.HasEventHandlingDelay;
+import de.esoco.ewt.style.StyleData;
+import de.esoco.lib.property.CheckBoxStyle;
+import gwt.material.design.client.constants.CheckBoxType;
+import gwt.material.design.client.ui.MaterialCheckBox;
+import gwt.material.design.client.ui.MaterialSwitch;
 
 import static de.esoco.lib.property.StyleProperties.CHECK_BOX_STYLE;
 
@@ -42,28 +39,24 @@ import static de.esoco.lib.property.StyleProperties.CHECK_BOX_STYLE;
 public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & HasValue<Boolean>>
 	extends MaterialWidgetFactory<W> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public W createMaterialWidget(Component rComponent, StyleData rStyle) {
-		CheckBoxStyle eStyle = rStyle.getProperty(CHECK_BOX_STYLE, null);
-		Widget aWidget;
+	public W createMaterialWidget(Component component, StyleData style) {
+		CheckBoxStyle checkBoxStyle = style.getProperty(CHECK_BOX_STYLE, null);
+		Widget widget;
 
-		if (eStyle == CheckBoxStyle.SWITCH) {
-			aWidget = new GewtMaterialSwitch();
+		if (checkBoxStyle == CheckBoxStyle.SWITCH) {
+			widget = new GewtMaterialSwitch();
 		} else {
-			MaterialCheckBox aCheckBox = new GewtMaterialCheckBox();
+			MaterialCheckBox checkBox = new GewtMaterialCheckBox();
 
-			if (eStyle == CheckBoxStyle.SOLID) {
-				aCheckBox.setType(CheckBoxType.FILLED);
+			if (checkBoxStyle == CheckBoxStyle.SOLID) {
+				checkBox.setType(CheckBoxType.FILLED);
 			}
-
-			aWidget = aCheckBox;
+			widget = checkBox;
 		}
 
-		return (W) aWidget;
+		return (W) widget;
 	}
 
 	/**
@@ -75,9 +68,6 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 	public static class GewtMaterialCheckBox extends MaterialCheckBox
 		implements HasEventHandlingDelay {
 
-		/**
-		 * {@inheritDoc}
-		 */
 		@Override
 		public int getEventHandlingDelay() {
 			return 100;
@@ -91,10 +81,10 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 	 *
 	 * @author eso
 	 */
-	public class GewtMaterialSwitch extends MaterialSwitch
+	public static class GewtMaterialSwitch extends MaterialSwitch
 		implements HasText, HasEventHandlingDelay {
 
-		private String sText;
+		private String text;
 
 		/**
 		 * Creates a new instance.
@@ -115,16 +105,16 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 		 */
 		@Override
 		public String getText() {
-			return sText;
+			return text;
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setText(String sText) {
-			super.setOnLabel(sText);
-			this.sText = sText;
+		public void setText(String text) {
+			super.setOnLabel(text);
+			this.text = text;
 		}
 	}
 }

@@ -30,12 +30,9 @@ import de.esoco.ewt.style.StyleData;
 public class MaterialTextAreaFactory
 	extends MaterialWidgetFactory<GewtMaterialTextArea> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public GewtMaterialTextArea createMaterialWidget(Component rComponent,
-		StyleData rStyle) {
+	public GewtMaterialTextArea createMaterialWidget(Component component,
+		StyleData style) {
 		return new GewtMaterialTextArea();
 	}
 }

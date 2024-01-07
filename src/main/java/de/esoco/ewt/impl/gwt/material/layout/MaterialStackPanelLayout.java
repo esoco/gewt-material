@@ -36,59 +36,44 @@ import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 public class MaterialStackPanelLayout
 	extends MaterialSwitchPanelLayout<MaterialStepper, MaterialStep> {
 
-	private MaterialStepper aStepper;
+	private MaterialStepper stepper;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addPage(Component rStepComponent, String sStepTitle,
-		boolean bCloseable) {
-		MaterialStep aStep = new MaterialStep();
+	public void addPage(Component stepComponent, String stepTitle,
+		boolean closeable) {
+		MaterialStep step = new MaterialStep();
 
-		aStepper.add(aStep);
-		aStep.add(rStepComponent.getWidget());
+		stepper.add(step);
+		step.add(stepComponent.getWidget());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public MaterialStepper createPanelWidget(Container rContainer,
-		StyleData rStyle) {
-		aStepper = new MaterialStepper();
+	public MaterialStepper createPanelWidget(Container container,
+		StyleData style) {
+		stepper = new MaterialStepper();
 
-		aStepper.setAxis(
-			rStyle.getProperty(ORIENTATION, null) == Orientation.VERTICAL ?
+		stepper.setAxis(
+			style.getProperty(ORIENTATION, null) == Orientation.VERTICAL ?
 			Axis.VERTICAL :
 			Axis.HORIZONTAL);
 
-		return aStepper;
+		return stepper;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getSelectionIndex() {
-		return aStepper.getCurrentStepIndex();
+		return stepper.getCurrentStepIndex();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setPageTitle(int nIndex, String sTitle) {
-		MaterialStep rStep = (MaterialStep) aStepper.getWidget(nIndex);
+	public void setPageTitle(int index, String title) {
+		MaterialStep step = (MaterialStep) stepper.getWidget(index);
 
-		rStep.setTitle(sTitle);
+		step.setTitle(title);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setSelection(int nIndex) {
-		aStepper.goToStep(nIndex + 1);
+	public void setSelection(int index) {
+		stepper.goToStep(index + 1);
 	}
 }

@@ -32,49 +32,37 @@ import de.esoco.ewt.property.ImageAttribute;
 public class GewtMaterialTextBox extends MaterialTextBox
 	implements IsTextControlWidget, ImageAttribute {
 
-	private ImageAttributeMixin<GewtMaterialTextBox> aImageAttrMixin =
+	private ImageAttributeMixin<GewtMaterialTextBox> imageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getCursorPos() {
 		return asValueBoxBase().getCursorPos();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return aImageAttrMixin.getImage();
+		return imageAttrMixin.getImage();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		aImageAttrMixin.setImage(rImage);
+	public void setImage(Image image) {
+		imageAttrMixin.setImage(image);
 	}
 
 	/**
 	 * @see MaterialTextBox#setType(InputType)
 	 */
 	@Override
-	public void setType(InputType rType) {
-		super.setType(rType);
+	public void setType(InputType type) {
+		super.setType(type);
 
 		// workaround for https://github.com/GwtMaterialDesign/gwt-material/issues/424
 		asValueBoxBase().removeStyleName("validate");
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setVisibleLength(int nColumns) {
+	public void setVisibleLength(int columns) {
 		// not supported by base class
 	}
 }

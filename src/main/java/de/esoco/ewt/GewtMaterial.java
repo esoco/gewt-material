@@ -16,26 +16,10 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt;
 
-import gwt.material.design.client.base.AbstractButton;
-import gwt.material.design.client.base.HasDurationTransition;
-import gwt.material.design.client.base.HasErrorText;
-import gwt.material.design.client.base.HasFloat;
-import gwt.material.design.client.base.HasHideOn;
-import gwt.material.design.client.base.HasIcon;
-import gwt.material.design.client.base.HasInOutDurationTransition;
-import gwt.material.design.client.base.HasOrientation;
-import gwt.material.design.client.base.HasPlaceholder;
-import gwt.material.design.client.base.HasTextAlign;
-import gwt.material.design.client.base.MaterialWidget;
-import gwt.material.design.client.constants.ButtonSize;
-import gwt.material.design.client.constants.HideOn;
-import gwt.material.design.client.constants.IconPosition;
-import gwt.material.design.client.constants.IconSize;
-import gwt.material.design.client.constants.IconType;
-import gwt.material.design.client.constants.ShowOn;
-import gwt.material.design.client.constants.TextAlign;
-import gwt.material.design.client.constants.WavesType;
-
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Widget;
 import de.esoco.ewt.component.Button;
 import de.esoco.ewt.component.CheckBox;
 import de.esoco.ewt.component.Component;
@@ -59,20 +43,30 @@ import de.esoco.ewt.impl.gwt.material.factory.MaterialTextAreaFactory;
 import de.esoco.ewt.impl.gwt.material.factory.MaterialTextBoxFactory;
 import de.esoco.ewt.impl.gwt.material.layout.MaterialLayoutFactory;
 import de.esoco.ewt.style.StyleData;
-
 import de.esoco.lib.property.Alignment;
 import de.esoco.lib.property.Color;
 import de.esoco.lib.property.LayoutVisibility;
 import de.esoco.lib.property.Orientation;
 import de.esoco.lib.property.RelativeScale;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
-
-import static gwt.material.design.client.constants.Orientation.LANDSCAPE;
-import static gwt.material.design.client.constants.Orientation.PORTRAIT;
+import gwt.material.design.client.base.AbstractButton;
+import gwt.material.design.client.base.HasDurationTransition;
+import gwt.material.design.client.base.HasErrorText;
+import gwt.material.design.client.base.HasFloat;
+import gwt.material.design.client.base.HasHideOn;
+import gwt.material.design.client.base.HasIcon;
+import gwt.material.design.client.base.HasInOutDurationTransition;
+import gwt.material.design.client.base.HasOrientation;
+import gwt.material.design.client.base.HasPlaceholder;
+import gwt.material.design.client.base.HasTextAlign;
+import gwt.material.design.client.base.MaterialWidget;
+import gwt.material.design.client.constants.ButtonSize;
+import gwt.material.design.client.constants.HideOn;
+import gwt.material.design.client.constants.IconPosition;
+import gwt.material.design.client.constants.IconSize;
+import gwt.material.design.client.constants.IconType;
+import gwt.material.design.client.constants.ShowOn;
+import gwt.material.design.client.constants.TextAlign;
+import gwt.material.design.client.constants.WavesType;
 
 import static de.esoco.lib.property.ContentProperties.ICON;
 import static de.esoco.lib.property.ContentProperties.PLACEHOLDER;
@@ -86,6 +80,8 @@ import static de.esoco.lib.property.LayoutProperties.TEXT_ALIGN;
 import static de.esoco.lib.property.StyleProperties.ANIMATION_DURATION;
 import static de.esoco.lib.property.StyleProperties.ICON_COLOR;
 import static de.esoco.lib.property.StyleProperties.ORIENTATION;
+import static gwt.material.design.client.constants.Orientation.LANDSCAPE;
+import static gwt.material.design.client.constants.Orientation.PORTRAIT;
 
 /**
  * The central management and factory class for the GEWT wrapper of the
@@ -95,7 +91,7 @@ import static de.esoco.lib.property.StyleProperties.ORIENTATION;
  */
 public class GewtMaterial {
 
-	private static WavesType aDefaultWavesType = WavesType.LIGHT;
+	private static WavesType defaultWavesType = WavesType.LIGHT;
 
 	/**
 	 * Creates a new instance.
@@ -106,21 +102,21 @@ public class GewtMaterial {
 	/**
 	 * @see Component#applyComponentErrorState(Component, String)
 	 */
-	public static void applyComponentErrorState(Component rComponent,
-		String sMessage) {
-		Widget rWidget = rComponent.getWidget();
+	public static void applyComponentErrorState(Component component,
+		String message) {
+		Widget widget = component.getWidget();
 
-		if (rWidget instanceof HasErrorText) {
-			HasErrorText rHasError = (HasErrorText) rWidget;
+		if (widget instanceof HasErrorText) {
+			HasErrorText hasError = (HasErrorText) widget;
 
-			if (sMessage != null) {
-				rHasError.setErrorText(
-					rComponent.getContext().expandResource(sMessage));
+			if (message != null) {
+				hasError.setErrorText(
+					component.getContext().expandResource(message));
 			} else {
-				rHasError.clearErrorText();
+				hasError.clearErrorText();
 			}
 		} else {
-			Component.applyComponentErrorState(rComponent, sMessage);
+			Component.applyComponentErrorState(component, message);
 		}
 	}
 
@@ -130,57 +126,56 @@ public class GewtMaterial {
 	 * name to a widget. If the type cannot be matched a default will be used
 	 * and a resource error will be logged (with {@link GWT#log(String)}).
 	 *
-	 * @param sIcon    The icon name in upper case
-	 * @param rHasIcon The widget to apply the icon to
+	 * @param icon    The icon name in upper case
+	 * @param hasIcon The widget to apply the icon to
 	 */
-	public static void applyIconType(String sIcon, HasIcon rHasIcon) {
-		IconType eIconType = null;
+	public static void applyIconType(String icon, HasIcon hasIcon) {
+		IconType iconType;
 
 		try {
-			eIconType = IconType.valueOf(sIcon);
+			iconType = IconType.valueOf(icon);
 		} catch (IllegalArgumentException e) {
-			GWT.log("No icon type for " + sIcon);
-			eIconType = IconType.HELP;
+			GWT.log("No icon type for " + icon);
+			iconType = IconType.HELP;
 		}
 
-		rHasIcon.setIconType(eIconType);
+		hasIcon.setIconType(iconType);
 	}
 
 	/**
 	 * Applies any alignment settings from a style data to the given widget.
 	 *
-	 * @param rWidget The material widget with alignment
-	 * @param rStyle  The style to check for alignment
+	 * @param widget The material widget with alignment
+	 * @param style  The style to check for alignment
 	 */
-	public static void checkApplyAlignment(IsWidget rWidget,
-		StyleData rStyle) {
-		if (rWidget instanceof HasTextAlign) {
-			HasTextAlign rHasTextAlign = (HasTextAlign) rWidget;
-			Alignment eAlignment = rStyle.getProperty(TEXT_ALIGN, null);
+	public static void checkApplyAlignment(IsWidget widget, StyleData style) {
+		if (widget instanceof HasTextAlign) {
+			HasTextAlign hasTextAlign = (HasTextAlign) widget;
+			Alignment alignment = style.getProperty(TEXT_ALIGN, null);
 
-			if (eAlignment == null) {
-				eAlignment = rStyle.getProperty(HORIZONTAL_ALIGN, null);
+			if (alignment == null) {
+				alignment = style.getProperty(HORIZONTAL_ALIGN, null);
 			}
 
-			if (eAlignment != null) {
-				TextAlign eTextAlign = TextAlign.DEFAULT;
+			if (alignment != null) {
+				TextAlign textAlign = TextAlign.DEFAULT;
 
-				switch (eAlignment) {
+				switch (alignment) {
 					case BEGIN:
-						eTextAlign = TextAlign.LEFT;
+						textAlign = TextAlign.LEFT;
 						break;
 
 					case FILL:
 					case CENTER:
-						eTextAlign = TextAlign.CENTER;
+						textAlign = TextAlign.CENTER;
 						break;
 
 					case END:
-						eTextAlign = TextAlign.RIGHT;
+						textAlign = TextAlign.RIGHT;
 						break;
 				}
 
-				rHasTextAlign.setTextAlign(eTextAlign);
+				hasTextAlign.setTextAlign(textAlign);
 			}
 		}
 	}
@@ -188,54 +183,54 @@ public class GewtMaterial {
 	/**
 	 * Applies any button scale settings from a style data to the given button.
 	 *
-	 * @param rButton The button widget to apply the size to
-	 * @param rStyle  The style to check for alignment
+	 * @param button The button widget to apply the size to
+	 * @param style  The style to check for alignment
 	 */
-	public static void checkApplyButtonScale(AbstractButton rButton,
-		StyleData rStyle) {
-		RelativeScale eButtonSize = rStyle.getProperty(BUTTON_SIZE, null);
+	public static void checkApplyButtonScale(AbstractButton button,
+		StyleData style) {
+		RelativeScale buttonSize = style.getProperty(BUTTON_SIZE, null);
 
-		if (eButtonSize == RelativeScale.LARGE) {
-			rButton.setSize(ButtonSize.LARGE);
+		if (buttonSize == RelativeScale.LARGE) {
+			button.setSize(ButtonSize.LARGE);
 		}
 	}
 
 	/**
 	 * Applies any icon definition from a style data to the given widget.
 	 *
-	 * @param rWidget The material widget with icon attribute
-	 * @param rStyle  The style to check for icon definitions
+	 * @param widget The material widget with icon attribute
+	 * @param style  The style to check for icon definitions
 	 */
-	public static void checkApplyIcon(IsWidget rWidget, StyleData rStyle) {
-		if (rWidget instanceof HasIcon) {
-			HasIcon rHasIcon = (HasIcon) rWidget;
+	public static void checkApplyIcon(IsWidget widget, StyleData style) {
+		if (widget instanceof HasIcon) {
+			HasIcon hasIcon = (HasIcon) widget;
 
-			String sIcon = rStyle.getProperty(ICON, null);
-			RelativeScale eIconSize = rStyle.getProperty(ICON_SIZE, null);
-			Color rIconColor = rStyle.getProperty(ICON_COLOR, null);
-			Alignment eAlignment = rStyle.getProperty(ICON_ALIGN, null);
+			String icon = style.getProperty(ICON, null);
+			RelativeScale iconSize = style.getProperty(ICON_SIZE, null);
+			Color iconColor = style.getProperty(ICON_COLOR, null);
+			Alignment alignment = style.getProperty(ICON_ALIGN, null);
 
-			if (sIcon != null) {
-				applyIconType(sIcon, rHasIcon);
+			if (icon != null) {
+				applyIconType(icon, hasIcon);
 			}
 
-			if (eIconSize != null) {
-				rHasIcon.setIconSize(IconSize.valueOf(eIconSize.name()));
+			if (iconSize != null) {
+				hasIcon.setIconSize(IconSize.valueOf(iconSize.name()));
 			}
 
-			if (rIconColor != null) {
+			if (iconColor != null) {
 				// set on Style because setIconColor expects color names
-				rHasIcon
+				hasIcon
 					.getIcon()
 					.getElement()
 					.getStyle()
-					.setColor(rIconColor.toHtml());
+					.setColor(iconColor.toHtml());
 			}
 
-			if (eAlignment != null) {
-				rHasIcon.setIconPosition(eAlignment != Alignment.END ?
-				                         IconPosition.LEFT :
-				                         IconPosition.RIGHT);
+			if (alignment != null) {
+				hasIcon.setIconPosition(alignment != Alignment.END ?
+				                        IconPosition.LEFT :
+				                        IconPosition.RIGHT);
 			}
 		}
 	}
@@ -243,53 +238,53 @@ public class GewtMaterial {
 	/**
 	 * Applies any alignment settings from a style data to the given widget.
 	 *
-	 * @param rWidget The material widget with alignment
-	 * @param rStyle  The style to check for alignment
+	 * @param widget The material widget with alignment
+	 * @param style  The style to check for alignment
 	 */
-	public static void checkApplyLayoutVisibility(IsWidget rWidget,
-		StyleData rStyle) {
-		LayoutVisibility eVisibility =
-			rStyle.getProperty(LAYOUT_VISIBILITY, null);
+	public static void checkApplyLayoutVisibility(IsWidget widget,
+		StyleData style) {
+		LayoutVisibility visibility =
+			style.getProperty(LAYOUT_VISIBILITY, null);
 
-		if (eVisibility != null) {
-			HideOn eHideOn = null;
+		if (visibility != null) {
+			HideOn hideOn = null;
 
-			switch (eVisibility) {
+			switch (visibility) {
 				case ALWAYS:
-					eHideOn = HideOn.NONE;
+					hideOn = HideOn.NONE;
 					break;
 
 				case LARGE:
-					eHideOn = HideOn.HIDE_ON_MED_DOWN;
+					hideOn = HideOn.HIDE_ON_MED_DOWN;
 					break;
 
 				case MEDIUM:
-					((MaterialWidget) rWidget).setVisible(false);
-					((MaterialWidget) rWidget).setShowOn(ShowOn.SHOW_ON_MED);
+					((MaterialWidget) widget).setVisible(false);
+					((MaterialWidget) widget).setShowOn(ShowOn.SHOW_ON_MED);
 					break;
 
 				case MEDIUM_AND_LARGE:
-					eHideOn = HideOn.HIDE_ON_SMALL;
+					hideOn = HideOn.HIDE_ON_SMALL;
 					break;
 
 				case SMALL:
-					eHideOn = HideOn.HIDE_ON_MED_UP;
+					hideOn = HideOn.HIDE_ON_MED_UP;
 					break;
 
 				case SMALL_AND_LARGE:
-					eHideOn = HideOn.HIDE_ON_MED;
+					hideOn = HideOn.HIDE_ON_MED;
 					break;
 
 				case SMALL_AND_MEDIUM:
-					eHideOn = HideOn.HIDE_ON_LARGE;
+					hideOn = HideOn.HIDE_ON_LARGE;
 					break;
 
 				default:
-					assert false : "No match for visibility " + eVisibility;
+					assert false : "No match for visibility " + visibility;
 			}
 
-			if (eHideOn != null) {
-				((HasHideOn) rWidget).setHideOn(eHideOn);
+			if (hideOn != null) {
+				((HasHideOn) widget).setHideOn(hideOn);
 			}
 		}
 	}
@@ -298,66 +293,62 @@ public class GewtMaterial {
 	 * Checks whether certain styles need to be converted and applied to the
 	 * widget of a GEWT component.
 	 *
-	 * @param rComponent The component to apply styles to
-	 * @param rStyle     The style data to check for styles
+	 * @param component The component to apply styles to
+	 * @param style     The style data to check for styles
 	 */
-	public static void checkApplyStyles(Component rComponent,
-		StyleData rStyle) {
-		Widget rWidget = rComponent.getWidget();
+	public static void checkApplyStyles(Component component, StyleData style) {
+		Widget widget = component.getWidget();
 
-		if (rWidget instanceof HasPlaceholder &&
-			rStyle.hasProperty(PLACEHOLDER)) {
-			String sPlaceholder = rStyle.getProperty(PLACEHOLDER, null);
+		if (widget instanceof HasPlaceholder &&
+			style.hasProperty(PLACEHOLDER)) {
+			String placeholder = style.getProperty(PLACEHOLDER, null);
 
-			if (sPlaceholder == null) {
-				sPlaceholder = "";
+			if (placeholder == null) {
+				placeholder = "";
 			} else {
-				sPlaceholder = EWT.expandResource(rComponent, sPlaceholder);
+				placeholder = EWT.expandResource(component, placeholder);
 			}
 
-			((HasPlaceholder) rWidget).setPlaceholder(sPlaceholder);
+			((HasPlaceholder) widget).setPlaceholder(placeholder);
 		}
 
-		checkApplyStyles(rWidget, rStyle);
+		checkApplyStyles(widget, style);
 	}
 
 	/**
 	 * Checks whether certain styles need to be converted and applied to a
 	 * material widget.
 	 *
-	 * @param rWidget The material widget to apply styles to
-	 * @param rStyle  The style data to check for styles
+	 * @param widget The material widget to apply styles to
+	 * @param style  The style data to check for styles
 	 */
-	public static void checkApplyStyles(Widget rWidget, StyleData rStyle) {
-		Alignment eFloatAlign = rStyle.getProperty(FLOAT, null);
-		Orientation eOrientation = rStyle.getProperty(ORIENTATION, null);
-		Integer rDuration = rStyle.getProperty(ANIMATION_DURATION, null);
+	public static void checkApplyStyles(Widget widget, StyleData style) {
+		Alignment floatAlign = style.getProperty(FLOAT, null);
+		Orientation orientation = style.getProperty(ORIENTATION, null);
+		Integer duration = style.getProperty(ANIMATION_DURATION, null);
 
-		if (eOrientation != null && rWidget instanceof HasOrientation) {
-			((HasOrientation) rWidget).setOrientation(
-				eOrientation == Orientation.HORIZONTAL ? LANDSCAPE : PORTRAIT);
+		if (orientation != null && widget instanceof HasOrientation) {
+			((HasOrientation) widget).setOrientation(
+				orientation == Orientation.HORIZONTAL ? LANDSCAPE : PORTRAIT);
 		}
 
-		if (eFloatAlign != null && rWidget instanceof HasFloat) {
-			((HasFloat) rWidget).setFloat(
-				eFloatAlign == Alignment.BEGIN ? Float.LEFT : Float.RIGHT);
+		if (floatAlign != null && widget instanceof HasFloat) {
+			((HasFloat) widget).setFloat(
+				floatAlign == Alignment.BEGIN ? Float.LEFT : Float.RIGHT);
 		}
 
-		if (rDuration != null) {
-			int nDuration = rDuration.intValue();
-
-			if (rWidget instanceof HasDurationTransition) {
-				((HasDurationTransition) rWidget).setDuration(nDuration);
-			} else if (rWidget instanceof HasInOutDurationTransition) {
-				((HasInOutDurationTransition) rWidget).setInDuration(nDuration);
-				((HasInOutDurationTransition) rWidget).setOutDuration(
-					nDuration);
+		if (duration != null) {
+			if (widget instanceof HasDurationTransition) {
+				((HasDurationTransition) widget).setDuration(duration);
+			} else if (widget instanceof HasInOutDurationTransition) {
+				((HasInOutDurationTransition) widget).setInDuration(duration);
+				((HasInOutDurationTransition) widget).setOutDuration(duration);
 			}
 		}
 
-		checkApplyLayoutVisibility(rWidget, rStyle);
-		checkApplyAlignment(rWidget, rStyle);
-		checkApplyIcon(rWidget, rStyle);
+		checkApplyLayoutVisibility(widget, style);
+		checkApplyAlignment(widget, style);
+		checkApplyIcon(widget, style);
 	}
 
 	/**
@@ -365,8 +356,8 @@ public class GewtMaterial {
 	 *
 	 * @return The default material widget animation type
 	 */
-	public static final WavesType getDefaultAnimation() {
-		return aDefaultWavesType;
+	public static WavesType getDefaultAnimation() {
+		return defaultWavesType;
 	}
 
 	/**
@@ -375,26 +366,25 @@ public class GewtMaterial {
 	 * @return The JQuery version string
 	 */
 	public static native String getJQueryVersion() /*-{
-		var jQuery = $wnd['jQuery'];
-		if (typeof jQuery != 'undefined') {
-			return jQuery.fn.jquery;
-		}
-		else {
-			return 'undefined';
-		}
-	}-*/;
+        var query = $wnd['jQuery'];
+        if (typeof query != 'undefined') {
+            return query.fn.jquery;
+        } else {
+            return 'undefined';
+        }
+    }-*/;
 
 	/**
 	 * Initializes the library wrapper by registering the necessary factories.
 	 */
 	public static void init() {
-		MaterialLayoutFactory aLayoutFactory = new MaterialLayoutFactory();
+		MaterialLayoutFactory layoutFactory = new MaterialLayoutFactory();
 
 		EWT.setChildViewFactory(new MaterialChildViewFactory());
-		EWT.setLayoutFactory(aLayoutFactory);
-		EWT.setLayoutMapper(aLayoutFactory);
+		EWT.setLayoutFactory(layoutFactory);
+		EWT.setLayoutMapper(layoutFactory);
 
-		Component.setWidgetStyleHandler((c, s) -> checkApplyStyles(c, s));
+		Component.setWidgetStyleHandler(GewtMaterial::checkApplyStyles);
 		Component.setWidgetErrorStateHandler(
 			GewtMaterial::applyComponentErrorState);
 
@@ -408,11 +398,11 @@ public class GewtMaterial {
 	 * Initializes the GwtMaterialDesign-specific widget factories.
 	 */
 	private static void registerWidgetFactories() {
-		MaterialListControlFactory aListControlFactory =
+		MaterialListControlFactory listControlFactory =
 			new MaterialListControlFactory();
 
-		EWT.registerWidgetFactory(List.class, aListControlFactory, true);
-		EWT.registerWidgetFactory(ListBox.class, aListControlFactory, true);
+		EWT.registerWidgetFactory(List.class, listControlFactory, true);
+		EWT.registerWidgetFactory(ListBox.class, listControlFactory, true);
 
 		EWT.registerWidgetFactory(Button.class, new MaterialButtonFactory<>(),
 			true);
@@ -437,9 +427,9 @@ public class GewtMaterial {
 	/**
 	 * Sets the default material widget animation.
 	 *
-	 * @param eWavesType The default material widget animation type
+	 * @param wavesType The default material widget animation type
 	 */
-	public static final void setDefaultAnimation(WavesType eWavesType) {
-		aDefaultWavesType = eWavesType;
+	public static void setDefaultAnimation(WavesType wavesType) {
+		defaultWavesType = wavesType;
 	}
 }

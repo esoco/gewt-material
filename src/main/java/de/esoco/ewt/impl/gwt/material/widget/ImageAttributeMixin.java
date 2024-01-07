@@ -34,36 +34,30 @@ import com.google.gwt.user.client.ui.Widget;
 public class ImageAttributeMixin<T extends Widget & HasIcon>
 	implements ImageAttribute {
 
-	private T rWidget;
+	private T widget;
 
-	private Image rImage;
+	private Image image;
 
 	/**
 	 * Creates a new instance.
 	 *
-	 * @param rWidget The widget to provide the image attribute for
+	 * @param widget The widget to provide the image attribute for
 	 */
-	public ImageAttributeMixin(T rWidget) {
-		this.rWidget = rWidget;
+	public ImageAttributeMixin(T widget) {
+		this.widget = widget;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return rImage;
+		return image;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		this.rImage = rImage;
+	public void setImage(Image image) {
+		this.image = image;
 
-		if (rImage instanceof Icon) {
-			GewtMaterial.applyIconType(((Icon) rImage).getName(), rWidget);
+		if (image instanceof Icon) {
+			GewtMaterial.applyIconType(((Icon) image).getName(), widget);
 		}
 	}
 }

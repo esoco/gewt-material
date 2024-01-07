@@ -38,72 +38,57 @@ import com.google.gwt.user.client.ui.Widget;
 public class MaterialTabPanelLayout
 	extends MaterialSwitchPanelLayout<MaterialPanel, MaterialTabItem> {
 
-	private MaterialTab aTabBar;
+	private MaterialTab tabBar;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addPage(Component rTabComponent, String sStepTitle,
-		boolean bCloseable) {
-		String sId = DOM.createUniqueId();
-		MaterialTabItem aTabItem = new MaterialTabItem();
-		MaterialLink aTabLink = new MaterialLink(sStepTitle, sId);
-		MaterialPanel aContentPanel = new MaterialPanel();
-		Widget rContentWidget = rTabComponent.getWidget();
+	public void addPage(Component tabComponent, String stepTitle,
+		boolean closeable) {
+		String id = DOM.createUniqueId();
+		MaterialTabItem tabItem = new MaterialTabItem();
+		MaterialLink tabLink = new MaterialLink(stepTitle, id);
+		MaterialPanel contentPanel = new MaterialPanel();
+		Widget contentWidget = tabComponent.getWidget();
 
-		aContentPanel.getElement().setId(sId);
+		contentPanel.getElement().setId(id);
 
-		getPanelWidget().add(aContentPanel);
-		aContentPanel.add(rContentWidget);
-		aTabItem.add(aTabLink);
-		aTabBar.add(aTabItem);
+		getPanelWidget().add(contentPanel);
+		contentPanel.add(contentWidget);
+		tabItem.add(tabLink);
+		tabBar.add(tabItem);
 
-		addContentWidget(rContentWidget, aTabItem);
+		addContentWidget(contentWidget, tabItem);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public MaterialPanel createPanelWidget(Container rContainer,
-		StyleData rStyle) {
-		MaterialPanel aTabPanelContainer = new MaterialPanel();
+	public MaterialPanel createPanelWidget(Container container,
+		StyleData style) {
+		MaterialPanel tabPanelContainer = new MaterialPanel();
 
-		aTabBar = new GewtMaterialTab();
+		tabBar = new GewtMaterialTab();
 
-		aTabPanelContainer.add(aTabBar);
+		tabPanelContainer.add(tabBar);
 
-		return aTabPanelContainer;
+		return tabPanelContainer;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getSelectionIndex() {
-		return aTabBar.getTabIndex();
+		return tabBar.getTabIndex();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setPageTitle(int nIndex, String sTitle) {
-		MaterialTabItem rTabItem =
-			(MaterialTabItem) aTabBar.getChildren().get(nIndex);
+	public void setPageTitle(int index, String title) {
+		MaterialTabItem tabItem =
+			(MaterialTabItem) tabBar.getChildren().get(index);
 
-		MaterialLink rTabLink = (MaterialLink) rTabItem.getChildren().get(0);
+		MaterialLink tabLink = (MaterialLink) tabItem.getChildren().get(0);
 
-		rTabLink.setText(sTitle);
+		tabLink.setText(title);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setSelection(int nIndex) {
-		aTabBar.setTabIndex(nIndex);
+	public void setSelection(int index) {
+		tabBar.setTabIndex(index);
 	}
 
 	/**
@@ -118,9 +103,9 @@ public class MaterialTabPanelLayout
 		 */
 		@Override
 		public int getTabIndex() {
-			int nTabIndex = super.getTabIndex();
+			int tabIndex = super.getTabIndex();
 
-			return nTabIndex >= 0 ? nTabIndex : 0;
+			return tabIndex >= 0 ? tabIndex : 0;
 		}
 
 		/**

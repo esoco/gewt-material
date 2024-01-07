@@ -32,31 +32,28 @@ import de.esoco.lib.property.LayoutType;
  */
 final class MaterialGridLayout extends AbstractMaterialLayout {
 
-	private LayoutType eLayout;
+	private LayoutType layout;
 
 	/**
 	 * Creates a new instance.
 	 *
-	 * @param eLayout The layout
+	 * @param layout The layout
 	 */
-	public MaterialGridLayout(LayoutType eLayout) {
-		this.eLayout = eLayout;
+	public MaterialGridLayout(LayoutType layout) {
+		this.layout = layout;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
-		StyleData rContainerStyle) {
-		MaterialWidget rContainerWidget;
+	protected MaterialWidget creatMaterialLayoutContainer(Container container,
+		StyleData containerStyle) {
+		MaterialWidget containerWidget;
 
-		if (eLayout == LayoutType.GRID_ROW) {
-			rContainerWidget = new MaterialRow();
+		if (layout == LayoutType.GRID_ROW) {
+			containerWidget = new MaterialRow();
 		} else {
-			rContainerWidget = new MaterialColumn();
+			containerWidget = new MaterialColumn();
 		}
 
-		return rContainerWidget;
+		return containerWidget;
 	}
 }

@@ -43,9 +43,6 @@ public class GewtMaterialSearch extends MaterialSearch
 		valueBoxBase.addBlurHandler(e -> setActive(false));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getCursorPos() {
 		return asValueBoxBase().getCursorPos();
@@ -55,22 +52,19 @@ public class GewtMaterialSearch extends MaterialSearch
 	 * @see MaterialSearch#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean bActive) {
-		super.setActive(bActive);
+	public void setActive(boolean active) {
+		super.setActive(active);
 
-		MaterialIcon rCloseIcon = getIconClose();
+		MaterialIcon closeIcon = getIconClose();
 
-		rCloseIcon.setIconColor(null);
-		rCloseIcon.setVisible(bActive);
+		closeIcon.setIconColor(null);
+		closeIcon.setVisible(active);
 		getIconSearch().setIconColor(null);
 		setTextColor(null);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setVisibleLength(int nColumns) {
+	public void setVisibleLength(int columns) {
 	}
 
 	/**

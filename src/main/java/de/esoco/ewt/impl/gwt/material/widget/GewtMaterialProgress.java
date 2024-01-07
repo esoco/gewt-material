@@ -29,11 +29,11 @@ import de.esoco.ewt.component.ProgressBar.IsProgressBarWidget;
 public class GewtMaterialProgress extends MaterialProgress
 	implements IsProgressBarWidget {
 
-	private int nMaximum = 0;
+	private int maximum = 0;
 
-	private int nMinimum = 0;
+	private int minimum = 0;
 
-	private int nProgress = 0;
+	private int progress = 0;
 
 	/**
 	 * Creates a new instance.
@@ -42,64 +42,46 @@ public class GewtMaterialProgress extends MaterialProgress
 		setType(ProgressType.INDETERMINATE);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getMaximum() {
-		return nMaximum;
+		return maximum;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getMinimum() {
-		return nMinimum;
+		return minimum;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getProgress() {
-		return nProgress;
+		return progress;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setMaximum(int nMaximum) {
-		this.nMaximum = nMaximum;
+	public void setMaximum(int maximum) {
+		this.maximum = maximum;
 		update();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setMinimum(int nMinimum) {
-		this.nMinimum = nMinimum;
+	public void setMinimum(int minimum) {
+		this.minimum = minimum;
 		update();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setProgress(int nProgress) {
-		this.nProgress = nProgress;
-		setPercent((nProgress - nMinimum) * 100 / (nMaximum - nMinimum));
+	public void setProgress(int progress) {
+		this.progress = progress;
+		setPercent((progress - minimum) * 100 / (maximum - minimum));
 	}
 
 	/**
 	 * Updates this instance according to it's current state.
 	 */
 	protected void update() {
-		if (nMaximum != nMinimum) {
+		if (maximum != minimum) {
 			setType(ProgressType.DETERMINATE);
-			setProgress(nProgress);
+			setProgress(progress);
 		} else {
 			setType(ProgressType.INDETERMINATE);
 			setPercent(100);

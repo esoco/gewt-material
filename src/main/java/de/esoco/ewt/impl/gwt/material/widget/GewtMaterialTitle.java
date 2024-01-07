@@ -27,31 +27,22 @@ import com.google.gwt.user.client.ui.HasText;
  */
 public class GewtMaterialTitle extends MaterialTitle implements HasText {
 
-	private String sTitleText;
+	private String titleText;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String getText() {
-		return sTitleText;
+		return titleText;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setText(String sText) {
-		sTitleText = sText;
+	public void setText(String text) {
+		titleText = text;
 
-		super.setTitle(sText);
+		super.setTitle(text);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setTitle(String sTooltip) {
-		super.setTooltip(sTooltip);
+	public void setTitle(String tooltip) {
+		super.setTooltip(tooltip);
 	}
 }

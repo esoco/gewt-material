@@ -16,19 +16,17 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.factory;
 
-import gwt.material.design.client.constants.DialogType;
-import gwt.material.design.client.ui.MaterialDialog;
-import gwt.material.design.client.ui.MaterialTitle;
-
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Widget;
 import de.esoco.ewt.EWT;
 import de.esoco.ewt.component.ChildView.ChildViewFactory;
 import de.esoco.ewt.component.ChildView.IsChildViewWidget;
 import de.esoco.ewt.component.View;
 import de.esoco.ewt.style.ViewStyle;
 import de.esoco.ewt.style.ViewStyle.Flag;
-
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
+import gwt.material.design.client.constants.DialogType;
+import gwt.material.design.client.ui.MaterialDialog;
+import gwt.material.design.client.ui.MaterialTitle;
 
 /**
  * A child view factory that creates instances of material dialogs.
@@ -37,38 +35,34 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MaterialChildViewFactory extends ChildViewFactory {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public IsChildViewWidget createChildViewWidget(View rParent,
-		ViewStyle rStyle) {
-		if (rStyle.hasFlag(ViewStyle.Flag.MODAL)) {
-			return createViewWidget(rParent, rStyle);
+	public IsChildViewWidget createChildViewWidget(View parent,
+		ViewStyle style) {
+		if (style.hasFlag(ViewStyle.Flag.MODAL)) {
+			return createViewWidget(parent, style);
 		} else {
-			return super.createChildViewWidget(rParent, rStyle);
+			return super.createChildViewWidget(parent, style);
 		}
 	}
 
 	/**
 	 * Creates the actual view widget.
 	 *
-	 * @param rParent The parent view
-	 * @param rStyle  The view style
+	 * @param parent The parent view
+	 * @param style  The view style
 	 * @return The view widget
 	 */
-	private IsChildViewWidget createViewWidget(View rParent,
-		ViewStyle rStyle) {
-		GewtMaterialDialog aModal = new GewtMaterialDialog(rStyle);
-		Widget rParentWidget = rParent.getWidget();
+	private IsChildViewWidget createViewWidget(View parent, ViewStyle style) {
+		GewtMaterialDialog modal = new GewtMaterialDialog(style);
+		Widget parentWidget = parent.getWidget();
 
-		if (rParentWidget instanceof HasWidgets) {
-			((HasWidgets) rParentWidget).add(aModal);
+		if (parentWidget instanceof HasWidgets) {
+			((HasWidgets) parentWidget).add(modal);
 		} else {
 			throw new IllegalStateException("Unsupported parent widget type");
 		}
 
-		return aModal;
+		return modal;
 	}
 
 	/**
@@ -80,19 +74,19 @@ public class MaterialChildViewFactory extends ChildViewFactory {
 	public static class GewtMaterialDialog extends MaterialDialog
 		implements IsChildViewWidget {
 
-		private MaterialTitle aTitle = null;
+		private MaterialTitle title = null;
 
 		/**
 		 * Creates a new instance.
 		 *
-		 * @param rStyle The view style
+		 * @param style The view style
 		 */
-		public GewtMaterialDialog(ViewStyle rStyle) {
+		public GewtMaterialDialog(ViewStyle style) {
 			setInDuration(500);
 			setOutDuration(500);
-			setDismissible(rStyle.hasFlag(Flag.AUTO_HIDE));
+			setDismissible(style.hasFlag(Flag.AUTO_HIDE));
 
-			if (rStyle.hasFlag(Flag.BOTTOM)) {
+			if (style.hasFlag(Flag.BOTTOM)) {
 				setType(DialogType.BOTTOM_SHEET);
 			}
 		}
@@ -121,14 +115,14 @@ public class MaterialChildViewFactory extends ChildViewFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setViewTitle(String sTitle) {
-			if (aTitle == null) {
-				aTitle = new MaterialTitle(sTitle);
-				insert(aTitle, 0);
+		public void setViewTitle(String text) {
+			if (title == null) {
+				title = new MaterialTitle(text);
+				insert(title, 0);
 
-				aTitle.addStyleName(EWT.CSS.ewtDialogTitle());
+				title.addStyleName(EWT.CSS.ewtDialogTitle());
 			} else {
-				aTitle.setTitle(sTitle);
+				title.setTitle(text);
 			}
 		}
 

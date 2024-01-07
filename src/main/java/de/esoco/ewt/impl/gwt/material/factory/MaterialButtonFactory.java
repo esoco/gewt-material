@@ -46,70 +46,67 @@ import static de.esoco.lib.property.StyleProperties.BUTTON_STYLE;
 public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	extends MaterialWidgetFactory<W> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public W createMaterialWidget(Component rComponent, StyleData rStyle) {
-		ButtonStyle eButtonStyle =
-			rStyle.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT);
+	public W createMaterialWidget(Component component, StyleData style) {
+		ButtonStyle buttonStyle =
+			style.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT);
 
-		ButtonType eButtonType = mapButtonType(eButtonStyle);
-		AbstractButton aButtonWidget;
+		ButtonType buttonType = mapButtonType(buttonStyle);
+		AbstractButton buttonWidget;
 
-		if (eButtonType == ButtonType.LINK ||
-			rStyle.hasFlag(StyleFlag.HYPERLINK)) {
-			aButtonWidget = new GewtMaterialLink();
-		} else if (eButtonStyle == ButtonStyle.ICON) {
-			aButtonWidget = new GewtMaterialIcon();
-		} else if (eButtonStyle == ButtonStyle.FLOAT &&
-			rStyle.hasProperty(FLOAT)) {
-			aButtonWidget = new GewtMaterialAnchorButton();
+		if (buttonType == ButtonType.LINK ||
+			style.hasFlag(StyleFlag.HYPERLINK)) {
+			buttonWidget = new GewtMaterialLink();
+		} else if (buttonStyle == ButtonStyle.ICON) {
+			buttonWidget = new GewtMaterialIcon();
+		} else if (buttonStyle == ButtonStyle.FLOAT &&
+			style.hasProperty(FLOAT)) {
+			buttonWidget = new GewtMaterialAnchorButton();
 		} else {
-			aButtonWidget = new GewtMaterialButton();
+			buttonWidget = new GewtMaterialButton();
 		}
 
-		if (eButtonType != null) {
-			aButtonWidget.setType(eButtonType);
+		if (buttonType != null) {
+			buttonWidget.setType(buttonType);
 		}
 
-		GewtMaterial.checkApplyButtonScale(aButtonWidget, rStyle);
+		GewtMaterial.checkApplyButtonScale(buttonWidget, style);
 
-		aButtonWidget.setWaves(GewtMaterial.getDefaultAnimation());
+		buttonWidget.setWaves(GewtMaterial.getDefaultAnimation());
 
-		return (W) aButtonWidget;
+		return (W) buttonWidget;
 	}
 
 	/**
 	 * Maps the {@link ButtonStyle} from a style data object to a GwtMaterial
 	 * {@link ButtonType} constant.
 	 *
-	 * @param eButtonStyle rStyle The style data to read the button style from
+	 * @param buttonStyle rStyle The style data to read the button style from
 	 * @return The button type or NULL for a default or if no mapping exists
 	 */
-	private ButtonType mapButtonType(ButtonStyle eButtonStyle) {
-		ButtonType eButtonType;
+	private ButtonType mapButtonType(ButtonStyle buttonStyle) {
+		ButtonType buttonType;
 
-		switch (eButtonStyle) {
+		switch (buttonStyle) {
 			case FLAT:
-				eButtonType = ButtonType.FLAT;
+				buttonType = ButtonType.FLAT;
 				break;
 
 			case FLOAT:
-				eButtonType = ButtonType.FLOATING;
+				buttonType = ButtonType.FLOATING;
 				break;
 
 			case LINK:
-				eButtonType = ButtonType.LINK;
+				buttonType = ButtonType.LINK;
 				break;
 
 			case DEFAULT:
 			case OUTLINE:
 			default:
-				eButtonType = null;
+				buttonType = null;
 		}
 
-		return eButtonType;
+		return buttonType;
 	}
 }

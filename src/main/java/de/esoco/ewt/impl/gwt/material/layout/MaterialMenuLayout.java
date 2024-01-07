@@ -16,6 +16,17 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 package de.esoco.ewt.impl.gwt.material.layout;
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Widget;
+import de.esoco.ewt.GewtMaterial;
+import de.esoco.ewt.component.Container;
+import de.esoco.ewt.layout.MenuLayout;
+import de.esoco.ewt.style.StyleData;
+import de.esoco.lib.property.Alignment;
+import de.esoco.lib.property.NavigationMenuStyle;
+import de.esoco.lib.property.Orientation;
 import gwt.material.design.client.base.AbstractButton;
 import gwt.material.design.client.base.AbstractSideNav;
 import gwt.material.design.client.base.HasFloat;
@@ -34,22 +45,8 @@ import gwt.material.design.client.ui.MaterialSideNavDrawer;
 import gwt.material.design.client.ui.MaterialSideNavMini;
 import gwt.material.design.client.ui.MaterialSideNavPush;
 
-import de.esoco.ewt.GewtMaterial;
-import de.esoco.ewt.component.Container;
-import de.esoco.ewt.layout.MenuLayout;
-import de.esoco.ewt.style.StyleData;
-
-import de.esoco.lib.property.Alignment;
-import de.esoco.lib.property.NavigationMenuStyle;
-import de.esoco.lib.property.Orientation;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.ContentProperties.ELEMENT_ID;
 import static de.esoco.lib.property.LayoutProperties.FLOAT;
@@ -82,198 +79,189 @@ public class MaterialMenuLayout extends MenuLayout {
 			SideNavType.MINI_WITH_EXPAND);
 	}
 
-	private MaterialNavBar aNavBar;
+	private MaterialNavBar navBar;
 
-	private MaterialNavSection aNavSection;
+	private MaterialNavSection navSection;
 
-	private MaterialFABList aMaterialFABList;
+	private MaterialFABList materialFABList;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addWidget(HasWidgets rContainer, Widget rWidget,
-		StyleData rStyle, int nIndex) {
-		if (aMaterialFABList != null) {
-			aMaterialFABList.add(rWidget);
+	public void addWidget(HasWidgets container, Widget widget, StyleData style,
+		int index) {
+		if (materialFABList != null) {
+			materialFABList.add(widget);
 
-			if (rWidget instanceof AbstractButton) {
-				GewtMaterial.checkApplyButtonScale((AbstractButton) rWidget,
-					rStyle);
+			if (widget instanceof AbstractButton) {
+				GewtMaterial.checkApplyButtonScale((AbstractButton) widget,
+					style);
 			}
 		} else {
-			if (rWidget instanceof MaterialNavSection) {
-				aNavSection = (MaterialNavSection) rWidget;
+			if (widget instanceof MaterialNavSection) {
+				navSection = (MaterialNavSection) widget;
 			} else {
-				if (!(rWidget instanceof MaterialNavBrand) && aNavBar != null &&
-					aNavSection == null) {
-					aNavSection = new MaterialNavSection();
-					aNavSection.setFloat(Float.RIGHT);
-					aNavBar.add(aNavSection);
+				if (!(widget instanceof MaterialNavBrand) && navBar != null &&
+					navSection == null) {
+					navSection = new MaterialNavSection();
+					navSection.setFloat(Float.RIGHT);
+					navBar.add(navSection);
 				}
 
-				if (aNavSection != null) {
-					rContainer = aNavSection;
+				if (navSection != null) {
+					container = navSection;
 				}
 			}
 
-			checkApplyFloat(rWidget, rStyle);
+			checkApplyFloat(widget, style);
 
-			super.addWidget(rContainer, rWidget, rStyle, nIndex);
+			super.addWidget(container, widget, style, index);
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void clear(HasWidgets rContainer) {
-		super.clear(rContainer);
+	public void clear(HasWidgets container) {
+		super.clear(container);
 
-		aNavBar = null;
-		aNavSection = null;
+		navBar = null;
+		navSection = null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public HasWidgets createLayoutContainer(Container rContainer,
-		StyleData rContainerStyle) {
-		Alignment eFloatAlign = rContainerStyle.getProperty(FLOAT, null);
-		Orientation eOrientation =
-			rContainerStyle.getProperty(ORIENTATION, Orientation.HORIZONTAL);
-		HasWidgets aMenuWidget;
+	public HasWidgets createLayoutContainer(Container container,
+		StyleData containerStyle) {
+		Alignment floatAlign = containerStyle.getProperty(FLOAT, null);
+		Orientation orientation =
+			containerStyle.getProperty(ORIENTATION, Orientation.HORIZONTAL);
+		HasWidgets menuWidget;
 
-		if (eFloatAlign != null) {
-			aMenuWidget = createFloatingMenu(rContainerStyle, eOrientation);
-		} else if (eOrientation == Orientation.VERTICAL) {
-			aMenuWidget = createSideMenu(rContainerStyle);
+		if (floatAlign != null) {
+			menuWidget = createFloatingMenu(containerStyle, orientation);
+		} else if (orientation == Orientation.VERTICAL) {
+			menuWidget = createSideMenu(containerStyle);
 		} else {
-			aMenuWidget = createTopMenu(rContainerStyle);
+			menuWidget = createTopMenu(containerStyle);
 		}
 
-		return aMenuWidget;
+		return menuWidget;
 	}
 
 	/**
 	 * Creates a new floating menu.
 	 *
-	 * @param rMenuStyle   The menu style
-	 * @param eOrientation bVertical TRUE for a vertical menu, FALSE for
-	 *                     horizontal
+	 * @param menuStyle   The menu style
+	 * @param orientation bVertical TRUE for a vertical menu, FALSE for
+	 *                    horizontal
 	 * @return The menu container widget
 	 */
-	protected HasWidgets createFloatingMenu(StyleData rMenuStyle,
-		Orientation eOrientation) {
-		MaterialFAB aMaterialFAB = new MaterialFAB();
+	protected HasWidgets createFloatingMenu(StyleData menuStyle,
+		Orientation orientation) {
+		MaterialFAB materialFAB = new MaterialFAB();
 
-		aMaterialFABList = new MaterialFABList();
+		materialFABList = new MaterialFABList();
 
-		aMaterialFAB.setAxis(eOrientation == Orientation.VERTICAL ?
-		                     Axis.VERTICAL :
-		                     Axis.HORIZONTAL);
+		materialFAB.setAxis(orientation == Orientation.VERTICAL ?
+		                    Axis.VERTICAL :
+		                    Axis.HORIZONTAL);
 
-		MaterialAnchorButton aMenuButton =
+		MaterialAnchorButton menuButton =
 			new MaterialAnchorButton(ButtonType.FLOATING);
 
-		GewtMaterial.checkApplyButtonScale(aMenuButton, rMenuStyle);
-		GewtMaterial.checkApplyIcon(aMenuButton, rMenuStyle);
-		aMaterialFAB.add(aMenuButton);
-		aMaterialFAB.add(aMaterialFABList);
+		GewtMaterial.checkApplyButtonScale(menuButton, menuStyle);
+		GewtMaterial.checkApplyIcon(menuButton, menuStyle);
+		materialFAB.add(menuButton);
+		materialFAB.add(materialFABList);
 
-		return aMaterialFAB;
+		return materialFAB;
 	}
 
 	/**
 	 * Creates a menu that is displayed at the side of the target area.
 	 *
-	 * @param rMenuStyle The meniu style
+	 * @param menuStyle The meniu style
 	 * @return The menu container widget
 	 */
-	protected HasWidgets createSideMenu(StyleData rMenuStyle) {
-		NavigationMenuStyle eMenuStyle =
-			rMenuStyle.getProperty(NAVIGATION_MENU_STYLE,
+	protected HasWidgets createSideMenu(StyleData menuStyle) {
+		NavigationMenuStyle navigationMenuStyle =
+			menuStyle.getProperty(NAVIGATION_MENU_STYLE,
 				NavigationMenuStyle.OVERLAY_CONTENT);
 
-		AbstractSideNav aSideNav;
+		AbstractSideNav sideNav;
 
-		switch (eMenuStyle) {
+		switch (navigationMenuStyle) {
 			case CARD:
-				aSideNav = new MaterialSideNavCard();
+				sideNav = new MaterialSideNavCard();
 				break;
 
 			case OVERLAY:
 			case OVERLAY_CONTENT:
-				aSideNav = new MaterialSideNavDrawer();
-				((MaterialSideNavDrawer) aSideNav).setWithHeader(
-					eMenuStyle == NavigationMenuStyle.OVERLAY_CONTENT);
+				sideNav = new MaterialSideNavDrawer();
+				((MaterialSideNavDrawer) sideNav).setWithHeader(
+					navigationMenuStyle == NavigationMenuStyle.OVERLAY_CONTENT);
 				break;
 
 			case PUSH:
 			case PUSH_CONTENT:
-				aSideNav = new MaterialSideNavPush();
-				((MaterialSideNavPush) aSideNav).setWithHeader(
-					eMenuStyle == NavigationMenuStyle.PUSH_CONTENT);
+				sideNav = new MaterialSideNavPush();
+				((MaterialSideNavPush) sideNav).setWithHeader(
+					navigationMenuStyle == NavigationMenuStyle.PUSH_CONTENT);
 				break;
 
 			case SMALL:
 			case SMALL_EXPANDING:
-				aSideNav = new MaterialSideNavMini();
-				((MaterialSideNavMini) aSideNav).setExpandable(
-					eMenuStyle == NavigationMenuStyle.SMALL_EXPANDING);
+				sideNav = new MaterialSideNavMini();
+				((MaterialSideNavMini) sideNav).setExpandable(
+					navigationMenuStyle == NavigationMenuStyle.SMALL_EXPANDING);
 				break;
 
 			default:
-				aSideNav = new MaterialSideNav();
+				sideNav = new MaterialSideNav();
 		}
 
-		String sId = rMenuStyle.getProperty(ELEMENT_ID, null);
+		String id = menuStyle.getProperty(ELEMENT_ID, null);
 
-		if (sId != null) {
+		if (id != null) {
 			// ID needs to be set early or else it won't be detected
-			aSideNav.setId(sId);
+			sideNav.setId(id);
 		}
 
-		aSideNav.setCloseOnClick(true);
-		aSideNav.setShowOnAttach(false);
-		aSideNav.setAlwaysShowActivator(true);
+		sideNav.setCloseOnClick(true);
+		sideNav.setShowOnAttach(false);
+		sideNav.setAlwaysShowActivator(true);
 
-		return aSideNav;
+		return sideNav;
 	}
 
 	/**
 	 * Creates a menu at the top of the target area.
 	 *
-	 * @param rMenuStyle rStyle
+	 * @param menuStyle rStyle
 	 * @return The menu container widget
 	 */
-	protected HasWidgets createTopMenu(StyleData rMenuStyle) {
-		aNavBar = new GewtMaterialNavBar();
+	protected HasWidgets createTopMenu(StyleData menuStyle) {
+		navBar = new GewtMaterialNavBar();
 
-		String sTargetId = rMenuStyle.getProperty(TARGET_ID, null);
+		String targetId = menuStyle.getProperty(TARGET_ID, null);
 
-		if (sTargetId != null) {
-			aNavBar.setActivates(sTargetId);
+		if (targetId != null) {
+			navBar.setActivates(targetId);
 		}
 
-		return aNavBar;
+		return navBar;
 	}
 
 	/**
 	 * Checks whether a float alignment needs to be applied to a widget.
 	 *
-	 * @param rWidget The widget
-	 * @param rStyle  The style to check for an alignment
+	 * @param widget The widget
+	 * @param style  The style to check for an alignment
 	 */
-	private void checkApplyFloat(Widget rWidget, StyleData rStyle) {
-		Alignment eAlignment = rStyle.getProperty(FLOAT, null);
+	private void checkApplyFloat(Widget widget, StyleData style) {
+		Alignment alignment = style.getProperty(FLOAT, null);
 
-		if (eAlignment != null) {
-			if (eAlignment == Alignment.BEGIN) {
-				((HasFloat) rWidget).setFloat(Float.LEFT);
-			} else if (eAlignment == Alignment.END) {
-				((HasFloat) rWidget).setFloat(Float.RIGHT);
+		if (alignment != null) {
+			if (alignment == Alignment.BEGIN) {
+				((HasFloat) widget).setFloat(Float.LEFT);
+			} else if (alignment == Alignment.END) {
+				((HasFloat) widget).setFloat(Float.RIGHT);
 			}
 		}
 	}

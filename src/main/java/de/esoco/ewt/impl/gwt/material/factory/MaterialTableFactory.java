@@ -31,12 +31,9 @@ import de.esoco.ewt.style.StyleData;
 public class MaterialTableFactory
 	extends MaterialWidgetFactory<IsTableControlWidget> {
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public IsTableControlWidget createMaterialWidget(Component rComponent,
-		StyleData rStyle) {
-		return new GewtMaterialTable(rComponent.getContext(), rStyle);
+	public IsTableControlWidget createMaterialWidget(Component component,
+		StyleData style) {
+		return new GewtMaterialTable(component.getContext(), style);
 	}
 }

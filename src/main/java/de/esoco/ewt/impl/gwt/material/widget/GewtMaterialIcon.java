@@ -33,49 +33,34 @@ import com.google.gwt.user.client.ui.HasText;
 public class GewtMaterialIcon extends MaterialIcon
 	implements HasHTML, ImageAttribute {
 
-	Span aTextSpan = null;
+	Span textSpan = null;
 
-	private ImageAttributeMixin<GewtMaterialIcon> aImageAttrMixin =
+	private ImageAttributeMixin<GewtMaterialIcon> imageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String getHTML() {
 		return getText();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return aImageAttrMixin.getImage();
+		return imageAttrMixin.getImage();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String getText() {
-		return aTextSpan != null ? aTextSpan.getText() : "";
+		return textSpan != null ? textSpan.getText() : "";
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setHTML(String sHtml) {
-		setText(sHtml);
+	public void setHTML(String html) {
+		setText(html);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		aImageAttrMixin.setImage(rImage);
+	public void setImage(Image image) {
+		imageAttrMixin.setImage(image);
 	}
 
 	/**
@@ -90,12 +75,12 @@ public class GewtMaterialIcon extends MaterialIcon
 	 * @see HasText#setText(String)
 	 */
 	@Override
-	public void setText(String sText) {
-		if (aTextSpan == null) {
-			aTextSpan = new Span(sText);
-			add(aTextSpan);
+	public void setText(String text) {
+		if (textSpan == null) {
+			textSpan = new Span(text);
+			add(textSpan);
 		} else {
-			aTextSpan.setText(sText);
+			textSpan.setText(text);
 		}
 	}
 }

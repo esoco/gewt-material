@@ -31,7 +31,7 @@ import de.esoco.ewt.property.ImageAttribute;
 public class GewtMaterialTextArea extends MaterialTextArea
 	implements IsTextArea, ImageAttribute {
 
-	private ImageAttributeMixin<GewtMaterialTextArea> aImageAttrMixin =
+	private ImageAttributeMixin<GewtMaterialTextArea> imageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
 	/**
@@ -41,63 +41,42 @@ public class GewtMaterialTextArea extends MaterialTextArea
 		setResizeRule(ResizeRule.AUTO);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getCursorPos() {
 		return asValueBoxBase().getCursorPos();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Image getImage() {
-		return aImageAttrMixin.getImage();
+		return imageAttrMixin.getImage();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setCharacterWidth(int nColumns) {
+	public void setCharacterWidth(int columns) {
 		// not supported by base class
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setImage(Image rImage) {
-		aImageAttrMixin.setImage(rImage);
+	public void setImage(Image image) {
+		imageAttrMixin.setImage(image);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setReadOnly(boolean bReadOnly) {
-		super.setReadOnly(bReadOnly);
+	public void setReadOnly(boolean readOnly) {
+		super.setReadOnly(readOnly);
 
 		// fix for gwt-material issue
 		// https://github.com/GwtMaterialDesign/gwt-material/issues/595
-		getValueBoxBase().setReadOnly(bReadOnly);
+		getValueBoxBase().setReadOnly(readOnly);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setVisibleLength(int nColumns) {
+	public void setVisibleLength(int columns) {
 		// not supported by base class
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void setVisibleLines(int nRows) {
+	public void setVisibleLines(int rows) {
 		// not supported by base class
 	}
 }
