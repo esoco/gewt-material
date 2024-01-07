@@ -22,25 +22,20 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTextArea;
 import de.esoco.ewt.style.StyleData;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
 public class MaterialTextAreaFactory
-	extends MaterialWidgetFactory<GewtMaterialTextArea>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<GewtMaterialTextArea> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GewtMaterialTextArea createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
-	{
+	public GewtMaterialTextArea createMaterialWidget(Component rComponent,
+		StyleData rStyle) {
 		return new GewtMaterialTextArea();
 	}
 }

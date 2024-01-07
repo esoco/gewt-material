@@ -25,24 +25,19 @@ import de.esoco.ewt.style.StyleData;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
-
-/********************************************************************
+/**
  * The base class for GwtMaterial layouts.
  *
  * @author eso
  */
-public abstract class AbstractMaterialLayout extends GenericLayout
-{
-	//~ Methods ----------------------------------------------------------------
+public abstract class AbstractMaterialLayout extends GenericLayout {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final HasWidgets createLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
+	public final HasWidgets createLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
 		MaterialWidget aContainer =
 			creatMaterialLayoutContainer(rContainer, rContainerStyle);
 
@@ -51,12 +46,11 @@ public abstract class AbstractMaterialLayout extends GenericLayout
 		return aContainer;
 	}
 
-	/***************************************
+	/**
 	 * Must be implemented by subclasses to create the actual layout container.
 	 *
 	 * @see GenericLayout#createLayoutContainer(Container, StyleData)
 	 */
 	protected abstract MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle);
+		Container rContainer, StyleData rContainerStyle);
 }

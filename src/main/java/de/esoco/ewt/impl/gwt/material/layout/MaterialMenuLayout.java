@@ -57,85 +57,62 @@ import static de.esoco.lib.property.StateProperties.TARGET_ID;
 import static de.esoco.lib.property.StyleProperties.NAVIGATION_MENU_STYLE;
 import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 
-
-/********************************************************************
+/**
  * A subclass of {@link MenuLayout} that creates material menu widgets.
  *
  * @author eso
  */
-public class MaterialMenuLayout extends MenuLayout
-{
-	//~ Static fields/initializers ---------------------------------------------
+public class MaterialMenuLayout extends MenuLayout {
 
 	private static final Map<NavigationMenuStyle, SideNavType> MENU_STYLES =
 		new HashMap<>(NavigationMenuStyle.values().length);
 
-	static
-	{
+	static {
 		MENU_STYLES.put(NavigationMenuStyle.FIXED, SideNavType.FIXED);
 		MENU_STYLES.put(NavigationMenuStyle.CARD, SideNavType.CARD);
-		MENU_STYLES.put(
-			NavigationMenuStyle.OVERLAY,
+		MENU_STYLES.put(NavigationMenuStyle.OVERLAY,
 			SideNavType.DRAWER_WITH_HEADER);
-		MENU_STYLES.put(
-			NavigationMenuStyle.OVERLAY_CONTENT,
+		MENU_STYLES.put(NavigationMenuStyle.OVERLAY_CONTENT,
 			SideNavType.DRAWER);
-		MENU_STYLES.put(NavigationMenuStyle.PUSH, SideNavType.PUSH_WITH_HEADER);
+		MENU_STYLES.put(NavigationMenuStyle.PUSH,
+			SideNavType.PUSH_WITH_HEADER);
 		MENU_STYLES.put(NavigationMenuStyle.PUSH_CONTENT, SideNavType.PUSH);
 		MENU_STYLES.put(NavigationMenuStyle.SMALL, SideNavType.MINI);
-		MENU_STYLES.put(
-			NavigationMenuStyle.SMALL_EXPANDING,
+		MENU_STYLES.put(NavigationMenuStyle.SMALL_EXPANDING,
 			SideNavType.MINI_WITH_EXPAND);
 	}
 
-	//~ Instance fields --------------------------------------------------------
+	private MaterialNavBar aNavBar;
 
-	private MaterialNavBar     aNavBar;
 	private MaterialNavSection aNavSection;
 
 	private MaterialFABList aMaterialFABList;
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyle,
-						  int		 nIndex)
-	{
-		if (aMaterialFABList != null)
-		{
+	public void addWidget(HasWidgets rContainer, Widget rWidget,
+		StyleData rStyle, int nIndex) {
+		if (aMaterialFABList != null) {
 			aMaterialFABList.add(rWidget);
 
-			if (rWidget instanceof AbstractButton)
-			{
-				GewtMaterial.checkApplyButtonScale(
-					(AbstractButton) rWidget,
+			if (rWidget instanceof AbstractButton) {
+				GewtMaterial.checkApplyButtonScale((AbstractButton) rWidget,
 					rStyle);
 			}
-		}
-		else
-		{
-			if (rWidget instanceof MaterialNavSection)
-			{
+		} else {
+			if (rWidget instanceof MaterialNavSection) {
 				aNavSection = (MaterialNavSection) rWidget;
-			}
-			else
-			{
-				if (!(rWidget instanceof MaterialNavBrand) &&
-					aNavBar != null &&
-					aNavSection == null)
-				{
+			} else {
+				if (!(rWidget instanceof MaterialNavBrand) && aNavBar != null &&
+					aNavSection == null) {
 					aNavSection = new MaterialNavSection();
 					aNavSection.setFloat(Float.RIGHT);
 					aNavBar.add(aNavSection);
 				}
 
-				if (aNavSection != null)
-				{
+				if (aNavSection != null) {
 					rContainer = aNavSection;
 				}
 			}
@@ -146,67 +123,56 @@ public class MaterialMenuLayout extends MenuLayout
 		}
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void clear(HasWidgets rContainer)
-	{
+	public void clear(HasWidgets rContainer) {
 		super.clear(rContainer);
 
-		aNavBar     = null;
+		aNavBar = null;
 		aNavSection = null;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
-		Alignment   eFloatAlign  = rContainerStyle.getProperty(FLOAT, null);
+	public HasWidgets createLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
+		Alignment eFloatAlign = rContainerStyle.getProperty(FLOAT, null);
 		Orientation eOrientation =
 			rContainerStyle.getProperty(ORIENTATION, Orientation.HORIZONTAL);
-		HasWidgets  aMenuWidget;
+		HasWidgets aMenuWidget;
 
-		if (eFloatAlign != null)
-		{
+		if (eFloatAlign != null) {
 			aMenuWidget = createFloatingMenu(rContainerStyle, eOrientation);
-		}
-		else if (eOrientation == Orientation.VERTICAL)
-		{
+		} else if (eOrientation == Orientation.VERTICAL) {
 			aMenuWidget = createSideMenu(rContainerStyle);
-		}
-		else
-		{
+		} else {
 			aMenuWidget = createTopMenu(rContainerStyle);
 		}
 
 		return aMenuWidget;
 	}
 
-	/***************************************
+	/**
 	 * Creates a new floating menu.
 	 *
-	 * @param  rMenuStyle   The menu style
-	 * @param  eOrientation bVertical TRUE for a vertical menu, FALSE for
-	 *                      horizontal
-	 *
+	 * @param rMenuStyle   The menu style
+	 * @param eOrientation bVertical TRUE for a vertical menu, FALSE for
+	 *                     horizontal
 	 * @return The menu container widget
 	 */
-	protected HasWidgets createFloatingMenu(
-		StyleData   rMenuStyle,
-		Orientation eOrientation)
-	{
+	protected HasWidgets createFloatingMenu(StyleData rMenuStyle,
+		Orientation eOrientation) {
 		MaterialFAB aMaterialFAB = new MaterialFAB();
 
 		aMaterialFABList = new MaterialFABList();
 
-		aMaterialFAB.setAxis(
-			eOrientation == Orientation.VERTICAL ? Axis.VERTICAL
-												 : Axis.HORIZONTAL);
+		aMaterialFAB.setAxis(eOrientation == Orientation.VERTICAL ?
+		                     Axis.VERTICAL :
+		                     Axis.HORIZONTAL);
 
 		MaterialAnchorButton aMenuButton =
 			new MaterialAnchorButton(ButtonType.FLOATING);
@@ -219,24 +185,20 @@ public class MaterialMenuLayout extends MenuLayout
 		return aMaterialFAB;
 	}
 
-	/***************************************
+	/**
 	 * Creates a menu that is displayed at the side of the target area.
 	 *
-	 * @param  rMenuStyle The meniu style
-	 *
+	 * @param rMenuStyle The meniu style
 	 * @return The menu container widget
 	 */
-	protected HasWidgets createSideMenu(StyleData rMenuStyle)
-	{
+	protected HasWidgets createSideMenu(StyleData rMenuStyle) {
 		NavigationMenuStyle eMenuStyle =
-			rMenuStyle.getProperty(
-				NAVIGATION_MENU_STYLE,
+			rMenuStyle.getProperty(NAVIGATION_MENU_STYLE,
 				NavigationMenuStyle.OVERLAY_CONTENT);
 
 		AbstractSideNav aSideNav;
 
-		switch (eMenuStyle)
-		{
+		switch (eMenuStyle) {
 			case CARD:
 				aSideNav = new MaterialSideNavCard();
 				break;
@@ -268,8 +230,7 @@ public class MaterialMenuLayout extends MenuLayout
 
 		String sId = rMenuStyle.getProperty(ELEMENT_ID, null);
 
-		if (sId != null)
-		{
+		if (sId != null) {
 			// ID needs to be set early or else it won't be detected
 			aSideNav.setId(sId);
 		}
@@ -281,67 +242,54 @@ public class MaterialMenuLayout extends MenuLayout
 		return aSideNav;
 	}
 
-	/***************************************
+	/**
 	 * Creates a menu at the top of the target area.
 	 *
-	 * @param  rMenuStyle rStyle
-	 *
+	 * @param rMenuStyle rStyle
 	 * @return The menu container widget
 	 */
-	protected HasWidgets createTopMenu(StyleData rMenuStyle)
-	{
+	protected HasWidgets createTopMenu(StyleData rMenuStyle) {
 		aNavBar = new GewtMaterialNavBar();
 
 		String sTargetId = rMenuStyle.getProperty(TARGET_ID, null);
 
-		if (sTargetId != null)
-		{
+		if (sTargetId != null) {
 			aNavBar.setActivates(sTargetId);
 		}
 
 		return aNavBar;
 	}
 
-	/***************************************
+	/**
 	 * Checks whether a float alignment needs to be applied to a widget.
 	 *
 	 * @param rWidget The widget
 	 * @param rStyle  The style to check for an alignment
 	 */
-	private void checkApplyFloat(Widget rWidget, StyleData rStyle)
-	{
+	private void checkApplyFloat(Widget rWidget, StyleData rStyle) {
 		Alignment eAlignment = rStyle.getProperty(FLOAT, null);
 
-		if (eAlignment != null)
-		{
-			if (eAlignment == Alignment.BEGIN)
-			{
+		if (eAlignment != null) {
+			if (eAlignment == Alignment.BEGIN) {
 				((HasFloat) rWidget).setFloat(Float.LEFT);
-			}
-			else if (eAlignment == Alignment.END)
-			{
+			} else if (eAlignment == Alignment.END) {
 				((HasFloat) rWidget).setFloat(Float.RIGHT);
 			}
 		}
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * Overridden to set as visible after onLoad().
 	 *
 	 * @author eso
 	 */
-	public static class GewtMaterialNavBar extends MaterialNavBar
-	{
-		//~ Methods ------------------------------------------------------------
+	public static class GewtMaterialNavBar extends MaterialNavBar {
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		protected void onLoad()
-		{
+		protected void onLoad() {
 			super.onLoad();
 			getNavMenu().setVisibility(Style.Visibility.VISIBLE);
 		}

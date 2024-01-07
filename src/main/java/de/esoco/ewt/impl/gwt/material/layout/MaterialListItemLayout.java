@@ -37,123 +37,94 @@ import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 
-
-/********************************************************************
+/**
  * GWT Material implementation for list-style layouts.
  *
  * @author eso
  */
-public class MaterialListItemLayout extends AbstractMaterialLayout
-{
-	//~ Instance fields --------------------------------------------------------
+public class MaterialListItemLayout extends AbstractMaterialLayout {
 
 	private boolean bIsCollapsible;
 
 	private MaterialCollapsibleHeader aItemHeader = null;
-	private MaterialCollapsibleBody   aItemBody   = null;
+
+	private MaterialCollapsibleBody aItemBody = null;
 
 	private MaterialCollectionSecondary aSecondary = null;
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyle,
-						  int		 nIndex)
-	{
-		if (bIsCollapsible)
-		{
+	public void addWidget(HasWidgets rContainer, Widget rWidget,
+		StyleData rStyle, int nIndex) {
+		if (bIsCollapsible) {
 			rWidget = createCollapsibleItemWidget(rWidget);
-		}
-		else
-		{
+		} else {
 			rWidget = createCollectionItemWidget(rWidget, rStyle);
 		}
 
-		if (rWidget != null)
-		{
+		if (rWidget != null) {
 			super.addWidget(rContainer, rWidget, rStyle, nIndex);
 		}
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void clear(HasWidgets rContainer)
-	{
+	public void clear(HasWidgets rContainer) {
 		super.clear(rContainer);
 
 		aItemHeader = null;
-		aItemBody   = null;
+		aItemBody = null;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
+	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
 		MaterialWidget aHasWidgets;
 
 		bIsCollapsible =
 			rContainer.getParent().getWidget() instanceof MaterialCollapsible;
 
-		if (bIsCollapsible)
-		{
+		if (bIsCollapsible) {
 			aHasWidgets = new GewtMaterialCollapsibleItem<Object>();
-		}
-		else
-		{
+		} else {
 			aHasWidgets = new MaterialCollectionItem();
 		}
 
 		return aHasWidgets;
 	}
 
-	/***************************************
-	 * Checks whether the given widget needs to be wrapped into a specific child
+	/**
+	 * Checks whether the given widget needs to be wrapped into a specific
+	 * child
 	 * widget for a {@link MaterialCollapsible} container.
 	 *
-	 * @param  rWidget The widget to check
-	 *
+	 * @param rWidget The widget to check
 	 * @return Either the original widget, a new wrapper widget or NULL if the
-	 *         widget has been added to an existing wrapper
+	 * widget has been added to an existing wrapper
 	 */
-	private Widget createCollapsibleItemWidget(Widget rWidget)
-	{
-		if (aItemHeader == null)
-		{
-			if (rWidget instanceof MaterialCollapsibleHeader)
-			{
+	private Widget createCollapsibleItemWidget(Widget rWidget) {
+		if (aItemHeader == null) {
+			if (rWidget instanceof MaterialCollapsibleHeader) {
 				aItemHeader = (MaterialCollapsibleHeader) rWidget;
-			}
-			else
-			{
+			} else {
 				aItemHeader = new GewtMaterialCollapsibleHeader(rWidget);
-				rWidget     = aItemHeader;
+				rWidget = aItemHeader;
 			}
-		}
-		else if (aItemBody == null)
-		{
-			if (rWidget instanceof MaterialCollapsibleBody)
-			{
+		} else if (aItemBody == null) {
+			if (rWidget instanceof MaterialCollapsibleBody) {
 				aItemBody = (MaterialCollapsibleBody) rWidget;
-			}
-			else
-			{
+			} else {
 				aItemBody = new MaterialCollapsibleBody(rWidget);
-				rWidget   = aItemBody;
+				rWidget = aItemBody;
 			}
-		}
-		else
-		{
+		} else {
 			aItemBody.add(rWidget);
 			rWidget = null;
 		}
@@ -161,28 +132,23 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 		return rWidget;
 	}
 
-	/***************************************
-	 * Checks whether the given widget needs to be wrapped into a specific child
+	/**
+	 * Checks whether the given widget needs to be wrapped into a specific
+	 * child
 	 * widget for a {@link MaterialCollection} container.
 	 *
-	 * @param  rWidget The widget to check
-	 * @param  rStyle
-	 *
+	 * @param rWidget The widget to check
 	 * @return Either the original widget, a new wrapper widget or NULL if the
-	 *         widget has been added to an existing wrapper
+	 * widget has been added to an existing wrapper
 	 */
-	private Widget createCollectionItemWidget(Widget rWidget, StyleData rStyle)
-	{
-		if (rStyle.getProperty(HORIZONTAL_ALIGN, null) == Alignment.END)
-		{
-			if (aSecondary == null)
-			{
+	private Widget createCollectionItemWidget(Widget rWidget,
+		StyleData rStyle) {
+		if (rStyle.getProperty(HORIZONTAL_ALIGN, null) == Alignment.END) {
+			if (aSecondary == null) {
 				aSecondary = new MaterialCollectionSecondary();
 				aSecondary.add(rWidget);
 				rWidget = aSecondary;
-			}
-			else
-			{
+			} else {
 				aSecondary.add(rWidget);
 				rWidget = null;
 			}
@@ -191,24 +157,19 @@ public class MaterialListItemLayout extends AbstractMaterialLayout
 		return rWidget;
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * Implements {@link de.esoco.ewt.impl.gwt.HasEventHandlingDelay}.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialCollapsibleItem<T>
-		extends MaterialCollapsibleItem<T> implements HasEventHandlingDelay
-	{
-		//~ Methods ------------------------------------------------------------
+		extends MaterialCollapsibleItem<T> implements HasEventHandlingDelay {
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public int getEventHandlingDelay()
-		{
+		public int getEventHandlingDelay() {
 			return 300;
 		}
 	}

@@ -22,66 +22,52 @@ import de.esoco.ewt.component.Component;
 import de.esoco.ewt.component.ListControl.IsListControlWidget;
 import de.esoco.ewt.style.StyleData;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialListBox} widgets.
  *
  * @author eso
  */
 public class MaterialListControlFactory
-	extends MaterialWidgetFactory<IsListControlWidget>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<IsListControlWidget> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IsListControlWidget createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
-	{
+	public IsListControlWidget createMaterialWidget(Component rComponent,
+		StyleData rStyle) {
 		return new GewtMaterialListBox();
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * A {@link MaterialListBox} subclass that also implements the interface
 	 * {@link IsListControlWidget}.
 	 *
 	 * @author eso
 	 */
 	static class GewtMaterialListBox extends MaterialListBox
-		implements IsListControlWidget
-	{
-		//~ Constructors -------------------------------------------------------
+		implements IsListControlWidget {
 
-		/***************************************
+		/**
 		 * Creates a new instance.
 		 */
-		public GewtMaterialListBox()
-		{
+		public GewtMaterialListBox() {
 			setNativeBrowserStyle(false);
 		}
 
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void addItem(String rValue)
-		{
+		public void addItem(String rValue) {
 			super.addItem(rValue, false);
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setTitle(String sText)
-		{
+		public void setTitle(String sText) {
 			super.setTitle(sText);
 		}
 	}

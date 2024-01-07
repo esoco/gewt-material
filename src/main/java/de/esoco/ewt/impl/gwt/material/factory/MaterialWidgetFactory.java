@@ -24,37 +24,31 @@ import de.esoco.ewt.style.StyleData;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
-
-/********************************************************************
+/**
  * The base class for all {@link MaterialWidget} factories.
  *
  * @author eso
  */
 public abstract class MaterialWidgetFactory<W extends IsWidget>
-	implements WidgetFactory<W>
-{
-	//~ Methods ----------------------------------------------------------------
+	implements WidgetFactory<W> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public final W createWidget(Component rComponent, StyleData rStyle)
-	{
+	public final W createWidget(Component rComponent, StyleData rStyle) {
 		return createMaterialWidget(rComponent, rStyle);
 	}
 
-	/***************************************
+	/**
 	 * Must be implemented by subclasses to create the {@link MaterialWidget}
 	 * for the given component.
 	 *
-	 * @param  rComponent The component to create the widget for
-	 * @param  rStyle     The style of the new widget
-	 *
+	 * @param rComponent The component to create the widget for
+	 * @param rStyle     The style of the new widget
 	 * @return The new material widget instance
 	 */
-	protected abstract W createMaterialWidget(
-		Component rComponent,
+	protected abstract W createMaterialWidget(Component rComponent,
 		StyleData rStyle);
 }

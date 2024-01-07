@@ -25,53 +25,44 @@ import de.esoco.ewt.property.ImageAttribute;
 
 import com.google.gwt.user.client.ui.Widget;
 
-
-/********************************************************************
- * A mixin for GEWT extensions of GwtMaterial widgets that applies images to Gwt
+/**
+ * A mixin for GEWT extensions of GwtMaterial widgets that applies images to
+ * Gwt
  *
  * @author eso
  */
 public class ImageAttributeMixin<T extends Widget & HasIcon>
-	implements ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+	implements ImageAttribute {
 
-	private T     rWidget;
+	private T rWidget;
+
 	private Image rImage;
 
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
+	/**
 	 * Creates a new instance.
 	 *
 	 * @param rWidget The widget to provide the image attribute for
 	 */
-	public ImageAttributeMixin(T rWidget)
-	{
+	public ImageAttributeMixin(T rWidget) {
 		this.rWidget = rWidget;
 	}
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return rImage;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		this.rImage = rImage;
 
-		if (rImage instanceof Icon)
-		{
+		if (rImage instanceof Icon) {
 			GewtMaterial.applyIconType(((Icon) rImage).getName(), rWidget);
 		}
 	}

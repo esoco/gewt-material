@@ -23,68 +23,58 @@ import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
-
-/********************************************************************
- * A {@link MaterialTextBox} subclass that also implements the interface {@link
- * IsTextControlWidget}.
+/**
+ * A {@link MaterialTextBox} subclass that also implements the interface
+ * {@link IsTextControlWidget}.
  *
  * @author eso
  */
 public class GewtMaterialTextBox extends MaterialTextBox
-	implements IsTextControlWidget, ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+	implements IsTextControlWidget, ImageAttribute {
 
 	private ImageAttributeMixin<GewtMaterialTextBox> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getCursorPos()
-	{
+	public int getCursorPos() {
 		return asValueBoxBase().getCursorPos();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return aImageAttrMixin.getImage();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		aImageAttrMixin.setImage(rImage);
 	}
 
-	/***************************************
+	/**
 	 * @see MaterialTextBox#setType(InputType)
 	 */
 	@Override
-	public void setType(InputType rType)
-	{
+	public void setType(InputType rType) {
 		super.setType(rType);
 
 		// workaround for https://github.com/GwtMaterialDesign/gwt-material/issues/424
 		asValueBoxBase().removeStyleName("validate");
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setVisibleLength(int nColumns)
-	{
+	public void setVisibleLength(int nColumns) {
 		// not supported by base class
 	}
 }

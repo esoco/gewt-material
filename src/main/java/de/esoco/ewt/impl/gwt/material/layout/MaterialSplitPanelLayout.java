@@ -33,45 +33,35 @@ import com.google.gwt.user.client.ui.Widget;
 import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 import static de.esoco.lib.property.StyleProperties.SPLITTER_SIZE;
 
-
-/********************************************************************
- * A layout implementation that creates and manages a {@link
- * MaterialSplitPanel}.
+/**
+ * A layout implementation that creates and manages a
+ * {@link MaterialSplitPanel}.
  *
  * @author eso
  */
-public class MaterialSplitPanelLayout extends SplitPanelLayout
-{
-	//~ Instance fields --------------------------------------------------------
+public class MaterialSplitPanelLayout extends SplitPanelLayout {
 
 	private MaterialSplitPanel aSplitPanel;
 
 	private MaterialPanel aFirst;
+
 	private MaterialPanel aSecond;
-	private int			  nAdded = 0;
 
-	//~ Methods ----------------------------------------------------------------
+	private int nAdded = 0;
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyle)
-	{
+	public void addWidget(HasWidgets rContainer, Widget rWidget,
+		StyleData rStyle) {
 		Alignment eVerticalAlign = rStyle.getVerticalAlignment();
 
-		if (nAdded == 0)
-		{
+		if (nAdded == 0) {
 			aFirst.add(rWidget);
-		}
-		else if (nAdded == 1)
-		{
+		} else if (nAdded == 1) {
 			aSecond.add(rWidget);
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException(
 				"Only two children allowed in split panel");
 		}
@@ -79,14 +69,12 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 		nAdded++;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
-		Container rContainer,
-		StyleData rStyle)
-	{
+	public HasWidgets createLayoutContainer(Container rContainer,
+		StyleData rStyle) {
 		aSplitPanel = new MaterialSplitPanel();
 
 		boolean bVertical =
@@ -96,24 +84,20 @@ public class MaterialSplitPanelLayout extends SplitPanelLayout
 
 		aSplitPanel.setAxis(bVertical ? Axis.VERTICAL : Axis.HORIZONTAL);
 
-		if (nThickness > 0)
-		{
+		if (nThickness > 0) {
 			aSplitPanel.setThickness(nThickness);
 		}
 
-		aFirst  = new MaterialPanel();
+		aFirst = new MaterialPanel();
 		aSecond = new MaterialPanel();
 
 		aSplitPanel.add(aFirst);
 		aSplitPanel.add(aSecond);
 
-		if (bVertical)
-		{
+		if (bVertical) {
 			aFirst.setWidth("100%");
 			aSecond.setWidth("100%");
-		}
-		else
-		{
+		} else {
 			aFirst.setHeight("100%");
 			aSecond.setHeight("100%");
 		}

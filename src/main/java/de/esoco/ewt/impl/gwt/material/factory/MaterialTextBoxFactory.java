@@ -29,40 +29,31 @@ import de.esoco.lib.property.TextFieldStyle;
 
 import static de.esoco.lib.property.StyleProperties.TEXT_FIELD_STYLE;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
 public class MaterialTextBoxFactory
-	extends MaterialWidgetFactory<IsTextControlWidget>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<IsTextControlWidget> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IsTextControlWidget createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
-	{
+	public IsTextControlWidget createMaterialWidget(Component rComponent,
+		StyleData rStyle) {
 		IsTextControlWidget aTextWidget;
 
 		TextFieldStyle eStyle =
 			rStyle.getProperty(TEXT_FIELD_STYLE, TextFieldStyle.DEFAULT);
 
-		if (eStyle == TextFieldStyle.SEARCH)
-		{
+		if (eStyle == TextFieldStyle.SEARCH) {
 			aTextWidget = new GewtMaterialSearch();
-		}
-		else
-		{
+		} else {
 			GewtMaterialTextBox aTextBox = new GewtMaterialTextBox();
 
-			if (eStyle == TextFieldStyle.PASSWORD)
-			{
+			if (eStyle == TextFieldStyle.PASSWORD) {
 				aTextBox.setType(InputType.PASSWORD);
 			}
 

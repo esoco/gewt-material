@@ -22,75 +22,62 @@ import de.esoco.ewt.component.TextArea.IsTextArea;
 import de.esoco.ewt.graphics.Image;
 import de.esoco.ewt.property.ImageAttribute;
 
-
-/********************************************************************
- * A {@link MaterialTextArea} subclass that also implements the interface {@link
- * IsTextArea}.
+/**
+ * A {@link MaterialTextArea} subclass that also implements the interface
+ * {@link IsTextArea}.
  *
  * @author eso
  */
 public class GewtMaterialTextArea extends MaterialTextArea
-	implements IsTextArea, ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+	implements IsTextArea, ImageAttribute {
 
 	private ImageAttributeMixin<GewtMaterialTextArea> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
+	/**
 	 * Creates a new instance.
 	 */
-	public GewtMaterialTextArea()
-	{
+	public GewtMaterialTextArea() {
 		setResizeRule(ResizeRule.AUTO);
 	}
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getCursorPos()
-	{
+	public int getCursorPos() {
 		return asValueBoxBase().getCursorPos();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return aImageAttrMixin.getImage();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCharacterWidth(int nColumns)
-	{
+	public void setCharacterWidth(int nColumns) {
 		// not supported by base class
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		aImageAttrMixin.setImage(rImage);
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setReadOnly(boolean bReadOnly)
-	{
+	public void setReadOnly(boolean bReadOnly) {
 		super.setReadOnly(bReadOnly);
 
 		// fix for gwt-material issue
@@ -98,21 +85,19 @@ public class GewtMaterialTextArea extends MaterialTextArea
 		getValueBoxBase().setReadOnly(bReadOnly);
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setVisibleLength(int nColumns)
-	{
+	public void setVisibleLength(int nColumns) {
 		// not supported by base class
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setVisibleLines(int nRows)
-	{
+	public void setVisibleLines(int nRows) {
 		// not supported by base class
 	}
 }

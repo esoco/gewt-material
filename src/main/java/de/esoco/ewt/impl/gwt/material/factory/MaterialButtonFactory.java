@@ -38,50 +38,39 @@ import com.google.gwt.user.client.ui.Widget;
 import static de.esoco.lib.property.LayoutProperties.FLOAT;
 import static de.esoco.lib.property.StyleProperties.BUTTON_STYLE;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
 public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
-	extends MaterialWidgetFactory<W>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<W> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public W createMaterialWidget(Component rComponent, StyleData rStyle)
-	{
+	public W createMaterialWidget(Component rComponent, StyleData rStyle) {
 		ButtonStyle eButtonStyle =
 			rStyle.getProperty(BUTTON_STYLE, ButtonStyle.DEFAULT);
 
-		ButtonType     eButtonType   = mapButtonType(eButtonStyle);
+		ButtonType eButtonType = mapButtonType(eButtonStyle);
 		AbstractButton aButtonWidget;
 
 		if (eButtonType == ButtonType.LINK ||
-			rStyle.hasFlag(StyleFlag.HYPERLINK))
-		{
+			rStyle.hasFlag(StyleFlag.HYPERLINK)) {
 			aButtonWidget = new GewtMaterialLink();
-		}
-		else if (eButtonStyle == ButtonStyle.ICON)
-		{
+		} else if (eButtonStyle == ButtonStyle.ICON) {
 			aButtonWidget = new GewtMaterialIcon();
-		}
-		else if (eButtonStyle == ButtonStyle.FLOAT && rStyle.hasProperty(FLOAT))
-		{
+		} else if (eButtonStyle == ButtonStyle.FLOAT &&
+			rStyle.hasProperty(FLOAT)) {
 			aButtonWidget = new GewtMaterialAnchorButton();
-		}
-		else
-		{
+		} else {
 			aButtonWidget = new GewtMaterialButton();
 		}
 
-		if (eButtonType != null)
-		{
+		if (eButtonType != null) {
 			aButtonWidget.setType(eButtonType);
 		}
 
@@ -92,20 +81,17 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 		return (W) aButtonWidget;
 	}
 
-	/***************************************
+	/**
 	 * Maps the {@link ButtonStyle} from a style data object to a GwtMaterial
 	 * {@link ButtonType} constant.
 	 *
-	 * @param  eButtonStyle rStyle The style data to read the button style from
-	 *
+	 * @param eButtonStyle rStyle The style data to read the button style from
 	 * @return The button type or NULL for a default or if no mapping exists
 	 */
-	private ButtonType mapButtonType(ButtonStyle eButtonStyle)
-	{
+	private ButtonType mapButtonType(ButtonStyle eButtonStyle) {
 		ButtonType eButtonType;
 
-		switch (eButtonStyle)
-		{
+		switch (eButtonStyle) {
 			case FLAT:
 				eButtonType = ButtonType.FLAT;
 				break;

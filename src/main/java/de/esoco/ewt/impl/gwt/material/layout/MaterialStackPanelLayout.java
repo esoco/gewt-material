@@ -28,78 +28,67 @@ import de.esoco.lib.property.Orientation;
 
 import static de.esoco.lib.property.StyleProperties.ORIENTATION;
 
-
-/********************************************************************
+/**
  * A layout implementation that creates and manages a {@link MaterialStepper}.
  *
  * @author eso
  */
 public class MaterialStackPanelLayout
-	extends MaterialSwitchPanelLayout<MaterialStepper, MaterialStep>
-{
-	//~ Instance fields --------------------------------------------------------
+	extends MaterialSwitchPanelLayout<MaterialStepper, MaterialStep> {
 
 	private MaterialStepper aStepper;
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addPage(Component rStepComponent,
-						String    sStepTitle,
-						boolean   bCloseable)
-	{
+	public void addPage(Component rStepComponent, String sStepTitle,
+		boolean bCloseable) {
 		MaterialStep aStep = new MaterialStep();
 
 		aStepper.add(aStep);
 		aStep.add(rStepComponent.getWidget());
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MaterialStepper createPanelWidget(
-		Container rContainer,
-		StyleData rStyle)
-	{
+	public MaterialStepper createPanelWidget(Container rContainer,
+		StyleData rStyle) {
 		aStepper = new MaterialStepper();
 
-		aStepper.setAxis(rStyle.getProperty(ORIENTATION, null) ==
-						 Orientation.VERTICAL ? Axis.VERTICAL
-											  : Axis.HORIZONTAL);
+		aStepper.setAxis(
+			rStyle.getProperty(ORIENTATION, null) == Orientation.VERTICAL ?
+			Axis.VERTICAL :
+			Axis.HORIZONTAL);
 
 		return aStepper;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getSelectionIndex()
-	{
+	public int getSelectionIndex() {
 		return aStepper.getCurrentStepIndex();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPageTitle(int nIndex, String sTitle)
-	{
+	public void setPageTitle(int nIndex, String sTitle) {
 		MaterialStep rStep = (MaterialStep) aStepper.getWidget(nIndex);
 
 		rStep.setTitle(sTitle);
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setSelection(int nIndex)
-	{
+	public void setSelection(int nIndex) {
 		aStepper.goToStep(nIndex + 1);
 	}
 }

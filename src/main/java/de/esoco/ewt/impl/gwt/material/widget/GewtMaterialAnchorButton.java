@@ -24,37 +24,30 @@ import de.esoco.ewt.property.ImageAttribute;
 
 import com.google.gwt.user.client.ui.HasText;
 
-
-/********************************************************************
+/**
  * A {@link MaterialButton} subclass that also implements {@link HasText}.
  *
  * @author eso
  */
 public class GewtMaterialAnchorButton extends MaterialAnchorButton
-	implements HasText, ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+	implements HasText, ImageAttribute {
 
 	private ImageAttributeMixin<GewtMaterialAnchorButton> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return aImageAttrMixin.getImage();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		aImageAttrMixin.setImage(rImage);
 	}
 }

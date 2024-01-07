@@ -23,25 +23,20 @@ import de.esoco.ewt.style.StyleData;
 
 import com.google.gwt.user.client.ui.RadioButton;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialRadioButton} widgets.
  *
  * @author eso
  */
 public class MaterialRadioButtonFactory
-	extends MaterialWidgetFactory<RadioButton>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<RadioButton> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RadioButton createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
-	{
+	public RadioButton createMaterialWidget(Component rComponent,
+		StyleData rStyle) {
 		return new MaterialRadioButton();
 	}
 }

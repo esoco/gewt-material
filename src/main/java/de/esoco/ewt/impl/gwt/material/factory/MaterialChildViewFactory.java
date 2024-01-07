@@ -30,143 +30,113 @@ import de.esoco.ewt.style.ViewStyle.Flag;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
-
-/********************************************************************
+/**
  * A child view factory that creates instances of material dialogs.
  *
  * @author eso
  */
-public class MaterialChildViewFactory extends ChildViewFactory
-{
-	//~ Methods ----------------------------------------------------------------
+public class MaterialChildViewFactory extends ChildViewFactory {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IsChildViewWidget createChildViewWidget(
-		View	  rParent,
-		ViewStyle rStyle)
-	{
-		if (rStyle.hasFlag(ViewStyle.Flag.MODAL))
-		{
+	public IsChildViewWidget createChildViewWidget(View rParent,
+		ViewStyle rStyle) {
+		if (rStyle.hasFlag(ViewStyle.Flag.MODAL)) {
 			return createViewWidget(rParent, rStyle);
-		}
-		else
-		{
+		} else {
 			return super.createChildViewWidget(rParent, rStyle);
 		}
 	}
 
-	/***************************************
+	/**
 	 * Creates the actual view widget.
 	 *
-	 * @param  rParent The parent view
-	 * @param  rStyle  The view style
-	 *
+	 * @param rParent The parent view
+	 * @param rStyle  The view style
 	 * @return The view widget
 	 */
-	private IsChildViewWidget createViewWidget(View rParent, ViewStyle rStyle)
-	{
-		GewtMaterialDialog aModal	    = new GewtMaterialDialog(rStyle);
-		Widget			  rParentWidget = rParent.getWidget();
+	private IsChildViewWidget createViewWidget(View rParent,
+		ViewStyle rStyle) {
+		GewtMaterialDialog aModal = new GewtMaterialDialog(rStyle);
+		Widget rParentWidget = rParent.getWidget();
 
-		if (rParentWidget instanceof HasWidgets)
-		{
+		if (rParentWidget instanceof HasWidgets) {
 			((HasWidgets) rParentWidget).add(aModal);
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException("Unsupported parent widget type");
 		}
 
 		return aModal;
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * A subclass of material dialogs that also implements the child view
 	 * interface.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialDialog extends MaterialDialog
-		implements IsChildViewWidget
-	{
-		//~ Instance fields ----------------------------------------------------
+		implements IsChildViewWidget {
 
 		private MaterialTitle aTitle = null;
 
-		//~ Constructors -------------------------------------------------------
-
-		/***************************************
+		/**
 		 * Creates a new instance.
 		 *
 		 * @param rStyle The view style
 		 */
-		public GewtMaterialDialog(ViewStyle rStyle)
-		{
+		public GewtMaterialDialog(ViewStyle rStyle) {
 			setInDuration(500);
 			setOutDuration(500);
 			setDismissible(rStyle.hasFlag(Flag.AUTO_HIDE));
 
-			if (rStyle.hasFlag(Flag.BOTTOM))
-			{
+			if (rStyle.hasFlag(Flag.BOTTOM)) {
 				setType(DialogType.BOTTOM_SHEET);
 			}
 		}
 
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void hide()
-		{
+		public void hide() {
 			close();
 
-			if (getParent() instanceof HasWidgets)
-			{
+			if (getParent() instanceof HasWidgets) {
 				((HasWidgets) getParent()).remove(this);
 			}
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public boolean isShown()
-		{
+		public boolean isShown() {
 			return isAttached();
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setViewTitle(String sTitle)
-		{
-			if (aTitle == null)
-			{
+		public void setViewTitle(String sTitle) {
+			if (aTitle == null) {
 				aTitle = new MaterialTitle(sTitle);
 				insert(aTitle, 0);
 
 				aTitle.addStyleName(EWT.CSS.ewtDialogTitle());
-			}
-			else
-			{
+			} else {
 				aTitle.setTitle(sTitle);
 			}
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void show()
-		{
+		public void show() {
 			open();
 		}
 	}

@@ -25,88 +25,76 @@ import de.esoco.ewt.property.ImageAttribute;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasText;
 
-
-/********************************************************************
+/**
  * A {@link MaterialIcon} subclass that also implements {@link HasText}.
  *
  * @author eso
  */
-public class GewtMaterialIcon extends MaterialIcon implements HasHTML,
-															  ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+public class GewtMaterialIcon extends MaterialIcon
+	implements HasHTML, ImageAttribute {
+
+	Span aTextSpan = null;
 
 	private ImageAttributeMixin<GewtMaterialIcon> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	Span aTextSpan = null;
-
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getHTML()
-	{
+	public String getHTML() {
 		return getText();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return aImageAttrMixin.getImage();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getText()
-	{
+	public String getText() {
 		return aTextSpan != null ? aTextSpan.getText() : "";
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setHTML(String sHtml)
-	{
+	public void setHTML(String sHtml) {
 		setText(sHtml);
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		aImageAttrMixin.setImage(rImage);
 	}
 
-	/***************************************
+	/**
 	 * Overridden to prevent error "this$static_0_g$ is null" on updating the
-	 * label. It occurs because {@link
-	 * gwt.material.design.client.base.AbstractButton} always removes the text
-	 * span in the {@link
-	 * gwt.material.design.client.base.AbstractButton#setText(String)} method.
+	 * label. It occurs because
+	 * {@link gwt.material.design.client.base.AbstractButton} always removes
+	 * the
+	 * text span in the
+	 * {@link gwt.material.design.client.base.AbstractButton#setText(String)}
+	 * method.
 	 *
 	 * @see HasText#setText(String)
 	 */
 	@Override
-	public void setText(String sText)
-	{
-		if (aTextSpan == null)
-		{
+	public void setText(String sText) {
+		if (aTextSpan == null) {
 			aTextSpan = new Span(sText);
 			add(aTextSpan);
-		}
-		else
-		{
+		} else {
 			aTextSpan.setText(sText);
 		}
 	}

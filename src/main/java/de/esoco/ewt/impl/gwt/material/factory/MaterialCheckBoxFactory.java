@@ -34,37 +34,29 @@ import com.google.gwt.user.client.ui.Widget;
 
 import static de.esoco.lib.property.StyleProperties.CHECK_BOX_STYLE;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialCheckBox} widgets.
  *
  * @author eso
  */
 public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & HasValue<Boolean>>
-	extends MaterialWidgetFactory<W>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<W> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public W createMaterialWidget(Component rComponent, StyleData rStyle)
-	{
-		CheckBoxStyle eStyle  = rStyle.getProperty(CHECK_BOX_STYLE, null);
-		Widget		  aWidget;
+	public W createMaterialWidget(Component rComponent, StyleData rStyle) {
+		CheckBoxStyle eStyle = rStyle.getProperty(CHECK_BOX_STYLE, null);
+		Widget aWidget;
 
-		if (eStyle == CheckBoxStyle.SWITCH)
-		{
+		if (eStyle == CheckBoxStyle.SWITCH) {
 			aWidget = new GewtMaterialSwitch();
-		}
-		else
-		{
+		} else {
 			MaterialCheckBox aCheckBox = new GewtMaterialCheckBox();
 
-			if (eStyle == CheckBoxStyle.SOLID)
-			{
+			if (eStyle == CheckBoxStyle.SOLID) {
 				aCheckBox.setType(CheckBoxType.FILLED);
 			}
 
@@ -74,78 +66,63 @@ public class MaterialCheckBoxFactory<W extends Widget & Focusable & HasHTML & Ha
 		return (W) aWidget;
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
-	 * Subclass of {@link MaterialCheckBox} that implements {@link
-	 * HasEventHandlingDelay}.
+	/**
+	 * Subclass of {@link MaterialCheckBox} that implements
+	 * {@link HasEventHandlingDelay}.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialCheckBox extends MaterialCheckBox
-		implements HasEventHandlingDelay
-	{
-		//~ Methods ------------------------------------------------------------
+		implements HasEventHandlingDelay {
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public int getEventHandlingDelay()
-		{
+		public int getEventHandlingDelay() {
 			return 100;
 		}
 	}
 
-	/********************************************************************
+	/**
 	 * A subclass of {@link MaterialSwitch} that implements the methods of
-	 * {@link HasHTML} to set the switch label. It also implements {@link
-	 * HasEventHandlingDelay}.
+	 * {@link HasHTML} to set the switch label. It also implements
+	 * {@link HasEventHandlingDelay}.
 	 *
 	 * @author eso
 	 */
 	public class GewtMaterialSwitch extends MaterialSwitch
-		implements HasText, HasEventHandlingDelay
-	{
-		//~ Instance fields ----------------------------------------------------
+		implements HasText, HasEventHandlingDelay {
 
 		private String sText;
 
-		//~ Constructors -------------------------------------------------------
-
-		/***************************************
+		/**
 		 * Creates a new instance.
 		 */
-		public GewtMaterialSwitch()
-		{
+		public GewtMaterialSwitch() {
 		}
 
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public int getEventHandlingDelay()
-		{
+		public int getEventHandlingDelay() {
 			return 100;
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String getText()
-		{
+		public String getText() {
 			return sText;
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setText(String sText)
-		{
+		public void setText(String sText) {
 			super.setOnLabel(sText);
 			this.sText = sText;
 		}

@@ -27,38 +27,29 @@ import de.esoco.lib.property.LayoutType;
 
 import static de.esoco.lib.property.StyleProperties.USE_STANDARD_COMPONENT;
 
-
-/********************************************************************
+/**
  * A factory and mapper that creates layouts or maps GEWT layouts to new layouts
  * that are based on GwtMaterialDesign widgets.
  *
  * @author eso
  */
 public class MaterialLayoutFactory extends DefaultLayoutFactory
-	implements LayoutMapper
-{
-	//~ Methods ----------------------------------------------------------------
+	implements LayoutMapper {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GenericLayout createLayout(Container  rParentContainer,
-									  StyleData  rContainerStyle,
-									  LayoutType eLayout)
-	{
+	public GenericLayout createLayout(Container rParentContainer,
+		StyleData rContainerStyle, LayoutType eLayout) {
 		GenericLayout aLayout;
 
-		if (rContainerStyle.hasFlag(USE_STANDARD_COMPONENT))
-		{
-			return super.createLayout(
-				rParentContainer,
-				rContainerStyle,
+		if (rContainerStyle.hasFlag(USE_STANDARD_COMPONENT)) {
+			return super.createLayout(rParentContainer, rContainerStyle,
 				eLayout);
 		}
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case SPLIT:
 				aLayout = new MaterialSplitPanelLayout();
 				break;
@@ -105,24 +96,20 @@ public class MaterialLayoutFactory extends DefaultLayoutFactory
 				break;
 
 			default:
-				aLayout =
-					super.createLayout(
-						rParentContainer,
-						rContainerStyle,
-						eLayout);
+				aLayout = super.createLayout(rParentContainer, rContainerStyle,
+					eLayout);
 		}
 
 		return aLayout;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public GenericLayout mapLayout(Container rContainer, GenericLayout aLayout)
-	{
-		if (aLayout instanceof MainViewLayout)
-		{
+	public GenericLayout mapLayout(Container rContainer,
+		GenericLayout aLayout) {
+		if (aLayout instanceof MainViewLayout) {
 			aLayout = new MaterialMainViewLayout();
 		}
 

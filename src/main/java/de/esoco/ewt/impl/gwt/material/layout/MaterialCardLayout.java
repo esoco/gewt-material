@@ -33,117 +33,87 @@ import de.esoco.ewt.style.StyleData;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
-
-/********************************************************************
+/**
  * GWT Material implementation of card layouts.
  *
  * @author eso
  */
-public class MaterialCardLayout extends AbstractMaterialLayout
-{
-	//~ Instance fields --------------------------------------------------------
+public class MaterialCardLayout extends AbstractMaterialLayout {
 
 	private MaterialCardContent aCardContent;
-	private MaterialCardAction  aCardAction;
-	private MaterialCardImage   aCardImage;
 
-	//~ Methods ----------------------------------------------------------------
+	private MaterialCardAction aCardAction;
 
-	/***************************************
+	private MaterialCardImage aCardImage;
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyle,
-						  int		 nIndex)
-	{
-		if (rWidget instanceof AbstractButton)
-		{
-			if (aCardAction == null)
-			{
+	public void addWidget(HasWidgets rContainer, Widget rWidget,
+		StyleData rStyle, int nIndex) {
+		if (rWidget instanceof AbstractButton) {
+			if (aCardAction == null) {
 				aCardAction = new MaterialCardAction();
 				aCardAction.add(rWidget);
 				rWidget = aCardAction;
 
 				GewtMaterial.checkApplyAlignment(rWidget, rStyle);
-			}
-			else
-			{
+			} else {
 				aCardAction.add(rWidget);
 				rWidget = null;
 			}
-		}
-		else if (rWidget instanceof MaterialImage &&
-				 aCardImage == null &&
-				 aCardContent == null)
-		{
+		} else if (rWidget instanceof MaterialImage && aCardImage == null &&
+			aCardContent == null) {
 			// if first image on card wrap it into card image
 			aCardImage = new MaterialCardImage();
 			aCardImage.add(rWidget);
 			rWidget = aCardImage;
-		}
-		else if (rWidget instanceof MaterialCardContent)
-		{
+		} else if (rWidget instanceof MaterialCardContent) {
 			aCardContent = (MaterialCardContent) rWidget;
-		}
-		else if (rWidget instanceof MaterialCardAction)
-		{
+		} else if (rWidget instanceof MaterialCardAction) {
 			aCardAction = (MaterialCardAction) rWidget;
-		}
-		else if (rWidget instanceof MaterialCardImage)
-		{
+		} else if (rWidget instanceof MaterialCardImage) {
 			aCardImage = (MaterialCardImage) rWidget;
-		}
-		else if (!(rWidget instanceof MaterialCardReveal))
-		{
-			if (aCardContent == null)
-			{
-				if (rWidget instanceof MaterialCardTitle && aCardImage != null)
-				{
+		} else if (!(rWidget instanceof MaterialCardReveal)) {
+			if (aCardContent == null) {
+				if (rWidget instanceof MaterialCardTitle &&
+					aCardImage != null) {
 					aCardImage.add(rWidget);
 					rWidget = null;
-				}
-				else
-				{
+				} else {
 					aCardContent = new MaterialCardContent();
 					aCardContent.add(rWidget);
 					rWidget = aCardContent;
 				}
-			}
-			else
-			{
+			} else {
 				aCardContent.add(rWidget);
 				rWidget = null;
 			}
 		}
 
-		if (rWidget != null)
-		{
+		if (rWidget != null) {
 			super.addWidget(rContainer, rWidget, rStyle, nIndex);
 		}
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void clear(HasWidgets rContainer)
-	{
+	public void clear(HasWidgets rContainer) {
 		super.clear(rContainer);
 
 		aCardContent = null;
-		aCardAction  = null;
+		aCardAction = null;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
+	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
 		return new MaterialCard();
 	}
 }

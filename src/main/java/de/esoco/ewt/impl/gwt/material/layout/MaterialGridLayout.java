@@ -25,48 +25,35 @@ import de.esoco.ewt.style.StyleData;
 
 import de.esoco.lib.property.LayoutType;
 
-
-/********************************************************************
+/**
  * A GwtMaterial layout implementation for elements in a responsive grid.
  *
  * @author eso
  */
-final class MaterialGridLayout extends AbstractMaterialLayout
-{
-	//~ Instance fields --------------------------------------------------------
+final class MaterialGridLayout extends AbstractMaterialLayout {
 
 	private LayoutType eLayout;
 
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
+	/**
 	 * Creates a new instance.
 	 *
 	 * @param eLayout The layout
 	 */
-	public MaterialGridLayout(LayoutType eLayout)
-	{
+	public MaterialGridLayout(LayoutType eLayout) {
 		this.eLayout = eLayout;
 	}
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
+	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
 		MaterialWidget rContainerWidget;
 
-		if (eLayout == LayoutType.GRID_ROW)
-		{
+		if (eLayout == LayoutType.GRID_ROW) {
 			rContainerWidget = new MaterialRow();
-		}
-		else
-		{
+		} else {
 			rContainerWidget = new MaterialColumn();
 		}
 

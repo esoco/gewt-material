@@ -24,66 +24,58 @@ import de.esoco.ewt.property.ImageAttribute;
 
 import com.google.gwt.user.client.ui.HasText;
 
-
-/********************************************************************
+/**
  * A {@link MaterialImage} subclass that also implements {@link HasText} and
  * {@link ImageAttribute}.
  *
  * @author eso
  */
-public class GewtMaterialImage extends MaterialImage implements HasText,
-																ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+public class GewtMaterialImage extends MaterialImage
+	implements HasText, ImageAttribute {
 
 	private Image rImage;
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return rImage;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getText()
-	{
+	public String getText() {
 		return getCaption();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		this.rImage = rImage;
 
-		if (rImage instanceof ImageRef)
-		{
+		if (rImage instanceof ImageRef) {
 			setUrl(((ImageRef) rImage).getGwtImage().getUrl());
 		}
 	}
 
-	/***************************************
+	/**
 	 * Overridden to prevent error "this$static_0_g$ is null" on updating the
-	 * label. It occurs because {@link
-	 * gwt.material.design.client.base.AbstractButton} always removes the text
-	 * span in the {@link
-	 * gwt.material.design.client.base.AbstractButton#setText(String)} method.
+	 * label. It occurs because
+	 * {@link gwt.material.design.client.base.AbstractButton} always removes
+	 * the
+	 * text span in the
+	 * {@link gwt.material.design.client.base.AbstractButton#setText(String)}
+	 * method.
 	 *
 	 * @see HasText#setText(String)
 	 */
 	@Override
-	public void setText(String sText)
-	{
+	public void setText(String sText) {
 		setCaption(sText);
 	}
 }

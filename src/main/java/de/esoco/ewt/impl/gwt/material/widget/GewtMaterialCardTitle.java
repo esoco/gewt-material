@@ -24,47 +24,39 @@ import de.esoco.ewt.property.ImageAttribute;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-
-/********************************************************************
- * A {@link MaterialCardTitle} subclass that also implements {@link
- * ImageAttribute}.
+/**
+ * A {@link MaterialCardTitle} subclass that also implements
+ * {@link ImageAttribute}.
  *
  * @author eso
  */
 public class GewtMaterialCardTitle extends MaterialCardTitle
-	implements ImageAttribute
-{
-	//~ Instance fields --------------------------------------------------------
+	implements ImageAttribute {
 
 	private ImageAttributeMixin<GewtMaterialCardTitle> aImageAttrMixin =
 		new ImageAttributeMixin<>(this);
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HandlerRegistration addClickHandler(ClickHandler rHandler)
-	{
+	public HandlerRegistration addClickHandler(ClickHandler rHandler) {
 		return getIcon().addClickHandler(rHandler);
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getImage()
-	{
+	public Image getImage() {
 		return aImageAttrMixin.getImage();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setImage(Image rImage)
-	{
+	public void setImage(Image rImage) {
 		aImageAttrMixin.setImage(rImage);
 	}
 }

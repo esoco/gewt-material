@@ -22,24 +22,19 @@ import gwt.material.design.client.ui.MaterialPanel;
 import de.esoco.ewt.component.Container;
 import de.esoco.ewt.style.StyleData;
 
-
-/********************************************************************
+/**
  * GwtMaterial layout implementation for {@link Layout#FLOW}.
  *
  * @author eso
  */
-final class MaterialFlowLayout extends AbstractMaterialLayout
-{
-	//~ Methods ----------------------------------------------------------------
+final class MaterialFlowLayout extends AbstractMaterialLayout {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
+	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
 		return new MaterialPanel();
 	}
 }

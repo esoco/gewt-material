@@ -43,45 +43,35 @@ import com.google.gwt.user.client.ui.Widget;
 import static de.esoco.lib.property.StyleProperties.HAS_IMAGES;
 import static de.esoco.lib.property.StyleProperties.LABEL_STYLE;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
 public class MaterialLabelFactory<W extends Widget & HasText>
-	extends MaterialWidgetFactory<W>
-{
-	//~ Instance fields --------------------------------------------------------
+	extends MaterialWidgetFactory<W> {
 
 	private LabelWidgetFactory<W> aDefaultFactory = new LabelWidgetFactory<>();
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public W createMaterialWidget(Component rComponent, StyleData rStyle)
-	{
+	public W createMaterialWidget(Component rComponent, StyleData rStyle) {
 		Widget aWidget = null;
 
-		if (rStyle.hasFlag(StyleFlag.HYPERLINK))
-		{
+		if (rStyle.hasFlag(StyleFlag.HYPERLINK)) {
 			aWidget = new MaterialLink();
-		}
-		else
-		{
+		} else {
 			LabelStyle eLabelStyle =
 				rStyle.getProperty(LABEL_STYLE, LabelStyle.DEFAULT);
 
-			switch (eLabelStyle)
-			{
+			switch (eLabelStyle) {
 				case DEFAULT:
-					aWidget =
-						rStyle.hasFlag(HAS_IMAGES) ? new GewtMaterialIcon()
-												   : new GewtMaterialLabel();
+					aWidget = rStyle.hasFlag(HAS_IMAGES) ?
+					          new GewtMaterialIcon() :
+					          new GewtMaterialLabel();
 					break;
 
 				case BRAND:
@@ -97,81 +87,69 @@ public class MaterialLabelFactory<W extends Widget & HasText>
 					break;
 
 				case TITLE:
-					aWidget =
-						isCardElement(rComponent) ? new GewtMaterialCardTitle()
-												  : new GewtMaterialTitle();
+					aWidget = isCardElement(rComponent) ?
+					          new GewtMaterialCardTitle() :
+					          new GewtMaterialTitle();
 					break;
 
 				default:
-					aWidget =
-						aDefaultFactory.createLabelWidget(rComponent,
-														  eLabelStyle,
-														  rStyle);
+					aWidget = aDefaultFactory.createLabelWidget(rComponent,
+						eLabelStyle, rStyle);
 			}
 		}
 
 		return (W) aWidget;
 	}
 
-	/***************************************
-	 * Checks whether the given component is a child element of a {@link
-	 * MaterialCard} widget.
+	/**
+	 * Checks whether the given component is a child element of a
+	 * {@link MaterialCard} widget.
 	 *
-	 * @param  rComponent The component to check
-	 *
+	 * @param rComponent The component to check
 	 * @return TRUE if it is a child element of a card
 	 */
-	private boolean isCardElement(Component rComponent)
-	{
+	private boolean isCardElement(Component rComponent) {
 		Widget rParentWidget = rComponent.getParent().getWidget();
 
 		return rParentWidget instanceof MaterialCard ||
-			   rParentWidget instanceof MaterialCardContent ||
-			   rParentWidget instanceof MaterialCardReveal;
+			rParentWidget instanceof MaterialCardContent ||
+			rParentWidget instanceof MaterialCardReveal;
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * Material label that also implements {@link HasHTML}.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialLabel extends MaterialLabel
-		implements HasHTML
-	{
-		//~ Instance fields ----------------------------------------------------
+		implements HasHTML {
 
-		private HTMLMixin<GewtMaterialLabel> aHtmlMixin = new HTMLMixin<>(this);
+		private HTMLMixin<GewtMaterialLabel> aHtmlMixin =
+			new HTMLMixin<>(this);
 
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String getHTML()
-		{
+		public String getHTML() {
 			return aHtmlMixin.getHTML();
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setHTML(String sHtml)
-		{
+		public void setHTML(String sHtml) {
 			aHtmlMixin.setHTML(sHtml);
 		}
 	}
 
-	/********************************************************************
+	/**
 	 * Subclassed to implement {@link HasText}.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialNavBrand extends MaterialNavBrand
-		implements HasText
-	{
+		implements HasText {
 	}
 }

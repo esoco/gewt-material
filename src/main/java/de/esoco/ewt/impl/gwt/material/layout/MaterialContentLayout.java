@@ -47,58 +47,44 @@ import de.esoco.lib.property.LayoutType;
 
 import com.google.gwt.user.client.ui.Widget;
 
-
-/********************************************************************
+/**
  * GWT Material implementation for content-specific layouts.
  *
  * @author eso
  */
-public class MaterialContentLayout extends AbstractMaterialLayout
-{
-	//~ Enums ------------------------------------------------------------------
+public class MaterialContentLayout extends AbstractMaterialLayout {
 
-	/********************************************************************
+	/**
 	 * Internal enumeration of the different content areas to consider.
 	 */
-	private enum ContentArea
-	{
+	private enum ContentArea {
 		GLOBAL, CARD, COLLAPSIBLE, COLLECTION, MENU, DIALOG
 	}
 
-	//~ Instance fields --------------------------------------------------------
-
 	private LayoutType eLayout;
 
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
+	/**
 	 * Creates a new instance.
 	 *
 	 * @param eLayout The layout of the content
 	 */
-	public MaterialContentLayout(LayoutType eLayout)
-	{
+	public MaterialContentLayout(LayoutType eLayout) {
 		this.eLayout = eLayout;
 	}
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
-		Widget		   rParentWidget = rContainer.getParent().getWidget();
+	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
+		Widget rParentWidget = rContainer.getParent().getWidget();
 		MaterialWidget aLayoutWidget = null;
-		ContentArea    eContentArea;
+		ContentArea eContentArea;
 
 		eContentArea = getContentArea(rParentWidget);
 
-		switch (eContentArea)
-		{
+		switch (eContentArea) {
 			case CARD:
 				aLayoutWidget = createCardContentContainer(eLayout);
 				break;
@@ -124,30 +110,25 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 				break;
 		}
 
-		if (aLayoutWidget == null)
-		{
-			throw new IllegalArgumentException("Unsupported content layout " +
-											   eLayout + " for " +
-											   rParentWidget.getClass()
-											   .getSimpleName());
+		if (aLayoutWidget == null) {
+			throw new IllegalArgumentException(
+				"Unsupported content layout " + eLayout + " for " +
+					rParentWidget.getClass().getSimpleName());
 		}
 
 		return aLayoutWidget;
 	}
 
-	/***************************************
+	/**
 	 * Creates the content layout widgets for a {@link MaterialCard} container.
 	 *
-	 * @param  eLayout The content layout type
-	 *
+	 * @param eLayout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCardContentContainer(LayoutType eLayout)
-	{
+	MaterialWidget createCardContentContainer(LayoutType eLayout) {
 		MaterialWidget aLayoutWidget;
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case CONTENT:
 				aLayoutWidget = new MaterialCardContent();
 				break;
@@ -167,20 +148,17 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		return aLayoutWidget;
 	}
 
-	/***************************************
+	/**
 	 * Creates the content layout widgets for a {@link MaterialCollapsible}
 	 * container.
 	 *
-	 * @param  eLayout The content layout type
-	 *
+	 * @param eLayout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCollapsibleContentContainer(LayoutType eLayout)
-	{
+	MaterialWidget createCollapsibleContentContainer(LayoutType eLayout) {
 		MaterialWidget aLayoutWidget;
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case HEADER:
 				aLayoutWidget = new GewtMaterialCollapsibleHeader();
 				break;
@@ -196,20 +174,17 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		return aLayoutWidget;
 	}
 
-	/***************************************
+	/**
 	 * Creates the content layout widgets for a {@link MaterialCollapsible}
 	 * container.
 	 *
-	 * @param  eLayout The content layout type
-	 *
+	 * @param eLayout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createCollectionContentContainer(LayoutType eLayout)
-	{
+	MaterialWidget createCollectionContentContainer(LayoutType eLayout) {
 		MaterialWidget aLayoutWidget;
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case SECONDARY_CONTENT:
 				aLayoutWidget = new MaterialCollectionSecondary();
 				break;
@@ -221,19 +196,16 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		return aLayoutWidget;
 	}
 
-	/***************************************
+	/**
 	 * Creates the global content layout widgets.
 	 *
-	 * @param  eLayout The content layout type
-	 *
+	 * @param eLayout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createGlobalContentContainer(LayoutType eLayout)
-	{
+	MaterialWidget createGlobalContentContainer(LayoutType eLayout) {
 		MaterialWidget aLayoutWidget;
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case HEADER:
 				aLayoutWidget = new MaterialHeader();
 				break;
@@ -253,20 +225,17 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		return aLayoutWidget;
 	}
 
-	/***************************************
+	/**
 	 * Creates the content layout widgets for a {@link MaterialHeader}
 	 * container.
 	 *
-	 * @param  eLayout The content layout type
-	 *
+	 * @param eLayout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createMenuContentContainer(LayoutType eLayout)
-	{
+	MaterialWidget createMenuContentContainer(LayoutType eLayout) {
 		MaterialWidget aLayoutWidget;
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case SECONDARY_CONTENT:
 				aLayoutWidget = new MaterialNavSection();
 				aLayoutWidget.setHideOn(HideOn.NONE);
@@ -279,19 +248,17 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		return aLayoutWidget;
 	}
 
-	/***************************************
-	 * Creates the content layout widgets for a {@link MaterialModal} container.
+	/**
+	 * Creates the content layout widgets for a {@link MaterialModal}
+	 * container.
 	 *
-	 * @param  eLayout The content layout type
-	 *
+	 * @param eLayout The content layout type
 	 * @return A new widget container or NULL if no match was available
 	 */
-	MaterialWidget createModalContentContainer(LayoutType eLayout)
-	{
+	MaterialWidget createModalContentContainer(LayoutType eLayout) {
 		MaterialWidget aLayoutWidget;
 
-		switch (eLayout)
-		{
+		switch (eLayout) {
 			case CONTENT:
 				aLayoutWidget = new MaterialDialogContent();
 				break;
@@ -307,92 +274,68 @@ public class MaterialContentLayout extends AbstractMaterialLayout
 		return aLayoutWidget;
 	}
 
-	/***************************************
+	/**
 	 * Returns the content area a certain widget represents.
-	 *
-	 * @param  rParent
 	 *
 	 * @return The content area for this widget
 	 */
-	private ContentArea getContentArea(Widget rParent)
-	{
+	private ContentArea getContentArea(Widget rParent) {
 		ContentArea eContentArea;
 
-		if (rParent instanceof MaterialCollapsibleItem)
-		{
+		if (rParent instanceof MaterialCollapsibleItem) {
 			eContentArea = ContentArea.COLLAPSIBLE;
-		}
-		else if (rParent instanceof MaterialCollectionItem)
-		{
+		} else if (rParent instanceof MaterialCollectionItem) {
 			eContentArea = ContentArea.COLLECTION;
-		}
-		else if (rParent instanceof MaterialCard)
-		{
+		} else if (rParent instanceof MaterialCard) {
 			eContentArea = ContentArea.CARD;
-		}
-		else if (rParent instanceof MaterialDialog)
-		{
+		} else if (rParent instanceof MaterialDialog) {
 			eContentArea = ContentArea.DIALOG;
-		}
-		else if (rParent instanceof MaterialNavBar ||
-				 rParent instanceof AbstractSideNav)
-		{
+		} else if (rParent instanceof MaterialNavBar ||
+			rParent instanceof AbstractSideNav) {
 			eContentArea = ContentArea.MENU;
-		}
-		else
-		{
+		} else {
 			eContentArea = ContentArea.GLOBAL;
 		}
 
 		return eContentArea;
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * Subclassed to implement the {@link HasActive} interface.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialCollapsibleHeader
-		extends MaterialCollapsibleHeader implements ActiveState
-	{
-		//~ Constructors -------------------------------------------------------
+		extends MaterialCollapsibleHeader implements ActiveState {
 
-		/***************************************
+		/**
 		 * Creates a new instance.
 		 */
-		public GewtMaterialCollapsibleHeader()
-		{
+		public GewtMaterialCollapsibleHeader() {
 		}
 
-		/***************************************
+		/**
 		 * Creates a new instance.
 		 *
 		 * @param rWidgets The header widgets
 		 */
-		public GewtMaterialCollapsibleHeader(Widget... rWidgets)
-		{
+		public GewtMaterialCollapsibleHeader(Widget... rWidgets) {
 			super(rWidgets);
 		}
 
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public boolean isActive()
-		{
+		public boolean isActive() {
 			return getStyleName().contains("active");
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setActive(boolean bActive)
-		{
+		public void setActive(boolean bActive) {
 			MaterialCollapsible rParent = (MaterialCollapsible) getParent();
 
 			rParent.setActive(rParent.getWidgetIndex(this) + 1);

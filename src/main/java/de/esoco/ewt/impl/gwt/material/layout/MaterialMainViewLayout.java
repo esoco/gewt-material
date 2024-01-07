@@ -23,24 +23,19 @@ import de.esoco.ewt.style.StyleData;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-
-/********************************************************************
+/**
  * The main view layout for GWT Material.
  *
  * @author eso
  */
-public class MaterialMainViewLayout extends GenericLayout
-{
-	//~ Methods ----------------------------------------------------------------
+public class MaterialMainViewLayout extends GenericLayout {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HasWidgets createLayoutContainer(
-		Container rContainer,
-		StyleData rStyle)
-	{
+	public HasWidgets createLayoutContainer(Container rContainer,
+		StyleData rStyle) {
 		return new HTMLPanel("");
 	}
 }

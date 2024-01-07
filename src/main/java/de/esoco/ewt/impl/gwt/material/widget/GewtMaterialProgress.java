@@ -21,102 +21,86 @@ import gwt.material.design.client.ui.MaterialProgress;
 
 import de.esoco.ewt.component.ProgressBar.IsProgressBarWidget;
 
-
-/********************************************************************
+/**
  * Material progress bar that implements the GEWT progress bar interface.
  *
  * @author eso
  */
 public class GewtMaterialProgress extends MaterialProgress
-	implements IsProgressBarWidget
-{
-	//~ Instance fields --------------------------------------------------------
+	implements IsProgressBarWidget {
 
-	private int nMaximum  = 0;
-	private int nMinimum  = 0;
+	private int nMaximum = 0;
+
+	private int nMinimum = 0;
+
 	private int nProgress = 0;
 
-	//~ Constructors -----------------------------------------------------------
-
-	/***************************************
+	/**
 	 * Creates a new instance.
 	 */
-	public GewtMaterialProgress()
-	{
+	public GewtMaterialProgress() {
 		setType(ProgressType.INDETERMINATE);
 	}
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getMaximum()
-	{
+	public int getMaximum() {
 		return nMaximum;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getMinimum()
-	{
+	public int getMinimum() {
 		return nMinimum;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getProgress()
-	{
+	public int getProgress() {
 		return nProgress;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setMaximum(int nMaximum)
-	{
+	public void setMaximum(int nMaximum) {
 		this.nMaximum = nMaximum;
 		update();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setMinimum(int nMinimum)
-	{
+	public void setMinimum(int nMinimum) {
 		this.nMinimum = nMinimum;
 		update();
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setProgress(int nProgress)
-	{
+	public void setProgress(int nProgress) {
 		this.nProgress = nProgress;
 		setPercent((nProgress - nMinimum) * 100 / (nMaximum - nMinimum));
 	}
 
-	/***************************************
+	/**
 	 * Updates this instance according to it's current state.
 	 */
-	protected void update()
-	{
-		if (nMaximum != nMinimum)
-		{
+	protected void update() {
+		if (nMaximum != nMinimum) {
 			setType(ProgressType.DETERMINATE);
 			setProgress(nProgress);
-		}
-		else
-		{
+		} else {
 			setType(ProgressType.INDETERMINATE);
 			setPercent(100);
 		}

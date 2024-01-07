@@ -23,25 +23,20 @@ import de.esoco.ewt.component.TableControl.IsTableControlWidget;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialTable;
 import de.esoco.ewt.style.StyleData;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
 public class MaterialTableFactory
-	extends MaterialWidgetFactory<IsTableControlWidget>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<IsTableControlWidget> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IsTableControlWidget createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
-	{
+	public IsTableControlWidget createMaterialWidget(Component rComponent,
+		StyleData rStyle) {
 		return new GewtMaterialTable(rComponent.getContext(), rStyle);
 	}
 }

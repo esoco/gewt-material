@@ -40,124 +40,100 @@ import static de.esoco.lib.property.LayoutProperties.HORIZONTAL_ALIGN;
 import static de.esoco.lib.property.StyleProperties.LIST_LAYOUT_STYLE;
 import static de.esoco.lib.property.StyleProperties.MULTI_SELECTION;
 
-
-/********************************************************************
+/**
  * GWT Material implementation for list-style layouts.
  *
  * @author eso
  */
 public class MaterialListLayout extends AbstractMaterialLayout
-	implements SingleSelection
-{
-	//~ Instance fields --------------------------------------------------------
+	implements SingleSelection {
 
-	private ListLayoutStyle		   eListStyle;
+	private ListLayoutStyle eListStyle;
+
 	private MaterialCollectionItem aCurrentItem;
-	private SingleSelection		   aSelectionWidget;
 
-	//~ Methods ----------------------------------------------------------------
+	private SingleSelection aSelectionWidget;
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addWidget(HasWidgets rContainer,
-						  Widget	 rWidget,
-						  StyleData  rStyle,
-						  int		 nIndex)
-	{
-		if (eListStyle == ListLayoutStyle.SIMPLE)
-		{
-			if (rWidget instanceof MaterialTitle)
-			{
+	public void addWidget(HasWidgets rContainer, Widget rWidget,
+		StyleData rStyle, int nIndex) {
+		if (eListStyle == ListLayoutStyle.SIMPLE) {
+			if (rWidget instanceof MaterialTitle) {
 				MaterialTitle rListTitle = (MaterialTitle) rWidget;
 
 				((MaterialCollection) rContainer).setHeader(
 					rListTitle.getTitle());
-			}
-			else if (!(rWidget instanceof MaterialCollectionItem))
-			{
+			} else if (!(rWidget instanceof MaterialCollectionItem)) {
 				if (aCurrentItem != null &&
-					rStyle.getProperty(HORIZONTAL_ALIGN, null) == Alignment.END)
-				{
+					rStyle.getProperty(HORIZONTAL_ALIGN, null) ==
+						Alignment.END) {
 					MaterialCollectionSecondary aSecondary =
 						new MaterialCollectionSecondary();
 
 					aCurrentItem.add(aSecondary);
 					aSecondary.add(rWidget);
 					aCurrentItem = null;
-				}
-				else
-				{
+				} else {
 					aCurrentItem = new MaterialCollectionItem();
 					aCurrentItem.add(rWidget);
 				}
 
 				rWidget = aCurrentItem;
 			}
-		}
-		else if (!(rWidget instanceof MaterialCollapsibleItem))
-		{
+		} else if (!(rWidget instanceof MaterialCollapsibleItem)) {
 			rWidget = new MaterialCollapsibleItem<Object>(rWidget);
 		}
 
-		if (rWidget != null)
-		{
+		if (rWidget != null) {
 			super.addWidget(rContainer, rWidget, rStyle, nIndex);
 		}
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getSelectionIndex()
-	{
-		return aSelectionWidget != null ? aSelectionWidget.getSelectionIndex()
-										: -1;
+	public int getSelectionIndex() {
+		return aSelectionWidget != null ?
+		       aSelectionWidget.getSelectionIndex() :
+		       -1;
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setSelection(int nIndex)
-	{
-		if (aSelectionWidget != null)
-		{
+	public void setSelection(int nIndex) {
+		if (aSelectionWidget != null) {
 			aSelectionWidget.setSelection(nIndex);
 		}
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected MaterialWidget creatMaterialLayoutContainer(
-		Container rContainer,
-		StyleData rContainerStyle)
-	{
-		eListStyle =
-			rContainerStyle.getProperty(
-				LIST_LAYOUT_STYLE,
-				ListLayoutStyle.SIMPLE);
+	protected MaterialWidget creatMaterialLayoutContainer(Container rContainer,
+		StyleData rContainerStyle) {
+		eListStyle = rContainerStyle.getProperty(LIST_LAYOUT_STYLE,
+			ListLayoutStyle.SIMPLE);
 
 		MaterialWidget aContainerWidget;
 
-		if (eListStyle == ListLayoutStyle.SIMPLE)
-		{
+		if (eListStyle == ListLayoutStyle.SIMPLE) {
 			aContainerWidget = new MaterialCollection();
-		}
-		else
-		{
+		} else {
 			GewtMaterialCollapsible aCollapsible =
 				new GewtMaterialCollapsible();
 
 			aCollapsible.setAccordion(
 				!rContainerStyle.hasFlag(MULTI_SELECTION));
-			aCollapsible.setType(
-				eListStyle == ListLayoutStyle.POPOUT ? CollapsibleType.POPOUT
-													 : CollapsibleType.FLAT);
+			aCollapsible.setType(eListStyle == ListLayoutStyle.POPOUT ?
+			                     CollapsibleType.POPOUT :
+			                     CollapsibleType.FLAT);
 			aContainerWidget = aCollapsible;
 			aSelectionWidget = aCollapsible;
 		}
@@ -165,45 +141,33 @@ public class MaterialListLayout extends AbstractMaterialLayout
 		return aContainerWidget;
 	}
 
-	//~ Inner Classes ----------------------------------------------------------
-
-	/********************************************************************
+	/**
 	 * A {@link MaterialCollapsible} subclass that also implements single
 	 * selection.
 	 *
 	 * @author eso
 	 */
 	public static class GewtMaterialCollapsible extends MaterialCollapsible
-		implements SingleSelection
-	{
-		//~ Instance fields ----------------------------------------------------
+		implements SingleSelection {
 
 		private int nSelection = -1;
 
-		//~ Methods ------------------------------------------------------------
-
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public int getSelectionIndex()
-		{
+		public int getSelectionIndex() {
 			int nIndex = 0;
 
 			nSelection = -1;
 
-			for (Widget rItem : getChildren())
-			{
-				if (StyleHelper.containsStyle(
-						rItem.getElement().getClassName(),
-						"active"))
-				{
+			for (Widget rItem : getChildren()) {
+				if (StyleHelper.containsStyle(rItem.getElement().getClassName(),
+					"active")) {
 					nSelection = nIndex;
 
 					break;
-				}
-				else
-				{
+				} else {
 					nIndex++;
 				}
 			}
@@ -211,34 +175,28 @@ public class MaterialListLayout extends AbstractMaterialLayout
 			return nSelection;
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setActive(int nIndex)
-		{
+		public void setActive(int nIndex) {
 			nSelection = nIndex - 1;
 
 			super.setActive(nIndex);
 		}
 
-		/***************************************
+		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setSelection(int nNewSelection)
-		{
-			if (nNewSelection >= 0)
-			{
+		public void setSelection(int nNewSelection) {
+			if (nNewSelection >= 0) {
 				// prevent multiple setting of the same value so that
 				// collapsible animation is not suppressed
-				if (nNewSelection != nSelection)
-				{
+				if (nNewSelection != nSelection) {
 					setActive(nNewSelection + 1);
 				}
-			}
-			else
-			{
+			} else {
 				clearActive();
 			}
 

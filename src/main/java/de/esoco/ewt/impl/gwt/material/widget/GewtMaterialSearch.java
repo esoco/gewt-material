@@ -22,23 +22,19 @@ import gwt.material.design.client.ui.MaterialTextBox;
 
 import de.esoco.ewt.component.TextControl.IsTextControlWidget;
 
-
-/********************************************************************
- * A {@link MaterialTextBox} subclass that also implements the interface {@link
- * IsTextControlWidget}.
+/**
+ * A {@link MaterialTextBox} subclass that also implements the interface
+ * {@link IsTextControlWidget}.
  *
  * @author eso
  */
 public class GewtMaterialSearch extends MaterialSearch
-	implements IsTextControlWidget
-{
-	//~ Constructors -----------------------------------------------------------
+	implements IsTextControlWidget {
 
-	/***************************************
+	/**
 	 * Creates a new instance.
 	 */
-	public GewtMaterialSearch()
-	{
+	public GewtMaterialSearch() {
 		addCloseHandler(e -> setValue("", true));
 
 		getIconSearch().addMouseDownHandler(e -> toggleActive());
@@ -47,23 +43,19 @@ public class GewtMaterialSearch extends MaterialSearch
 		valueBoxBase.addBlurHandler(e -> setActive(false));
 	}
 
-	//~ Methods ----------------------------------------------------------------
-
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getCursorPos()
-	{
+	public int getCursorPos() {
 		return asValueBoxBase().getCursorPos();
 	}
 
-	/***************************************
+	/**
 	 * @see MaterialSearch#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean bActive)
-	{
+	public void setActive(boolean bActive) {
 		super.setActive(bActive);
 
 		MaterialIcon rCloseIcon = getIconClose();
@@ -74,25 +66,20 @@ public class GewtMaterialSearch extends MaterialSearch
 		setTextColor(null);
 	}
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setVisibleLength(int nColumns)
-	{
+	public void setVisibleLength(int nColumns) {
 	}
 
-	/***************************************
+	/**
 	 * Toggles the active state of this search field.
 	 */
-	private void toggleActive()
-	{
-		if (isActive())
-		{
+	private void toggleActive() {
+		if (isActive()) {
 			close();
-		}
-		else
-		{
+		} else {
 			open();
 		}
 	}

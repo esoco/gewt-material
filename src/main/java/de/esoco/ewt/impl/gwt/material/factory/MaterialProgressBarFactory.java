@@ -23,25 +23,20 @@ import de.esoco.ewt.component.ProgressBar.IsProgressBarWidget;
 import de.esoco.ewt.impl.gwt.material.widget.GewtMaterialProgress;
 import de.esoco.ewt.style.StyleData;
 
-
-/********************************************************************
+/**
  * The factory for {@link MaterialButton} widgets.
  *
  * @author eso
  */
 public class MaterialProgressBarFactory
-	extends MaterialWidgetFactory<IsProgressBarWidget>
-{
-	//~ Methods ----------------------------------------------------------------
+	extends MaterialWidgetFactory<IsProgressBarWidget> {
 
-	/***************************************
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IsProgressBarWidget createMaterialWidget(
-		Component rComponent,
-		StyleData rStyle)
-	{
+	public IsProgressBarWidget createMaterialWidget(Component rComponent,
+		StyleData rStyle) {
 		return new GewtMaterialProgress();
 	}
 }
