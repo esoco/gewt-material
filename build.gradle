@@ -1,3 +1,5 @@
+import de.esoco.gwt.gradle.extension.CompilerOption
+
 plugins {
     id "java-library"
     id "de.esoco.gwt-lib" version "$gwtLibPluginVersion"
@@ -20,25 +22,25 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
-dependencies 
-{
-	implementation 'de.esoco:gewt:1.4.0'
+dependencies
+        {
+            implementation 'de.esoco:gewt:1.4.0'
 
-	implementation 'com.github.gwtmaterialdesign:gwt-material:2.2'
-	implementation 'com.github.gwtmaterialdesign:gwt-material-addins:2.2'
-	implementation 'com.github.gwtmaterialdesign:gwt-material-table:2.2'
+            implementation "com.github.gwtmaterialdesign:gwt-material:$gwtMaterialVersion"
+            implementation "com.github.gwtmaterialdesign:gwt-material-addins:$gwtMaterialVersion"
+            implementation "com.github.gwtmaterialdesign:gwt-material-table:$gwtMaterialVersion"
 
-	testImplementation platform("org.junit:junit-bom:$junitVersion")	
-	testImplementation 'org.junit.jupiter:junit-jupiter'
-}
+            testImplementation platform("org.junit:junit-bom:$junitVersion")
+            testImplementation 'org.junit.jupiter:junit-jupiter'
+        }
 
 gwt {
     module 'de.esoco.GewtMaterial'
     gwtVersion = "$gwtVersion"
-    compile {
-		sourceLevel = '1.8'
-		maxHeapSize = '1024M'
-	}
+    compile(({
+        sourceLevel = '1.8'
+        maxHeapSize = '1024M'
+    } as Closure<CompilerOption>))
 }
 
 test {

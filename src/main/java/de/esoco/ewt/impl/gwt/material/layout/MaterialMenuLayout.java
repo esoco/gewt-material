@@ -208,7 +208,7 @@ public class MaterialMenuLayout extends MenuLayout {
 			case SMALL:
 			case SMALL_EXPANDING:
 				sideNav = new MaterialSideNavMini();
-				((MaterialSideNavMini) sideNav).setExpandable(
+				((MaterialSideNavMini) sideNav).setExpandOnClick(
 					navigationMenuStyle == NavigationMenuStyle.SMALL_EXPANDING);
 				break;
 
