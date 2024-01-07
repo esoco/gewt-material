@@ -1,7 +1,6 @@
 # The gewt-material project
 
-Travis build status:  
-[![Build Status](https://www.travis-ci.org/esoco/gewt-material.svg?branch=master)](https://www.travis-ci.org/esoco/gewt-material)
+[![](https://github.com/esoco/gewt-material/workflows/Build/badge.svg)](https://github.com/esoco/gewt-material/actions)
 
 This project contains a [GEWT](https://github.com/esoco/gewt) integration of the [GWT Material Design project](https://github.com/GwtMaterialDesign/gwt-material). It allows to use the Material Design elements in all GEWT-based projects.
 
