@@ -148,7 +148,7 @@ public class MaterialMenuLayout extends MenuLayout {
 	 * Creates a new floating menu.
 	 *
 	 * @param menuStyle   The menu style
-	 * @param orientation bVertical TRUE for a vertical menu, FALSE for
+	 * @param orientation vertical TRUE for a vertical menu, FALSE for
 	 *                    horizontal
 	 * @return The menu container widget
 	 */
@@ -233,7 +233,7 @@ public class MaterialMenuLayout extends MenuLayout {
 	/**
 	 * Creates a menu at the top of the target area.
 	 *
-	 * @param menuStyle rStyle
+	 * @param menuStyle style
 	 * @return The menu container widget
 	 */
 	protected HasWidgets createTopMenu(StyleData menuStyle) {

@@ -82,7 +82,7 @@ public class MaterialButtonFactory<W extends Widget & Focusable & HasText>
 	 * Maps the {@link ButtonStyle} from a style data object to a GwtMaterial
 	 * {@link ButtonType} constant.
 	 *
-	 * @param buttonStyle rStyle The style data to read the button style from
+	 * @param buttonStyle style The style data to read the button style from
 	 * @return The button type or NULL for a default or if no mapping exists
 	 */
 	private ButtonType mapButtonType(ButtonStyle buttonStyle) {

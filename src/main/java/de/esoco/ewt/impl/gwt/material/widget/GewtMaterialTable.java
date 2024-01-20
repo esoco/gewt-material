@@ -116,7 +116,7 @@ public class GewtMaterialTable extends Composite
 	/**
 	 * Returns the date time format.
 	 *
-	 * @param columnDef sDatatype The date time format
+	 * @param columnDef datatype The date time format
 	 * @return The date time format
 	 */
 	public static DateTimeFormat getDateTimeFormat(ColumnDefinition columnDef) {
